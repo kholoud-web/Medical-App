@@ -6,8 +6,12 @@ export default {
 ],
   theme: {
     extend: {
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+      },
       colors:{
-        'card-bg':"#F0F0F0"
+        'card-bg':"#F0F0F0",
+        'primary-black':"#1D4ED8"
       },
       backgroundImage:{
         'gradient-border':'linear-gradient(to bottom ,#C6D8FD ,#207EFF )'
