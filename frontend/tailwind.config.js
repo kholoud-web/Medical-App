@@ -11,9 +11,10 @@ export default {
       },
       colors:{
         'card-bg':"#F0F0F0",
-        'primary-black':"#1D4ED8",
+        'primary-black':"rgba(37, 37, 37, 1)",
         "primary-blue":"rgba(56, 104, 200, 1)",
-        "primary-white":'rgba(237, 243, 255, 1)'
+        "primary-white":'rgba(237, 243, 255, 1)',
+        'gradient':'linear-gradient(to bottom ,#C6D8FD ,#207EFF )'
       },
       backgroundImage:{
         'gradient-border':'linear-gradient(to bottom ,#C6D8FD ,#207EFF )'
