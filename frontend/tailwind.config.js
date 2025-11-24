@@ -62,7 +62,8 @@ export default {
   			}
   		},
   		backgroundImage: {
-  			'gradient-border': 'linear-gradient(to bottom ,#C6D8FD ,#207EFF )'
+  			'gradient-border': 'linear-gradient(to bottom ,#C6D8FD ,#207EFF )',
+			'dashboard-border':'linear-gradient(to right , #C6D8FD 0% , #1F3A70 50% , #C6D8FD 100%)'
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
