@@ -102,7 +102,7 @@ const Calendar = () => {
   };
 
   return (
-    <div className=" w-[476px] h-[414px]  mx-auto bg-card rounded-3xl shadow-medium overflow-hidden">
+    <div className=" w-[476px] h-[414px]  mx-auto bg-card rounded-2xl shadow-medium overflow-hidden">
       {/* Header - Blue Section */}
       <div className="bg-[#3868C8] px-4 py-6">
         <div className="flex items-center justify-between mb-6">
@@ -110,7 +110,7 @@ const Calendar = () => {
             variant="ghost"
             size="icon"
             onClick={previousWeek}
-            className="h-10 w-10 rounded-full bg-[#3868C8] text-primary-foreground"
+            className="h-10 w-10 rounded-full bg-[#3868C8] hover:bg-card-bg text-primary-foreground"
           >
             <ChevronLeft className="h-5 w-5" />
           </Button>
@@ -128,7 +128,7 @@ const Calendar = () => {
                       className={cn(
                         "w-8 h-8 mx-auto rounded-full flex items-center justify-center text-sm font-semibold transition-all",
                         today
-                          ? "bg-white text-primary shadow-lg scale-110"
+                          ? "bg-card-bg text-primary shadow-lg scale-110"
                           : "text-primary-foreground"
                       )}
                     >
@@ -144,7 +144,7 @@ const Calendar = () => {
             variant="ghost"
             size="icon"
             onClick={nextWeek}
-            className="h-10 w-10 rounded-full bg-[#3868C8] text-primary-foreground"
+            className="h-10 w-10 rounded-full bg-[#3868C8] hover:bg-card-bg text-primary-foreground"
           >
             <ChevronRight className="h-5 w-5" />
           </Button>
@@ -156,7 +156,7 @@ const Calendar = () => {
       </div>
 
       {/* Stats Section - White Section */}
-      <div className="bg-card px-6 py-6">
+      <div className="bg-card-bg px-6 py-6">
         <div className="flex items-center justify-between py-3 border-b border-border">
           <span className="text-foreground font-semibold text-lg">
             Today appointment
