@@ -16,7 +16,7 @@ function RequestCard() {
               </div>
             </div>
             <div className="flex gap-2">
-              <PrimButton className="bg-green-500 px-6">Accept</PrimButton>
+              <PrimButton className="!bg-green-500 px-6">Accept</PrimButton>
               <PrimButton className="bg-red-500 px-6">Decline</PrimButton>
             </div>
             
