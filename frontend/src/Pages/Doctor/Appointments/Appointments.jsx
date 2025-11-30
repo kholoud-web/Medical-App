@@ -22,12 +22,12 @@ export default function Appointments() {
 
    
   return (
-    <div className='space-y-4 p-10'>
+    <div className='space-y-4'>
    <div>
      <h2 className='text-2xl'>Appointments</h2>
-   <div className='flex items-center justify-between'>
+   <div className='flex gap-4 justify-between flex-row max-[1252px]:flex-col'>
      <p className='text-primary-gray text-2xl '>Manage and organize your patient visits effectively</p>
-     <div className='flex items-center justify-center  gap-4'>
+     <div className='flex items-center max-[385px]:flex-wrap  gap-4'>
         {
             Links.map((link,index)=>(
                 <div key={index}><NavLink  to={link.link}   className={({ isActive }) =>
