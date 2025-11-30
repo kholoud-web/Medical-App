@@ -154,7 +154,7 @@ export default function SideBar() {
         </li>
     ))
 ) : role === "Patient" ? PatientNavBar.map((item, index) => (
-        <li key={index} className="">
+        <li key={index} className="my-1">
             <NavLink
                 to={item.link}
                 className={({ isActive }) =>
