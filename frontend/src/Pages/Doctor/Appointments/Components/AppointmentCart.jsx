@@ -64,7 +64,7 @@ export default function AppointmentCart({ info: { name, age, status, date, time,
         </div>
 
         {/* Buttons */}
-        <div className="flex items-center justify-between gap-4 pl-6">
+        <div className="flex items-center flex-wrap justify-between gap-4 ">
           <Link
             to={"#"}
             className="btn bg-primary-blue text-white shadow-lg py-2 px-4  border-none"
