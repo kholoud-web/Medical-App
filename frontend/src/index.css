@@ -61,11 +61,36 @@ body {
   }
 }
 
+/* index.css */
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+
+.gradient-border {
+  border-radius: 20px; 
+  padding: 2px;        
+  background: linear-gradient(to bottom, #C6D8FD, #207EFF);
+}
+
+
 @layer base {
   * {
     @apply border-border;
+    
   }
+ 
   body {
     @apply bg-background text-foreground;
+  }
+
+  .btn{
+    @apply bg-white py-1 px-4 rounded-xl border border-primary-blue shadow-sm text-sm font-medium text-primary-blue hover:bg-primary-blue hover:text-white transition-all ease-in-out duration-300;
   }
 }
