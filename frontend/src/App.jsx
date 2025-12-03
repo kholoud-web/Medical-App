@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import './App.css'
 import Appointments from './Pages/Doctor/Appointments/Appointments';
-import Layout from './components/Layout';
+import Layout from './Layouts/Layout';
 import { RouterProvider } from 'react-router';
 import NotFound from './Pages/NotFound/NotFound';
 import Dashboard from './Pages/Doctor/Dashboard';
