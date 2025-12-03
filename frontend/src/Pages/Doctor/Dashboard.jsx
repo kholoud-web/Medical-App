@@ -46,7 +46,7 @@ function Dashboard() {
   }
 
   return (
-    <div className="flex flex-col justify-center  gap-10">
+    <div className="max-w-screen-xl flex flex-col justify-center items-center gap-10">
       {/* Top right section (filter section )*/}
       <div className="flex w-full justify-between items-center mb-4">
         <div></div>
