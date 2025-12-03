@@ -46,7 +46,7 @@ function Dashboard() {
   }
 
   return (
-    <div className="flex flex-col justify-center p-20 gap-10">
+    <div className="flex flex-col justify-center  gap-10">
       {/* Top right section (filter section )*/}
       <div className="flex w-full justify-between items-center mb-4">
         <div></div>
@@ -57,29 +57,33 @@ function Dashboard() {
       </div>
 
       {/* the first section */}
-      <div className="flex gap-4 justify-center items-center">
+      <div className="flex flex-wrap gap-4 justify-center items-center">
         {statsData.map((stat, index) => (
+          <div>
           <StatsCard key={index} title={stat.title} value={stat.value} />
+          </div>
         ))}
-      </div>
+      {/* </div> */}
 
       {/* the second charts section */}
-      <div className="flex gap-4 justify-center items-center ">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-center items-center "> */}
         {chartsData.map((chartItem, index) => (
+          <div>
           <ChartsCard key={index} title={chartItem.title}>
             {chartItem.chart}
           </ChartsCard>
+          </div>
         ))}
       </div>
 
       {/* the third section Calendar */}
-      <div className="flex justify-center gap-4 items-center ">
+      <div className="flex justify-center items-center xl:gap-4 ">
         <Card>
           <Calendar />
         </Card>
-
+        <div className="hidden xl:inline-block">
         <Card
-          classname={`h-[414px] w-[510px] relative flex flex-col justify-start items-center gap-2 p-6 `}
+          classname={` hidden xl:flex h-[414px] w-[510px] relative flex-col justify-start items-center gap-2 p-6 `}
         >
           <div className="absolute top-5 left-5">
             <Card classname="w-9 h-9 rounded-full "></Card>
@@ -90,6 +94,9 @@ function Dashboard() {
           <RequestCard />
           <RequestCard />
         </Card>
+
+        </div>
+
       </div>
 
       {/* fourth section */}

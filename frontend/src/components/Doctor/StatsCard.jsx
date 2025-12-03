@@ -4,7 +4,7 @@ import PrimButton from "@/components/Common/PrimButton";
 
 function StatsCard({value , title}) {
   return (
-    <Card classname='flex flex-col justify-start items-center gap-4 p-6 w-80 h-48 relative'>
+    <Card classname='w-80 h-48 flex flex-col justify-start items-center gap-4 p-6 relative'>
       <div className="absolute top-5 left-5">
         <Card classname="w-9 h-9 rounded-full "></Card>
       </div>
