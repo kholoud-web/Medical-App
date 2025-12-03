@@ -4,6 +4,7 @@ import Appointments from './Pages/Doctor/Appointments/Appointments';
 import Layout from './components/Layout';
 import { RouterProvider } from 'react-router';
 import NotFound from './Pages/NotFound/NotFound';
+import Dashboard from './Pages/Doctor/Dashboard';
 
 function App() {
   const route =createBrowserRouter([
@@ -12,6 +13,9 @@ function App() {
       children:[
         {
           path:"appointments",element:<Appointments/>
+        },
+        {
+          path:"dashboard",element:<Dashboard/>
         },
         {
           path:"*",element:<NotFound/>

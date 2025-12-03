@@ -19,7 +19,7 @@ function Timeline() {
     );
   }
   return (
-    <div className="flex justify-center">
+    <div className="hidden xl:flex justify-center">
       <Card
         classname={`h-[355px] w-[1000px] relative flex flex-col justify-start items-center gap-2 p-6 `}
       >

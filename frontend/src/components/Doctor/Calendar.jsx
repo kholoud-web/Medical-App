@@ -102,7 +102,7 @@ const Calendar = () => {
   };
 
   return (
-    <div className=" w-[476px] h-[414px]  mx-auto bg-card rounded-2xl shadow-medium overflow-hidden">
+    <div className="w-[330px] sm:w-[476px] h-[414px] mx-auto bg-card rounded-2xl shadow-medium overflow-hidden">
       {/* Header - Blue Section */}
       <div className="bg-[#3868C8] px-4 py-6">
         <div className="flex items-center justify-between mb-6">
