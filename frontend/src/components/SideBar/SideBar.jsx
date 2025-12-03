@@ -134,7 +134,7 @@ export default function SideBar() {
         },
     ]
   return (
-    <div className='space-y-4 text-lg h-screen overflow-y-auto scrollbar-hide md:block hidden fixed top-0 left-0  z-[9999] bg-white shadow-[4px_0_15px_rgba(0,0,0,0.2)] px-8 py-5 '>
+    <div className='space-y-4 text-lg h-min-screen overflow-y-auto scrollbar-hide md:block hidden top-0 left-0 z-[9999] bg-white shadow-[4px_0_15px_rgba(0,0,0,0.2)] px-8 py-5 '>
       
        <h2 className='text-2xl font-bold px-3'>MENU</h2>
        <ul className='my-1 font-bold'>
