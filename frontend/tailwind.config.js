@@ -21,6 +21,7 @@ export default {
   			'primary-white': 'rgba(237, 243, 255, 1)',
 			'primary-gray': '#2525259E',
 			'primary-gray-50': '#80808038',
+			'treat-bg-Gray': '#F7F7F7',
   			gradient: 'linear-gradient(to bottom ,#C6D8FD ,#207EFF )',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

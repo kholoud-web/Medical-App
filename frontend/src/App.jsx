@@ -5,6 +5,7 @@ import Layout from './Layouts/Layout';
 import { RouterProvider } from 'react-router';
 import NotFound from './Pages/NotFound/NotFound';
 import Dashboard from './Pages/Doctor/Dashboard';
+import Treatment from './Pages/Doctor/Treatment/treatment';
 
 function App() {
   const route =createBrowserRouter([
@@ -17,6 +18,10 @@ function App() {
         {
           path:"dashboard",element:<Dashboard/>
         },
+        {
+           path: "treatment",element: <Treatment />
+},
+
         {
           path:"*",element:<NotFound/>
         }

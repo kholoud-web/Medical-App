@@ -118,7 +118,13 @@ export default function SideBar() {
             icon:<FiFilePlus  className='inline-block mr-2' />,
             title: "Medical Files",
             link:"/medicalFiles"
-        }
+        },
+        {
+            icon:<PiHandCoinsThin   className='inline-block mr-2' />,
+            title: "Treatment",
+            link:"/treatment",
+           
+        }       ,
     ]
 
     const generalMenu =[
