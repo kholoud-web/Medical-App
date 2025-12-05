@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Card from "../../components/Common/Card";
-import EarningsChart from "../../components/Doctor/EarningsChart";
-import BarChar from "../../components/Doctor/BarChar";
-import Calendar from "../../components/Doctor/Calendar";
-import RequestCard from "@/components/Doctor/RequestCard";
-import CustomFilter from "@/components/Doctor/CustomFilter";
-import Timeline from "@/components/Doctor/Timeline";
-import StatsCard from "@/components/Doctor/StatsCard";
-import ChartsCard from "@/components/Doctor/ChartsCard";
+import EarningsChart from "../../components/Doctor/Dashborad/EarningsChart";
+import BarChar from "../../components/Doctor/Dashborad/BarChar";
+import Calendar from "../../components/Doctor/Dashborad/Calendar";
+import RequestCard from "@/components/Doctor/Dashborad/RequestCard";
+import CustomFilter from "@/components/Doctor/Dashborad/CustomFilter";
+import Timeline from "@/components/Doctor/Dashborad/Timeline";
+import StatsCard from "@/components/Doctor/Dashborad/StatsCard";
+import ChartsCard from "@/components/Doctor/Dashborad/ChartsCard";
 
 const statsData = [
   { title: "Urgent patients", value: 2 },
@@ -59,8 +59,8 @@ function Dashboard() {
       {/* the first section */}
       <div className="flex flex-wrap gap-4 justify-center items-center">
         {statsData.map((stat, index) => (
-          <div>
-          <StatsCard key={index} title={stat.title} value={stat.value} />
+          <div key={index}>
+          <StatsCard title={stat.title} value={stat.value} />
           </div>
         ))}
       {/* </div> */}
@@ -68,8 +68,8 @@ function Dashboard() {
       {/* the second charts section */}
       {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-center items-center "> */}
         {chartsData.map((chartItem, index) => (
-          <div>
-          <ChartsCard key={index} title={chartItem.title}>
+          <div key={index}>
+          <ChartsCard title={chartItem.title}>
             {chartItem.chart}
           </ChartsCard>
           </div>
@@ -89,10 +89,9 @@ function Dashboard() {
             <Card classname="w-9 h-9 rounded-full "></Card>
           </div>
           <h1 className="font-semibold text-2xl mb-4">Requests</h1>
-          <RequestCard />
-          <RequestCard />
-          <RequestCard />
-          <RequestCard />
+          {[...Array(4)].map((_,index)=>(
+            <RequestCard key={index} />
+          ))}
         </Card>
 
         </div>

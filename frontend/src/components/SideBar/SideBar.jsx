@@ -78,6 +78,11 @@ export default function SideBar() {
             title:"Diagnosis Module",
             link:"/DiagnosisModule"
         },
+                {
+            icon:<LuChartColumn  className='inline-block mr-2' />,
+            title: "Finances",
+            link:"/finances"
+        },
         {
             icon:<TbMessageCirclePlus  className='inline-block mr-2' />,
             title: "Ai Diagnosis Result",
