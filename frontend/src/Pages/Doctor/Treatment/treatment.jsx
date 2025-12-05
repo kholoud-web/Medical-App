@@ -67,15 +67,20 @@ export default function Treatment() {
 }
 
 /* small sub-component for action cards */
-function ActionCard({ icon, title }) {
+export function ActionCard({ icon, title , btnText=""}) {
   return (
-    <button className="flex items-center gap-4 border-blue-300 border bg-white rounded-xl p-4 hover:shadow-md  duration-150 focus:outline-none">
-      <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-50 text-blue-600">
-        {icon}
+    <button className="flex items-center justify-between gap-4 border-blue-300 border bg-white rounded-xl p-4 hover:shadow-md  duration-150 focus:outline-none">
+      <div className="flex items-center justify-between gap-4">
+          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-50 text-blue-600">
+            {icon}
+          </div>
+          <div className="text-left">
+            <p className="font-medium">{title}</p>
+          </div> 
       </div>
-      <div className="text-left">
-        <p className="font-medium">{title}</p>
-      </div>
+
+
+      {btnText!=="" && <div className="text-[#4682FA] hover:text-blue-700">{btnText}</div>}
     </button>
   );
 }
