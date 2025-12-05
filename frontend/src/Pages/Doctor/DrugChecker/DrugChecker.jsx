@@ -21,7 +21,7 @@ function DrugChecker() {
       <div className="border border-blue-300 rounded-2xl">
         <div className="bg-treat-bg-Gray rounded-2xl p-6 space-y-4">
           <div>
-            <h3 className="text-xl font-semibold">
+            <h3 className="text-xl font-semibold text-primary-black ">
               {" "}
               Compatibility / Conflict us :{" "}
             </h3>
