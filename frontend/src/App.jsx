@@ -1,39 +1,44 @@
-// src/App.jsx
-import './App.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-// تم حذف: import { Provider } from 'react-redux';
-// تم حذف: import { store } from './Redux/store'; 
-// (لأن هذين الاستيرادين أصبحا غير ضروريين بعد إزالة الـ Provider من هنا)
-
-import Layout from './Layouts/Layout';
-import Dashboard from './Pages/Doctor/Dashboard';
+import { createBrowserRouter } from 'react-router-dom';
+import './App.css'
 import Appointments from './Pages/Doctor/Appointments/Appointments';
-import Treatment from './Pages/Doctor/Treatment/treatment';
-import DiagnosisPage from './Pages/Doctor/Diagnosis/diagnosis';
+import Layout from './Layouts/Layout';
+import { RouterProvider } from 'react-router';
 import NotFound from './Pages/NotFound/NotFound';
+import Dashboard from './Pages/Doctor/Dashboard';
+import Treatment from './Pages/Doctor/Treatment/treatment';
+import DiagnosisAssistant from './Pages/Doctor/Diagnosis/DiagnosisAssistant';
+// import Diagnosis from './Pages/Doctor/Diagnosis/diagnosis';
 
 function App() {
-  const router = createBrowserRouter([
+  const route =createBrowserRouter([
     {
-      path: '/',
-      element: <Layout />,
-      children: [
-        // يفضل استخدام index: true كبديل لـ path: '/' لتحديد الصفحة الرئيسية الفرعية
-        { index: true, element: <Dashboard /> }, 
-        { path: 'dashboard', element: <Dashboard /> },
-        { path: 'appointments', element: <Appointments /> },
-        { path: 'treatment', element: <Treatment /> },
-        { path: 'diagnosis', element: <DiagnosisPage /> },
-        { path: '*', element: <NotFound /> },
-      ],
-    },
-  ]);
+      path:"/",element:<Layout/>,
+      children:[
+        {
+          path:"appointments",element:<Appointments/>
+        },
+        {
+          path:"dashboard",element:<Dashboard/>
+        },
+        {path:"diagnosis", element:<DiagnosisAssistant/>},
+        {
+           path: "treatment",element: <Treatment />
+},
+// { path: "diagnosis", element: <Diagnosis/> },
+
+        {
+          path:"*",element:<NotFound/>
+        }
+      ]
+    }
+  ])
 
   return (
-    // تم حذف وسم <Provider store={store}>
-    // <RouterProvider router={router} /> هو كل ما تحتاجه هنا
-    <RouterProvider router={router} />
+    <>
+    <RouterProvider router={route}/>
+
+</>
   );
 }
 
-export default App;
+export default App
