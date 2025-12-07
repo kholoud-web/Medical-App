@@ -88,6 +88,11 @@ export default function SideBar() {
             title: "Ai Diagnosis Result",
             link:"/AiDiagnosisResult"
         },
+         {
+            icon:<FaSearchPlus  className='inline-block mr-2' />,
+            title: "Diagnosis",
+            link:"/diagnosis"
+        },
         {
             icon:<BiInjection   className='inline-block mr-2' />,
             title: "Drug Checker",

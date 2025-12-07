@@ -6,6 +6,8 @@ import { RouterProvider } from 'react-router';
 import NotFound from './Pages/NotFound/NotFound';
 import Dashboard from './Pages/Doctor/Dashboard';
 import Treatment from './Pages/Doctor/Treatment/treatment';
+import DiagnosisAssistant from './Pages/Doctor/Diagnosis/DiagnosisAssistant';
+// import Diagnosis from './Pages/Doctor/Diagnosis/diagnosis';
 import DrugChecker from './Pages/Doctor/DrugChecker/DrugChecker';
 
 function App() {
@@ -19,8 +21,12 @@ function App() {
         {
           path:"dashboard",element:<Dashboard/>
         },
+        {path:"diagnosis", element:<DiagnosisAssistant/>},
         {
            path: "treatment",element: <Treatment />
+},
+// { path: "diagnosis", element: <Diagnosis/> },
+
         },
         {
           path:"/DrugChecker" , element:<DrugChecker/>
