@@ -26,7 +26,7 @@ export default function InputSection() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-md border border-blue-200">
+    <div className="bg-treat-bg-Gray p-6 rounded-2xl shadow-md border border-blue-200">
 
       {/* ---- Title ---- */}
       <h2 className="text-center font-semibold text-lg mb-4">
