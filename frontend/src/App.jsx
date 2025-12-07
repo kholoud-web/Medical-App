@@ -27,7 +27,7 @@ function App() {
 },
 // { path: "diagnosis", element: <Diagnosis/> },
 
-        },
+        
         {
           path:"/DrugChecker" , element:<DrugChecker/>
         },
