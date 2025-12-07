@@ -1,5 +1,5 @@
 import React from 'react'
-import PrimButton from '../Common/PrimButton'
+import PrimButton from '@/components/Common/PrimButton'
 
 function RequestCard() {
   return (

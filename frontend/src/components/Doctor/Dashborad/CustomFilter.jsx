@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../Common/Card";
+import Card from "@/components/Common/Card";
 
 function CustomFilter({ options = []  , handleClick}) {
   return (

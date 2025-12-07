@@ -8,6 +8,7 @@ import Dashboard from './Pages/Doctor/Dashboard';
 import Treatment from './Pages/Doctor/Treatment/treatment';
 import DiagnosisAssistant from './Pages/Doctor/Diagnosis/DiagnosisAssistant';
 // import Diagnosis from './Pages/Doctor/Diagnosis/diagnosis';
+import DrugChecker from './Pages/Doctor/DrugChecker/DrugChecker';
 
 function App() {
   const route =createBrowserRouter([
@@ -26,6 +27,10 @@ function App() {
 },
 // { path: "diagnosis", element: <Diagnosis/> },
 
+        },
+        {
+          path:"/DrugChecker" , element:<DrugChecker/>
+        },
         {
           path:"*",element:<NotFound/>
         }

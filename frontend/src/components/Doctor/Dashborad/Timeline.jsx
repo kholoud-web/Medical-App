@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Card from "@/components/Common/Card";
-import CustomFilter from "@/components/Doctor/CustomFilter";
-import MedicalRow from "@/components/Doctor/MedicalRow";
+import CustomFilter from "@/components/Doctor/Dashborad/CustomFilter";
+import MedicalRow from "@/components/Doctor/Dashborad/MedicalRow";
 
 function Timeline() {
   const [filterOptions, setFilteredOptions] = useState([
@@ -27,7 +27,7 @@ function Timeline() {
           <div className="absolute top-5 left-5">
             <Card classname="w-9 h-9 rounded-full "></Card>
           </div>
-          <h1 className="font-semibold text-2xl mr-8">
+          <h1 className="font-semibold text-2xl mr-3">
             Patients Medical Timeline Today
           </h1>
           <CustomFilter
