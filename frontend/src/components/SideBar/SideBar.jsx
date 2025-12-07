@@ -78,6 +78,11 @@ export default function SideBar() {
             title:"Diagnosis Module",
             link:"/DiagnosisModule"
         },
+                {
+            icon:<LuChartColumn  className='inline-block mr-2' />,
+            title: "Finances",
+            link:"/finances"
+        },
         {
             icon:<TbMessageCirclePlus  className='inline-block mr-2' />,
             title: "Ai Diagnosis Result",
@@ -165,7 +170,7 @@ export default function SideBar() {
         </li>
     ))
 ) : role === "Patient" ? PatientNavBar.map((item, index) => (
-        <li key={index} className="">
+        <li key={index} className="my-1">
             <NavLink
                 to={item.link}
                 className={({ isActive }) =>
