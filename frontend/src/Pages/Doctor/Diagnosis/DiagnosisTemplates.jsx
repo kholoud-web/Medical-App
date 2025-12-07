@@ -4,29 +4,25 @@ import { FaThermometerHalf, FaCoffee, FaHeartbeat, FaChartLine } from 'react-ico
 
 
 const TemplateCard = ({ Icon, title, iconColor, borderColor }) => (
-  
-  <div className={`p-6 rounded-xl shadow-xl border border-gray-200 bg-white flex flex-col justify-between h-full hover:shadow-2xl transition duration-300`}>
+  <div className="p-6 rounded-xl shadow-xl border border-gray-200 bg-white flex flex-col justify-between h-full hover:shadow-2xl transition duration-300">
     
     <div className="flex items-center mb-6"> 
       
       <div className={`relative p-3 rounded-full bg-white border ${borderColor} mr-4`}> 
-        <Icon 
-          className={`text-xl ${iconColor}`} 
-        />
+        <Icon className={`text-xl ${iconColor}`} />
       </div>
-      
-      {/* عنوان القالب */}
+
       <p className="font-semibold text-gray-800 text-sm leading-snug">
-          {title}
+        {title}
       </p>
     </div>
 
-    {/* زر "Use template" -  */}
     <button className="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-150 shadow-md">
       Use template
     </button>
   </div>
 );
+
 
 const DiagnosisTemplates = () => {
   const templates = [
