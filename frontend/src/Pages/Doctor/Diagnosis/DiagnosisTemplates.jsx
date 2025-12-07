@@ -1,15 +1,21 @@
 import React from 'react';
 // استيراد الأيقونات من مكتبة react-icons
-import { FaThermometerHalf, FaCoffee, FaHeartbeat, FaChartLine } from 'react-icons/fa';
+// import { FaThermometerHalf, FaCoffee, FaHeartbeat, FaChartLine } from 'react-icons/fa';
+import ThermoIcon from "./Icons/thermo.svg"
+import StomachIcon from "./Icons/stomach.svg"
+import HeartIcon from "./Icons/heart.svg"
+import DiabetesIcon from "./Icons/diabetes.svg"
 
-
-const TemplateCard = ({ Icon, title, iconColor, borderColor }) => (
+const TemplateCard = ({ icon, title, borderColor }) => (
   <div className="p-6 rounded-xl shadow-xl border border-gray-200 bg-white flex flex-col justify-between h-full hover:shadow-2xl transition duration-300">
-    
-    <div className="flex items-center mb-6"> 
-      
-      <div className={`relative p-3 rounded-full bg-white border ${borderColor} mr-4`}> 
-        <Icon className={`text-xl ${iconColor}`} />
+
+    <div className="flex items-center mb-6">
+      <div className={`relative p-3 rounded-full bg-white border ${borderColor} mr-4`}>
+        <img 
+          src={icon} 
+          alt={title} 
+          className="w-8 h-8 object-contain"
+        />
       </div>
 
       <p className="font-semibold text-gray-800 text-sm leading-snug">
@@ -23,34 +29,30 @@ const TemplateCard = ({ Icon, title, iconColor, borderColor }) => (
   </div>
 );
 
-
 const DiagnosisTemplates = () => {
   const templates = [
-    {
-      Icon: FaThermometerHalf, 
-      title: 'Cold & Flu',
-      iconColor: 'text-red-500',
-      borderColor: 'border-red-300', 
-    },
-    {
-      Icon: FaCoffee, 
-      title: 'Stomach Pain',
-      iconColor: 'text-green-600',
-      borderColor: 'border-green-300',
-    },
-    {
-      Icon: FaHeartbeat,
-      title: 'Hypertension',
-      iconColor: 'text-pink-500',
-      borderColor: 'border-pink-300',
-    },
-    {
-      Icon: FaChartLine, 
-      title: 'Diabetes Follow-up',
-      iconColor: 'text-blue-500',
-      borderColor: 'border-blue-300',
-    },
-  ];
+  {
+    icon: ThermoIcon,
+    title: "Cold & Flu",
+    borderColor: "border-red-300",
+  },
+  {
+    icon: StomachIcon,
+    title: "Stomach Pain",
+    borderColor: "border-green-300",
+  },
+  {
+    icon: HeartIcon,
+    title: "Hypertension",
+    borderColor: "border-pink-300",
+  },
+  {
+    icon: DiabetesIcon,
+    title: "Diabetes Follow-up",
+    borderColor: "border-blue-300",
+  },
+];
+
 
   return (
     <div className="space-y-4 mt-8">
@@ -61,13 +63,12 @@ const DiagnosisTemplates = () => {
     
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6"> 
         {templates.map((template, index) => (
-          <TemplateCard
-            key={index}
-            Icon={template.Icon} // تمرير المكون كـ Prop
-            title={template.title}
-            iconColor={template.iconColor}
-            borderColor={template.borderColor}
-          />
+         <TemplateCard
+  key={index}
+  icon={template.icon}
+  title={template.title}
+  borderColor={template.borderColor}
+/>
         ))}
       </div>
     </div>

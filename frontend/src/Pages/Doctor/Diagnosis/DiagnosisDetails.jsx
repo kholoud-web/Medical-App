@@ -25,7 +25,7 @@ export default function DiagnosisDetails() {
   ]);
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-lg border border-blue-200">
+    <div className="bg-treat-bg-Gray p-6 rounded-xl shadow-lg border border-blue-200">
       <h2 className="text-md font-semibold text-gray-800">Diagnosis Details</h2>
       <p className="text-sm text-gray-600 mb-4">Type 2 Diabetes Mellitus</p>
 
@@ -165,7 +165,7 @@ export default function DiagnosisDetails() {
 
             <button
               onClick={() => setEditMode(false)}
-              className="px-6 py-1.5 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition"
+              className="px-6 py-1.5 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition"
             >
               Save
             </button>
