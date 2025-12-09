@@ -12,7 +12,7 @@ function DrugChecker() {
       {/* title */}
       <div className="text-center space-y-2">
         <h1 className="text-4xl font-extrabold">Drug Conflict Check</h1>
-        <p className="text-gray-500 text-lg">
+        <p className="text-primary-black text-lg">
           Review potential drug interactions and compatibility issues below
         </p>
       </div>
