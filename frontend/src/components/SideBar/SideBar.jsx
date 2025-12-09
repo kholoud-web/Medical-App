@@ -32,7 +32,7 @@ export default function SideBar() {
         {
             icon:<FiUsers className='inline-block mr-2' />,
             title: "My patients",
-            link:"/my patients"
+            link:"/my-patients"
         },
         {
             icon:<CiCircleQuestion  className='inline-block mr-2' />,
@@ -113,6 +113,11 @@ export default function SideBar() {
             icon:<VscNote   className='inline-block mr-2' />,
             title: "Complaints",
             link:"/complaints"
+        },
+                {
+            icon:<FiUsers className='inline-block mr-2' />,
+            title: "My patients",
+            link:"/my-patients"
         },
         {
             icon:<LuNotebookText   className='inline-block mr-2' />,
