@@ -6,6 +6,7 @@ import { RouterProvider } from 'react-router';
 import NotFound from './Pages/NotFound/NotFound';
 import Dashboard from './Pages/Doctor/Dashboard';
 import Treatment from './Pages/Doctor/Treatment/treatment';
+import AiDiagnosisResult from './Pages/Patient/AiDiagnosisResult';
 
 function App() {
   const route =createBrowserRouter([
@@ -17,6 +18,9 @@ function App() {
         },
         {
           path:"dashboard",element:<Dashboard/>
+        },
+        {
+          path:"AiDiagnosisResult",element:<AiDiagnosisResult/>
         },
         {
            path: "treatment",element: <Treatment />
