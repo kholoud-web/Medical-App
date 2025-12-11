@@ -10,6 +10,7 @@ import DiagnosisAssistant from './Pages/Doctor/Diagnosis/DiagnosisAssistant';
 // import Diagnosis from './Pages/Doctor/Diagnosis/diagnosis';
 import DrugChecker from './Pages/Doctor/DrugChecker/DrugChecker';
 import MyPatients from './Pages/Doctor/MyPatients/MyPatients';
+import PatientProfile from './Pages/Doctor/PatientProfile/PatientProfile';
 
 function App() {
   const route =createBrowserRouter([
@@ -26,7 +27,7 @@ function App() {
         {
            path: "treatment",element: <Treatment />
 },
-// { path: "diagnosis", element: <Diagnosis/> },
+{ path: "/patient-profile", element: <PatientProfile/> },
 {
   path:"/my-patients", element:<MyPatients/>
 },
