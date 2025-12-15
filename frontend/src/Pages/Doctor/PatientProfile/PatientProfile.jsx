@@ -22,7 +22,7 @@ export default function PatientProfile() {
 
           {/* Patient Info */}
           <div className="text-center space-y-4">
-            <img src={patientImg} className=" w-28 h-28 rounded-full mx-auto object-cover" />
+            <img src={patientImg} className=" w-28 h-28 rounded-full mx-auto object-cover border-2 border-blue-500" />
 
             <h2 className="text-xl font-bold">Emily Williams</h2>
           </div>
