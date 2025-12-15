@@ -8,6 +8,8 @@ import Dashboard from "./Pages/Doctor/Dashboard";
 import Treatment from "./Pages/Doctor/Treatment/treatment";
 import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
 import PatientProfile from "./Pages/Patient/PatientProfile";
+import Directory from "./Pages/Patient/Directory";
+import Payment from "./Pages/Patient/Payment";
 
 function App() {
   const route = createBrowserRouter([
@@ -34,6 +36,14 @@ function App() {
         {
           path: "treatment",
           element: <Treatment />,
+        },
+        {
+          path: "directory",
+          element: <Directory />,
+        },
+        {
+          path: "payment",
+          element: <Payment />,
         },
 
         {

@@ -116,6 +116,12 @@ export default function SideBar() {
             link:"/directory"
         },
         {
+            icon:<PiHandCoinsThin   className='inline-block mr-2' />,
+            title: "Payment",
+            link:"/payment",
+           
+        }       ,
+        {
             icon:<MdOutlineEventNote className='inline-block mr-2' />,
             title: "Appointments",
             link:"/appointments"
