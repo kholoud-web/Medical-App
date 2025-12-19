@@ -34,7 +34,7 @@ export default function DiagnosisDetails() {
 
         {/* Symptoms */}
         <div className="w-1/2">
-          <h3 className="text-md font-semibold text-red-600 mb-2">Symptoms</h3>
+          <h3 className="text-md font-semibold text-blue-500 mb-2">Symptoms</h3>
 
           {!editMode ? (
             <ul className="list-disc list-inside text-gray-700 space-y-1">
@@ -62,7 +62,7 @@ export default function DiagnosisDetails() {
 
         {/* Clinical Findings */}
         <div className="w-1/2">
-          <h3 className="text-md font-semibold text-yellow-600 mb-2">
+          <h3 className="text-md font-semibold text-blue-500 mb-2">
             Clinical Findings
           </h3>
 
@@ -117,7 +117,7 @@ export default function DiagnosisDetails() {
 
       {/* Suggested Medications */}
       <div className="mt-6">
-        <h3 className="text-md font-semibold text-green-600 mb-1">
+        <h3 className="text-md font-semibold text-blue-500 mb-1">
           Suggested Medications
         </h3>
 
