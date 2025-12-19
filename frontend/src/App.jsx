@@ -3,8 +3,6 @@ import "./App.css";
 
 import Layout from "./Layouts/Layout";
 import NotFound from "./Pages/NotFound/NotFound";
-
-// Doctor
 import Appointments from "./Pages/Doctor/Appointments/Appointments";
 import Dashboard from "./Pages/Doctor/Dashboard";
 import Treatment from "./Pages/Doctor/Treatment/treatment";
@@ -12,16 +10,15 @@ import DiagnosisAssistant from "./Pages/Doctor/Diagnosis/DiagnosisAssistant";
 import MyPatients from "./Pages/Doctor/MyPatients/MyPatients";
 import Reports from "./Pages/Doctor/Reports/Reports";
 import Notifications from "./Pages/Doctor/Notifications/Notifications";
-
-// Admin
 import NotificationCenter from "./Pages/Admin/NotificationCenter/NotificationCenter";
 import DrugChecker from "./Pages/Admin/DrugChecker/DrugChecker";
-
-// Common
+import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
+import Directory from "./Pages/Patient/Directory";
+import Payment from "./Pages/Patient/Payment";
 import Service from "./Pages/Service/Service";
 
 function App() {
-  const role = "admin"; // or "doctor"
+  const role = "admin"; 
 
   const router = createBrowserRouter([
     {
@@ -42,6 +39,12 @@ function App() {
           ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
               { path: "drugChecker", element: <DrugChecker /> },
+            ]
+          : role === "patient"
+          ? [
+              { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
+              { path: "directory", element: <Directory /> },
+              { path: "payment", element: <Payment /> },
             ]
           : []),
 
