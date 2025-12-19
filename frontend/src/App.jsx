@@ -16,6 +16,7 @@ import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
 import Directory from "./Pages/Patient/Directory";
 import Payment from "./Pages/Patient/Payment";
 import Service from "./Pages/Service/Service";
+import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 
 function App() {
   const role = "admin"; 
@@ -49,6 +50,10 @@ function App() {
           : []),
 
         { path: "service", element: <Service /> },
+          ,
+        {
+          path:"/help", element:<HelpSupport/>
+        }
         { path: "*", element: <NotFound /> },
       ],
     },
