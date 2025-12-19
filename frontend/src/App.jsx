@@ -11,7 +11,7 @@ import DiagnosisAssistant from './Pages/Doctor/Diagnosis/DiagnosisAssistant';
 import DrugChecker from './Pages/Doctor/DrugChecker/DrugChecker';
 import MyPatients from './Pages/Doctor/MyPatients/MyPatients';
 import PatientProfile from './Pages/Doctor/PatientProfile/PatientProfile';
-
+import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 function App() {
   const route =createBrowserRouter([
     {
@@ -38,6 +38,9 @@ function App() {
         },
         {
           path:"*",element:<NotFound/>
+        },
+        {
+          path:"/help", element:<HelpSupport/>
         }
       ]
     }
