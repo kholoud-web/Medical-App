@@ -14,6 +14,7 @@ import Reports from './Pages/Doctor/Reports/Reports';
 import Notifications from './Pages/Doctor/Notifications/Notifications';
 import NotificationCenter from './Pages/Admin/NotificationCenter/NotificationCenter';
 import DrugChecker from './Pages/Admin/DrugChecker/DrugChecker';
+import Service from './Pages/Service/Service';
 
 function App() {
   const role= "admin"
@@ -69,14 +70,15 @@ const route = createBrowserRouter([
               // { path: "DrugChecker", element: <DrugChecker /> },
               { path: "reports", element: <Reports /> },
               { path: "notifications", element: <Notifications /> },
+             
             ]
             // admin routes
           : role === "admin" ? [
              { path: "notificationCenter", element: <NotificationCenter/> },
              {path:"drugChecker",element:<DrugChecker/>}
 
-
           ] :[]), 
+            { path: "service", element: <Service/> },
 
         { path: "*", element: <NotFound /> },
       ],
