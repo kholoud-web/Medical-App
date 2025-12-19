@@ -1,59 +1,60 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import Appointments from "./Pages/Doctor/Appointments/Appointments";
+
 import Layout from "./Layouts/Layout";
-import { RouterProvider } from "react-router";
 import NotFound from "./Pages/NotFound/NotFound";
+import Appointments from "./Pages/Doctor/Appointments/Appointments";
 import Dashboard from "./Pages/Doctor/Dashboard";
 import Treatment from "./Pages/Doctor/Treatment/treatment";
+import DiagnosisAssistant from "./Pages/Doctor/Diagnosis/DiagnosisAssistant";
+import MyPatients from "./Pages/Doctor/MyPatients/MyPatients";
+import Reports from "./Pages/Doctor/Reports/Reports";
+import Notifications from "./Pages/Doctor/Notifications/Notifications";
+import NotificationCenter from "./Pages/Admin/NotificationCenter/NotificationCenter";
+import DrugChecker from "./Pages/Admin/DrugChecker/DrugChecker";
 import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
 import Directory from "./Pages/Patient/Directory";
 import Payment from "./Pages/Patient/Payment";
+import Service from "./Pages/Service/Service";
 
 function App() {
-  const route = createBrowserRouter([
+  const role = "admin"; 
+
+  const router = createBrowserRouter([
     {
       path: "/",
       element: <Layout />,
       children: [
-        {
-          path: "appointments",
-          element: <Appointments />,
-        },
-        {
-          path: "dashboard",
-          element: <Dashboard />,
-        },
-        {
-          path: "AiDiagnosisResult",
-          element: <AiDiagnosisResult />,
-        },
-        {
-          path: "treatment",
-          element: <Treatment />,
-        },
-        {
-          path: "directory",
-          element: <Directory />,
-        },
-        {
-          path: "payment",
-          element: <Payment />,
-        },
+        ...(role === "doctor"
+          ? [
+              { path: "appointments", element: <Appointments /> },
+              { path: "dashboard", element: <Dashboard /> },
+              { path: "diagnosis", element: <DiagnosisAssistant /> },
+              { path: "treatment", element: <Treatment /> },
+              { path: "my-patients", element: <MyPatients /> },
+              { path: "reports", element: <Reports /> },
+              { path: "notifications", element: <Notifications /> },
+            ]
+          : role === "admin"
+          ? [
+              { path: "notificationCenter", element: <NotificationCenter /> },
+              { path: "drugChecker", element: <DrugChecker /> },
+            ]
+          : role === "patient"
+          ? [
+              { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
+              { path: "directory", element: <Directory /> },
+              { path: "payment", element: <Payment /> },
+            ]
+          : []),
 
-        {
-          path: "*",
-          element: <NotFound />,
-        },
+        { path: "service", element: <Service /> },
+        { path: "*", element: <NotFound /> },
       ],
     },
   ]);
 
-  return (
-    <>
-      <RouterProvider router={route} />
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

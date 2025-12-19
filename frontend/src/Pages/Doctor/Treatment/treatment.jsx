@@ -4,6 +4,7 @@ import { MdOutlineSend, MdOutlineEdit } from "react-icons/md";
 import { FaWheelchair } from "react-icons/fa";
 import { FaNotesMedical } from "react-icons/fa";
 import  patientImg  from "./image/image.png"
+import { AiOutlineUser } from "react-icons/ai";
 
 export default function Treatment() {
   return (
@@ -32,15 +33,14 @@ export default function Treatment() {
             </div>
           </div>
 
-          <Link
-            to="#"
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12H3m12 0l-4 4m4-4l-4-4" />
-            </svg>
-            View Full Profile
-          </Link>
+          
+            <Link
+  to="/patient-profile"
+  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow"
+>
+  <AiOutlineUser className="w-5 h-5" />
+  View Full Profile
+</Link>
         </div>
       </div>
 
@@ -67,15 +67,20 @@ export default function Treatment() {
 }
 
 /* small sub-component for action cards */
-function ActionCard({ icon, title }) {
+export function ActionCard({ icon, title , btnText=""}) {
   return (
-    <button className="flex items-center gap-4 border-blue-300 border bg-white rounded-xl p-4 hover:shadow-md  duration-150 focus:outline-none">
-      <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-50 text-blue-600">
-        {icon}
+    <button className="flex items-center justify-between gap-4 border-blue-300 border bg-white rounded-xl p-4 hover:shadow-md  duration-150 focus:outline-none">
+      <div className="flex items-center justify-between gap-4">
+          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-50 text-blue-600">
+            {icon}
+          </div>
+          <div className="text-left">
+            <p className="font-medium">{title}</p>
+          </div> 
       </div>
-      <div className="text-left">
-        <p className="font-medium">{title}</p>
-      </div>
+
+
+      {btnText!=="" && <div className="text-[#4682FA] hover:text-blue-700">{btnText}</div>}
     </button>
   );
 }
