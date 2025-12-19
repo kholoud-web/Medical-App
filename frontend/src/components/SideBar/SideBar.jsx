@@ -18,7 +18,6 @@ import { FaPersonThroughWindow } from "react-icons/fa6";
 import { BiInjection } from "react-icons/bi";
 import { TbMessageCirclePlus } from "react-icons/tb";
 import { MdOutlineAddBox } from "react-icons/md";
-import { FaRegUserCircle } from "react-icons/fa";
 
 
 
@@ -29,11 +28,6 @@ export default function SideBar() {
             icon:<MdOutlineDashboard className='inline-block mr-2' />,
             title:"Dashboard",
             link:"/dashboard"
-        },
-        {
-            icon:<FaRegUserCircle className='inline-block mr-2' />,
-            title:"Patient Profile",
-            link:"/PatientProfile"
         },
         {
             icon:<FiUsers className='inline-block mr-2' />,

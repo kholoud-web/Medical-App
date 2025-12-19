@@ -7,7 +7,6 @@ import NotFound from "./Pages/NotFound/NotFound";
 import Dashboard from "./Pages/Doctor/Dashboard";
 import Treatment from "./Pages/Doctor/Treatment/treatment";
 import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
-import PatientProfile from "./Pages/Patient/PatientProfile";
 import Directory from "./Pages/Patient/Directory";
 import Payment from "./Pages/Patient/Payment";
 
@@ -28,10 +27,6 @@ function App() {
         {
           path: "AiDiagnosisResult",
           element: <AiDiagnosisResult />,
-        },
-        {
-          path: "PatientProfile",
-          element: <PatientProfile />,
         },
         {
           path: "treatment",
