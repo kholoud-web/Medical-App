@@ -12,7 +12,7 @@ export default function Service() {
         {title:"Physiotherapy (AI-Powered)",icon:"/Vector (2).png",desc:"Get instant AI feedback on your physiotherapy exercises with posture correction and progress reports sent directly to your physiotherapist.",link:"#"}
     ]
   return (
-    <div className='space-y-7'>
+    <div className='space-y-7 px-8 py-16'>
         <div className='flex flex-col justify-center items-center'>
             <h2 className='text-2xl font-bold'>Our Medical Services</h2>
             <p className='text-primary-gray'>Browse our comprehensive healthcare services. Login to unlock full access and start your health journey.</p>
