@@ -21,48 +21,48 @@ import MainLayout from "./Layouts/MainLayout";
 import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 
 function App() {
-  const role = "doctor"; 
+  const role = "doctor";
 
   const router = createBrowserRouter([
     { path: "landing", element: <LandingPage /> },
-      {
-    path: "/",
-    element: <MainLayout />,
-    children: [
-      { index: true, element: <LandingPage /> },
-      { path: "services", element: <Service /> },
-    ],
-  },
+    {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        { index: true, element: <LandingPage /> },
+        { path: "services", element: <Service /> },
+      ],
+    },
     {
       path: "/",
       element: <Layout />,
       children: [
         ...(role === "doctor"
           ? [
-              { path: "appointments", element: <Appointments /> },
-              { path: "dashboard", element: <Dashboard /> },
-              { path: "diagnosis", element: <DiagnosisAssistant /> },
-              { path: "treatment", element: <Treatment /> },
-              { path: "my-patients", element: <MyPatients /> },
-              { path: "reports", element: <Reports /> },
-              { path: "notifications", element: <Notifications /> },
-            ]
+            { path: "appointments", element: <Appointments /> },
+            { path: "dashboard", element: <Dashboard /> },
+            { path: "diagnosis", element: <DiagnosisAssistant /> },
+            { path: "treatment", element: <Treatment /> },
+            { path: "my-patients", element: <MyPatients /> },
+            { path: "reports", element: <Reports /> },
+            { path: "notifications", element: <Notifications /> },
+          ]
           : role === "admin"
-          ? [
+            ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
               { path: "drugChecker", element: <DrugChecker /> },
             ]
-          : role === "patient"
-          ? [
-              { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
-              { path: "directory", element: <Directory /> },
-              { path: "payment", element: <Payment /> },
-            ]
-          : []),
-          ,
+            : role === "patient"
+              ? [
+                { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
+                { path: "directory", element: <Directory /> },
+                { path: "payment", element: <Payment /> },
+              ]
+              : []),
+        ,
         {
-          path:"help", element:<HelpSupport/>
-        } ,       
+          path: "help", element: <HelpSupport />
+        },
         { path: "*", element: <NotFound /> },
       ],
     },
