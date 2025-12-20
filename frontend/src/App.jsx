@@ -20,6 +20,7 @@ import LandingPage from "./Pages/Common/LandingPage/LandingPage";
 import MainLayout from "./Layouts/MainLayout";
 import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 import Contact from "./Pages/Contact/Contact";
+import FAQ from "./Pages/Common/FAQ/FAQ";
 
 function App() {
   const role = "doctor";
@@ -33,6 +34,7 @@ function App() {
       { index: true, element: <LandingPage /> },
       { path: "services", element: <Service /> },
        { path: "contact", element: <Contact/>},
+       { path: "faq", element: <FAQ />},
        { path: "*", element: <NotFound /> },
     ],
   },
