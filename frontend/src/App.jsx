@@ -62,7 +62,7 @@ function App() {
           ,
         {
           path:"/help", element:<HelpSupport/>
-        }        
+        } ,       
         { path: "*", element: <NotFound /> },
       ],
     },
