@@ -19,6 +19,7 @@ import Service from "./Pages/Service/Service";
 import LandingPage from "./Pages/Common/LandingPage/LandingPage";
 import MainLayout from "./Layouts/MainLayout";
 import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
+import Contact from "./Pages/Contact/Contact";
 
 function App() {
   const role = "doctor"; 
@@ -31,6 +32,8 @@ function App() {
     children: [
       { index: true, element: <LandingPage /> },
       { path: "services", element: <Service /> },
+       { path: "contact", element: <Contact/>},
+       { path: "*", element: <NotFound /> },
     ],
   },
     {
@@ -51,6 +54,7 @@ function App() {
           ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
               { path: "drugChecker", element: <DrugChecker /> },
+
             ]
           : role === "patient"
           ? [
@@ -59,7 +63,7 @@ function App() {
               { path: "payment", element: <Payment /> },
             ]
           : []),
-          ,
+          
         {
           path:"help", element:<HelpSupport/>
         } ,       
