@@ -22,7 +22,7 @@ import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 import Contact from "./Pages/Contact/Contact";
 
 function App() {
-  const role = "doctor"; 
+  const role = "doctor";
 
   const router = createBrowserRouter([
     { path: "landing", element: <LandingPage /> },
@@ -42,16 +42,16 @@ function App() {
       children: [
         ...(role === "doctor"
           ? [
-              { path: "appointments", element: <Appointments /> },
-              { path: "dashboard", element: <Dashboard /> },
-              { path: "diagnosis", element: <DiagnosisAssistant /> },
-              { path: "treatment", element: <Treatment /> },
-              { path: "my-patients", element: <MyPatients /> },
-              { path: "reports", element: <Reports /> },
-              { path: "notifications", element: <Notifications /> },
-            ]
+            { path: "appointments", element: <Appointments /> },
+            { path: "dashboard", element: <Dashboard /> },
+            { path: "diagnosis", element: <DiagnosisAssistant /> },
+            { path: "treatment", element: <Treatment /> },
+            { path: "my-patients", element: <MyPatients /> },
+            { path: "reports", element: <Reports /> },
+            { path: "notifications", element: <Notifications /> },
+          ]
           : role === "admin"
-          ? [
+            ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
               { path: "drugChecker", element: <DrugChecker /> },
 
@@ -65,8 +65,8 @@ function App() {
           : []),
           
         {
-          path:"help", element:<HelpSupport/>
-        } ,       
+          path: "help", element: <HelpSupport />
+        },
         { path: "*", element: <NotFound /> },
       ],
     },
