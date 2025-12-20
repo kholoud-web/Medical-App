@@ -19,20 +19,23 @@ import Service from "./Pages/Service/Service";
 import LandingPage from "./Pages/Common/LandingPage/LandingPage";
 import MainLayout from "./Layouts/MainLayout";
 import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
+import Contact from "./Pages/Contact/Contact";
 
 function App() {
   const role = "doctor";
 
   const router = createBrowserRouter([
     { path: "landing", element: <LandingPage /> },
-    {
-      path: "/",
-      element: <MainLayout />,
-      children: [
-        { index: true, element: <LandingPage /> },
-        { path: "services", element: <Service /> },
-      ],
-    },
+      {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      { index: true, element: <LandingPage /> },
+      { path: "services", element: <Service /> },
+       { path: "contact", element: <Contact/>},
+       { path: "*", element: <NotFound /> },
+    ],
+  },
     {
       path: "/",
       element: <Layout />,
@@ -51,15 +54,16 @@ function App() {
             ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
               { path: "drugChecker", element: <DrugChecker /> },
+
             ]
-            : role === "patient"
-              ? [
-                { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
-                { path: "directory", element: <Directory /> },
-                { path: "payment", element: <Payment /> },
-              ]
-              : []),
-        ,
+          : role === "patient"
+          ? [
+              { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
+              { path: "directory", element: <Directory /> },
+              { path: "payment", element: <Payment /> },
+            ]
+          : []),
+          
         {
           path: "help", element: <HelpSupport />
         },
