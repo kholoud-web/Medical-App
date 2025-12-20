@@ -23,45 +23,51 @@ export default function FindDoctor() {
       </div>
 
       {/* Search */}
-    <div className="flex flex-col md:flex-row gap-4 mb-6">
-  <div className="relative flex-1">
-    {/* أيقونة السيرش */}
-    <img
-      src={SearchIcon}
-      alt="search"
-      className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 opacity-60"
-    />
+    <div className="flex justify-center mt-2 mb-4">
+  <div className="flex justify-center gap-4 w-[422px] h-[38px]">
+    <div className="relative flex-1">
+      {/* أيقونة السيرش */}
+      <img
+        src={SearchIcon}
+        alt="search"
+        className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 opacity-60"
+      />
 
-    <input
-      type="text"
-      placeholder="Doctor name..."
-      className="w-full border border-blue-200 rounded-lg pl-9 pr-4 py-2 outline-blue-500"
-    />
+      {/* input */}
+      <input
+        type="text"
+        placeholder="Doctor name..."
+        className="w-full border border-blue-200 rounded-lg pl-10 pr-4 py-2 outline-blue-500"
+      />
+    </div>
   </div>
 </div>
 
 
+
+
       {/* Login Alert */}
-      <div className="bg-blue-50 border border-blue-200 rounded-sm p-8 flex items-center justify-between mb-8">
-  <div>
-  
-    <h3 className="flex items-center gap-2 font-medium text-black-600 -mt-1">
-      <img
-        src={TaagopIcon}
-        alt="info"
-        className="w-4 h-4 opacity-70"
-      />
-      Login to Book Appointments
-    </h3>
+     <div className="flex justify-center mt-2 mb-8">
+  <div className="bg-blue-50 border w-[1093px] h-[130px] border-blue-200 rounded-lg p-6 flex justify-between items-center">
+    <div>
+      <h3 className="flex items-center gap-2 font-medium text-black">
+        <img
+          src={TaagopIcon}
+          alt="info"
+          className="w-4 h-4 opacity-70"
+        />
+        Login to Book Appointments
+      </h3>
 
-    <p className="text-sm text-gray-500 mt-1">
-      You can browse doctor profiles, but booking requires an account.
-    </p>
+      <p className="text-sm text-gray-500 mt-2">
+        You can browse doctor profiles, but booking requires an account.
+      </p>
+    </div>
+
+    <button className="bg-blue-600 text-white w-[131px] h-[34px] rounded-lg shadow-xl hover:shadow-md hover:bg-blue-700">
+      Login
+    </button>
   </div>
-
-  <button className="bg-blue-600 text-white px-8 py-1 rounded-lg shadow-xl hover:shadow-md hover:bg-blue-700">
-    Login
-  </button>
 </div>
 
 
