@@ -1,20 +1,15 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import "./App.css";
-
-import Layout from "./Layouts/Layout";
-import NotFound from "./Pages/NotFound/NotFound";
 import Appointments from "./Pages/Doctor/Appointments/Appointments";
+import Layout from "./Layouts/Layout";
+import { RouterProvider } from "react-router";
+import NotFound from "./Pages/NotFound/NotFound";
 import Dashboard from "./Pages/Doctor/Dashboard";
 import Treatment from "./Pages/Doctor/Treatment/treatment";
-import DiagnosisAssistant from "./Pages/Doctor/Diagnosis/DiagnosisAssistant";
-import MyPatients from "./Pages/Doctor/MyPatients/MyPatients";
-import Reports from "./Pages/Doctor/Reports/Reports";
-import Notifications from "./Pages/Doctor/Notifications/Notifications";
-import NotificationCenter from "./Pages/Admin/NotificationCenter/NotificationCenter";
-import DrugChecker from "./Pages/Admin/DrugChecker/DrugChecker";
 import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
 import Directory from "./Pages/Patient/Directory";
 import Payment from "./Pages/Patient/Payment";
+<<<<<<< HEAD
 import Service from "./Pages/Service/Service";
 import LandingPage from "./Pages/Common/LandingPage/LandingPage";
 import MainLayout from "./Layouts/MainLayout";
@@ -33,10 +28,18 @@ function App() {
       { path: "services", element: <Service /> },
     ],
   },
+=======
+import Settings from "./Pages/Patient/Settings";
+import { LocaleProvider } from "./context/LocaleContext";
+
+function App() {
+  const route = createBrowserRouter([
+>>>>>>> 32831a2 (Settings Pages done & update Pages)
     {
       path: "/",
       element: <Layout />,
       children: [
+<<<<<<< HEAD
         ...(role === "doctor"
           ? [
               { path: "appointments", element: <Appointments /> },
@@ -64,11 +67,50 @@ function App() {
           path:"help", element:<HelpSupport/>
         } ,       
         { path: "*", element: <NotFound /> },
+=======
+        {
+          path: "appointments",
+          element: <Appointments />,
+        },
+        {
+          path: "dashboard",
+          element: <Dashboard />,
+        },
+        {
+          path: "AiDiagnosisResult",
+          element: <AiDiagnosisResult />,
+        },
+        {
+          path: "treatment",
+          element: <Treatment />,
+        },
+        {
+          path: "directory",
+          element: <Directory />,
+        },
+        {
+          path: "payment",
+          element: <Payment />,
+        },
+        {
+          path: "settings",
+          element: <Settings />,
+        },
+
+        {
+          path: "*",
+          element: <NotFound />,
+        },
+>>>>>>> 32831a2 (Settings Pages done & update Pages)
       ],
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <LocaleProvider>
+      <RouterProvider router={route} />
+    </LocaleProvider>
+  );
 }
 
 export default App;

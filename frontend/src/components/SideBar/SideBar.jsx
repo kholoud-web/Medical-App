@@ -17,198 +17,82 @@ import { TiMessages } from "react-icons/ti";
 import { FaPersonThroughWindow } from "react-icons/fa6";
 import { BiInjection } from "react-icons/bi";
 import { TbMessageCirclePlus } from "react-icons/tb";
-import { MdOutlineAddBox } from "react-icons/md";
-
-
 
 export default function SideBar() {
-    const role = "Admin";
-    const DoctorNavBar=[
-        {
-            icon:<MdOutlineDashboard className='inline-block mr-2' />,
-            title:"Dashboard",
-            link:"/dashboard"
-        },
-        {
-            icon:<FiUsers className='inline-block mr-2' />,
-            title: "My patients",
-            link:"/my-patients"
-        },
-        {
-            icon:<CiCircleQuestion  className='inline-block mr-2' />,
-            title: "Consultations",
-            link:"/consultations"
-        },
-        {
-            icon:<FaSearchPlus  className='inline-block mr-2' />,
-            title: "Diagnosis",
-            link:"/diagnosis"
-        },
-        {
-            icon:<PiHandCoinsThin   className='inline-block mr-2' />,
-            title: "Treatment",
-            link:"/treatment",
+  const role = "admin";
 
-        }       ,
-        {
-            icon:<FaChartLine  className='inline-block mr-2' />,
-            title: "Reports",
-            link:"/reports"
-        },
-        {
-            icon:<LuChartColumn  className='inline-block mr-2' />,
-            title: "Finances",
-            link:"/finances"
-        },
-        {
-            icon:<MdOutlineEventNote className='inline-block mr-2' />,
-            title: "Appointments",
-            link:"/appointments"
-        }
-    ]
+  const DoctorNavBar = [
+    { icon: <MdOutlineDashboard />, title: "Dashboard", link: "/dashboard" },
+    { icon: <FaRegUserCircle />, title: "Patient Profile", link: "/patient-profile" },
+    { icon: <FiUsers />, title: "My Patients", link: "/my-patients" },
+    { icon: <FaSearchPlus />, title: "Diagnosis", link: "/diagnosis" },
+    { icon: <PiHandCoinsThin />, title: "Treatment", link: "/treatment" },
+    { icon: <FaChartLine />, title: "Reports", link: "/reports" },
+    { icon: <MdOutlineEventNote />, title: "Appointments", link: "/appointments" },
+  ];
 
-     const AdminNavBar=[
-        {
-            icon:<MdOutlineDashboard className='inline-block mr-2' />,
-            title:"Dashboard",
-            link:"/dashboard"
-        },
-        {
-            icon:<MdOutlineAddBox  className='inline-block mr-2' />,
-            title:"Diagnosis Module",
-            link:"/DiagnosisModule"
-        },
-                {
-            icon:<LuChartColumn  className='inline-block mr-2' />,
-            title: "Finances",
-            link:"/finances"
-        },
-        {
-            icon:<TbMessageCirclePlus  className='inline-block mr-2' />,
-            title: "Ai Diagnosis Result",
-            link:"/AiDiagnosisResult"
-        },
-         {
-            icon:<FaSearchPlus  className='inline-block mr-2' />,
-            title: "Diagnosis",
-            link:"/diagnosis"
-        },
-        {
-            icon:<BiInjection   className='inline-block mr-2' />,
-            title: "Drug Checker",
-            link:"/drugChecker"
-        },
-        {
-            icon:<FaPersonThroughWindow  className='inline-block mr-2' />,
-            title: "physiotherapy",
-            link:"/physiotherapy"
-        },
-        {
-            icon:<TiMessages   className='inline-block mr-2' />,
-            title: "Inqiries",
-            link:"/inqiries",
+  const PatientNavBar = [
+    { icon: <TbMessageCirclePlus />, title: "AI Diagnosis Result", link: "/ai-diagnosis-result" },
+    { icon: <LuNotebookText />, title: "Directory", link: "/directory" },
+    { icon: <PiHandCoinsThin />, title: "Payment", link: "/payment" },
+  ];
 
-        }       ,
-        {
-            icon:<VscNote   className='inline-block mr-2' />,
-            title: "Complaints",
-            link:"/complaints"
-        },
-                {
-            icon:<FiUsers className='inline-block mr-2' />,
-            title: "My patients",
-            link:"/my-patients"
-        },
-        {
-            icon:<LuNotebookText   className='inline-block mr-2' />,
-            title: "Directory",
-            link:"/directory"
-        },
-        {
-            icon:<MdOutlineEventNote className='inline-block mr-2' />,
-            title: "Appointments",
-            link:"/appointments"
-        },
-        {
-            icon:<FiFilePlus  className='inline-block mr-2' />,
-            title: "Medical Files",
-            link:"/medicalFiles"
-        },
-        {
-            icon:<PiHandCoinsThin   className='inline-block mr-2' />,
-            title: "Treatment",
-            link:"/treatment",
+  const AdminNavBar = [
+    { icon: <MdOutlineDashboard />, title: "Dashboard", link: "/dashboard" },
+    { icon: <BiInjection />, title: "Drug Checker", link: "/drugChecker" },
+    { icon: <FiUsers />, title: "Patients", link: "/my-patients" },
+    { icon: <MdOutlineEventNote />, title: "Appointments", link: "/appointments" },
+  ];
 
-        }       ,
-    ]
+  const generalMenu = [
+    { icon: <IoSettingsOutline />, title: "Settings", link: "/settings" },
+    { icon: <CiCircleQuestion />, title: "Help", link: "/help" },
+  ];
 
-    const generalMenu =[
-        {
-            icon:<IoSettingsOutline  className='inline-block mr-2' />,
-            title: "Settings",
-            link:"/settings"
-        },
-        {
-            icon:<CiCircleQuestion  className='inline-block mr-2' />,
-            title: "Help",
-            link:"/help"
-        },
-    ]
+  const menu =
+    role === "doctor"
+      ? DoctorNavBar
+      : role === "patient"
+      ? PatientNavBar
+      : AdminNavBar;
+
   return (
-    <div className='space-y-4 text-lg h-min-screen overflow-y-auto scrollbar-hide md:block hidden top-0 left-0 z-[9999] bg-white shadow-[4px_0_15px_rgba(0,0,0,0.2)] px-8 py-5 '>
+    <div className="hidden px-8 py-5 space-y-4 overflow-y-auto text-lg bg-white shadow h-min-screen md:block">
+      <h2 className="px-3 text-2xl font-bold">MENU</h2>
 
-       <h2 className='text-2xl font-bold px-3'>MENU</h2>
-       <ul className='my-1 font-bold'>
-        {role === "Doctor" ? (
-    DoctorNavBar.map((item, index) => (
-        <li key={index} className="my-1">
+      <ul className="font-bold">
+        {menu.map((item, index) => (
+          <li key={index} className="my-1">
             <NavLink
-                to={item.link}
-                className={({ isActive }) =>
-                    isActive
-                        ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
-                        : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
-                }
+              to={item.link}
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-primary-blue text-white py-3 px-3 rounded-xl block"
+                  : "py-3 px-3 rounded-xl hover:bg-primary-blue hover:text-white block"
+              }
             >
-                {item.icon} {item.title}
+              {item.icon} <span className="ml-2">{item.title}</span>
             </NavLink>
-        </li>
-    ))
-) : role === "Admin" ? AdminNavBar.map((item, index) => (
-        <li key={index} className="my-1">
-            <NavLink
-                to={item.link}
-                className={({ isActive }) =>
-                    isActive
-                        ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
-                        : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
-                }
-            >
-                {item.icon} {item.title}
+          </li>
+        ))}
+      </ul>
+
+      <h2 className="px-3 text-2xl font-bold">GENERAL</h2>
+
+      <ul className="font-bold">
+        {generalMenu.map((item, index) => (
+          <li key={index} className="my-2">
+            <NavLink to={item.link}>
+              {item.icon} <span className="ml-2">{item.title}</span>
             </NavLink>
-        </li>
-    )): ""}
-
-       </ul>
-
-
-
-       <h2 className='text-2xl font-bold px-3'>GENERAL</h2>
-       <ul className=' font-bold'>
-        {
-            generalMenu.map((item,index)=>(
-                <li key={index} className='my-2'>
-                    <NavLink to={item.link} className= {({isActive})=>isActive ? "bg-primary-blue text-white py-3 px-3 rounded-xl" :"py-3 px-3"}>{item.icon} {item.title}</NavLink>
-                </li>
-            ))
-        }
+          </li>
+        ))}
         <li>
-             <button className='font-bold py-1 px-3 '>
-            <FiLogOut className='inline-block mr-2 ' /><span className='text-red-500'>Logout</span>
-       </button>
+          <button className="px-3 py-1 font-bold text-red-500">
+            <FiLogOut className="inline-block mr-2" /> Logout
+          </button>
         </li>
-       </ul>
-
+      </ul>
     </div>
   )
 }
