@@ -16,13 +16,24 @@ import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
 import Directory from "./Pages/Patient/Directory";
 import Payment from "./Pages/Patient/Payment";
 import Service from "./Pages/Service/Service";
+import LandingPage from "./Pages/Common/LandingPage/LandingPage";
+import MainLayout from "./Layouts/MainLayout";
 
 function App() {
-  const role = "admin"; 
+  const role = "doctor"; 
 
   const router = createBrowserRouter([
+    { path: "landing", element: <LandingPage /> },
+      {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      { index: true, element: <LandingPage /> },
+      { path: "services", element: <Service /> },
+    ],
+  },
     {
-      path: "/",
+      path: "/User",
       element: <Layout />,
       children: [
         ...(role === "doctor"
@@ -47,8 +58,7 @@ function App() {
               { path: "payment", element: <Payment /> },
             ]
           : []),
-
-        { path: "service", element: <Service /> },
+        
         { path: "*", element: <NotFound /> },
       ],
     },
