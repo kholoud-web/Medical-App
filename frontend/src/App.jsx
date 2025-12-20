@@ -11,6 +11,12 @@ import DiagnosisAssistant from './Pages/Doctor/Diagnosis/DiagnosisAssistant';
 import DrugChecker from './Pages/Doctor/DrugChecker/DrugChecker';
 import MyPatients from './Pages/Doctor/MyPatients/MyPatients';
 import PatientProfile from './Pages/Doctor/PatientProfile/PatientProfile';
+import CustomerLayout from './Layouts/CustomerLayout';
+
+
+////////////////////////////////////////////////// Customer Layout/////////////////////
+import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
+
 
 function App() {
   const route =createBrowserRouter([
@@ -40,7 +46,14 @@ function App() {
           path:"*",element:<NotFound/>
         }
       ]
-    }
+    },
+     {
+      path: "/customer",
+      element: <CustomerLayout />,
+      children: [
+        { path: "find-doctor", element: <FindDoctor /> },
+      ],
+    },
   ])
 
   return (
