@@ -34,7 +34,7 @@ function App() {
     ],
   },
     {
-      path: "/User",
+      path: "/",
       element: <Layout />,
       children: [
         ...(role === "doctor"
@@ -61,8 +61,8 @@ function App() {
           : []),
           ,
         {
-          path:"/help", element:<HelpSupport/>
-        }        
+          path:"help", element:<HelpSupport/>
+        } ,       
         { path: "*", element: <NotFound /> },
       ],
     },
