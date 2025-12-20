@@ -9,8 +9,6 @@ import Treatment from "./Pages/Doctor/Treatment/treatment";
 import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
 import Directory from "./Pages/Patient/Directory";
 import Payment from "./Pages/Patient/Payment";
-<<<<<<< HEAD
-<<<<<<< HEAD
 import Service from "./Pages/Service/Service";
 import LandingPage from "./Pages/Common/LandingPage/LandingPage";
 import MainLayout from "./Layouts/MainLayout";
@@ -35,20 +33,10 @@ import { LocaleProvider } from "./context/LocaleContext";
 
 function App() {
   const route = createBrowserRouter([
->>>>>>> 32831a2 (Settings Pages done & update Pages)
-=======
-import Settings from "./Pages/Patient/Settings";
-import { LocaleProvider } from "./context/LocaleContext";
-
-function App() {
-  const route = createBrowserRouter([
->>>>>>> 32831a2732cfec2a0bde7f40f663134763e8c074
     {
       path: "/",
       element: <Layout />,
       children: [
-<<<<<<< HEAD
-<<<<<<< HEAD
         ...(role === "doctor"
           ? [
               { path: "appointments", element: <Appointments /> },
