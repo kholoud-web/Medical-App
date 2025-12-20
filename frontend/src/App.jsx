@@ -18,6 +18,7 @@ import Payment from "./Pages/Patient/Payment";
 import Service from "./Pages/Service/Service";
 import LandingPage from "./Pages/Common/LandingPage/LandingPage";
 import MainLayout from "./Layouts/MainLayout";
+import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 
 function App() {
   const role = "doctor"; 
@@ -58,7 +59,10 @@ function App() {
               { path: "payment", element: <Payment /> },
             ]
           : []),
-        
+          ,
+        {
+          path:"/help", element:<HelpSupport/>
+        }        
         { path: "*", element: <NotFound /> },
       ],
     },
