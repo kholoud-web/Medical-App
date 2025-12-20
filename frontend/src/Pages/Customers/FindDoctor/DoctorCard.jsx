@@ -15,13 +15,12 @@ export default function DoctorCard({ doctor }) {
         <h3 className="font-semibold">{doctor.name}</h3>
         <p className="text-sm text-gray-500">{doctor.specialty}</p>
 
-        {/* Rating */}
         <div className="flex items-center gap-1 text-sm ">
           <img src={StarIcon} alt="star" className="w-4 h-4" />
           <span>{doctor.rating}</span>
         </div>
 
-        {/* Button */}
+       
         <button className="mt-3 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-1 text-sm">
           <img src={LockIcon} alt="lock" className="w-4 h-4" />
           Login to book

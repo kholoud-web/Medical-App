@@ -26,14 +26,14 @@ export default function FindDoctor() {
     <div className="flex justify-center mt-2 mb-4">
   <div className="flex justify-center gap-4 w-[422px] h-[38px]">
     <div className="relative flex-1">
-      {/* أيقونة السيرش */}
+     
       <img
         src={SearchIcon}
         alt="search"
         className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 opacity-60"
       />
 
-      {/* input */}
+
       <input
         type="text"
         placeholder="Doctor name..."
@@ -71,9 +71,9 @@ export default function FindDoctor() {
 </div>
 
 
-      {/* Content */}
+     
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Filters */}
+      
         <Filters />
 
         {/* Doctors */}
