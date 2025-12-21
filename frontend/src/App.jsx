@@ -21,6 +21,7 @@ import MainLayout from "./Layouts/MainLayout";
 import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 import Contact from "./Pages/Contact/Contact";
 import FAQ from "./Pages/Common/FAQ/FAQ";
+import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 
 function App() {
   const role = "doctor";
@@ -67,7 +68,10 @@ function App() {
           : []),
           
         {
-          path: "help", element: <HelpSupport />
+          path: "HelpSupport", element: <HelpSupport />
+        },
+        {
+          path: "MedicalFiles", element: <MedicalFiles />
         },
         { path: "*", element: <NotFound /> },
       ],
