@@ -18,7 +18,7 @@ export default function ContactForm() {
                 <textarea name="message" id="message" cols="30" rows="5" className='border border-primary-blue p-1 rounded'></textarea>
             </div>
 
-            <button className='bg-[#207EFF] w-[60%] max-[400px]:w-[100%] xl:w-[50%] block mx-auto py-1 px-4 rounded border  border-primary-blue shadow-xl text-sm font-medium text-primary-white hover:bg-white hover:text-primary-blue transition-all ease-in-out duration-300'>Send us a message</button>
+            <button className='bg-[#207EFF] w-[60%] max-[418px]:w-[100%] xl:w-[50%] block mx-auto py-1 px-4 rounded border  border-primary-blue shadow-xl text-sm font-medium text-primary-white hover:bg-white hover:text-primary-blue transition-all ease-in-out duration-300'>Send us a message</button>
         </form>
     </div>
   )
