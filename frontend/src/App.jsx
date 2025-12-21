@@ -16,10 +16,22 @@ import CustomerLayout from './Layouts/CustomerLayout';
 
 ////////////////////////////////////////////////// Customer Layout/////////////////////
 import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
+import Register from './Pages/Customers/Registration/Registration';
+import ResetPassword from './Pages/Customers/Registration/ResetPassword';
 
 
 function App() {
   const route =createBrowserRouter([
+    {
+    path: "/register", 
+    element: <Register />,
+    
+  },
+     
+{
+  path: "/reset-password",
+  element: <ResetPassword /> 
+},
     {
       path:"/",element:<Layout/>,
       children:[
@@ -34,6 +46,7 @@ function App() {
            path: "treatment",element: <Treatment />
 },
 { path: "/patient-profile", element: <PatientProfile/> },
+
 {
   path:"/my-patients", element:<MyPatients/>
 },
