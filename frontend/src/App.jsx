@@ -24,11 +24,23 @@ import Contact from "./Pages/Contact/Contact";
 import FAQ from "./Pages/Common/FAQ/FAQ";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
+import Register from './Pages/Customers/Registration/Registration';
+import ResetPassword from './Pages/Customers/Registration/ResetPassword';
 
 function App() {
   const role = "doctor";
 
   const router = createBrowserRouter([
+       {
+    path: "/register", 
+    element: <Register />,
+    
+  },
+     
+{
+  path: "/reset-password",
+  element: <ResetPassword /> 
+},
     { path: "landing", element: <LandingPage /> },
       {
     path: "/",
