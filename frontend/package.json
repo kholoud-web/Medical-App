@@ -10,7 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.6",
+    "@mui/material": "^7.3.6",
     "@reduxjs/toolkit": "^2.11.0",
+    "@rollup/rollup-win32-x64-msvc": "^4.53.3",
     "@shadcn/ui": "^0.0.4",
     "axios": "^1.13.2",
     "class-variance-authority": "^0.7.1",
