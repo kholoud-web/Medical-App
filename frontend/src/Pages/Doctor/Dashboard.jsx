@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import Card from "../../components/Common/Card";
 import EarningsChart from "../../components/Doctor/Dashborad/EarningsChart";
 import BarChar from "../../components/Doctor/Dashborad/BarChar";
-import Calendar from "../../components/Doctor/Dashborad/Calendar";
-import RequestCard from "@/components/Doctor/Dashborad/RequestCard";
 import CustomFilter from "@/components/Doctor/Dashborad/CustomFilter";
-import Timeline from "@/components/Doctor/Dashborad/Timeline";
 import StatsCard from "@/components/Doctor/Dashborad/StatsCard";
 import ChartsCard from "@/components/Doctor/Dashborad/ChartsCard";
 import CommonDiagnoses from "@/components/Doctor/Dashborad/CommonDiagnoses";
