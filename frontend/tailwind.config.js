@@ -17,7 +17,7 @@ export default {
   			'card-bg': '#F0F0F0',
   			'card-bg-50': 'rgba(240,240,240,0.5)',
   			'primary-black': 'rgba(37, 37, 37, 1)',
-  			'primary-blue': 'rgba(56, 104, 200, 1)',
+  			'primary-blue': 'rgba(70, 130, 250, 1)',
   			'primary-white': 'rgba(237, 243, 255, 1)',
 			'primary-gray': '#2525259E',
 			'primary-gray-50': '#80808038',

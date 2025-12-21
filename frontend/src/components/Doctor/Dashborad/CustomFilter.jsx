@@ -11,8 +11,8 @@ function CustomFilter({ options = []  , handleClick}) {
           className={`px-4 py-1 w-32 text-sm rounded-full transition-colors
             ${
               option.active
-                ? "bg-blue-500 text-white"
-                : "border border-blue-500 text-blue-500 hover:bg-blue-50"
+                ? "bg-primary-blue text-white"
+                : "border border-primary-blue text-primary-blue hover:bg-primary-blue-50"
             }`}
         >
           {option.title}
