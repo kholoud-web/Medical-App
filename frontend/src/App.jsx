@@ -22,6 +22,7 @@ import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 import Contact from "./Pages/Contact/Contact";
 import FAQ from "./Pages/Common/FAQ/FAQ";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
+import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
 
 function App() {
   const role = "doctor";
@@ -35,6 +36,7 @@ function App() {
       { index: true, element: <LandingPage /> },
       { path: "services", element: <Service /> },
        { path: "contact", element: <Contact/>},
+      { path: "find-doctor", element: <FindDoctor /> },
        { path: "faq", element: <FAQ />},
        { path: "*", element: <NotFound /> },
     ],
