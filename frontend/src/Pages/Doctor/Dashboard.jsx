@@ -1,32 +1,31 @@
 import React, { useState } from "react";
-import Card from "../../components/Common/Card";
 import EarningsChart from "../../components/Doctor/Dashborad/EarningsChart";
 import BarChar from "../../components/Doctor/Dashborad/BarChar";
-import Calendar from "../../components/Doctor/Dashborad/Calendar";
-import RequestCard from "@/components/Doctor/Dashborad/RequestCard";
 import CustomFilter from "@/components/Doctor/Dashborad/CustomFilter";
-import Timeline from "@/components/Doctor/Dashborad/Timeline";
 import StatsCard from "@/components/Doctor/Dashborad/StatsCard";
 import ChartsCard from "@/components/Doctor/Dashborad/ChartsCard";
+import CommonDiagnoses from "@/components/Doctor/Dashborad/CommonDiagnoses";
 
 const statsData = [
-  { title: "Urgent patients", value: 2 },
-  { title: "Patients", value: 12 },
-  { title: "Lab Results", value: 7 },
+  { title: "Consultations", value: 12 , imgSrc:"/consultaions.svg"},
+  { title: "Treatment plans", value: 8 , imgSrc:"/TreatmentPlans.svg"},
 ];
 
 const chartsData = [
   {
     title: "New vs Returning Patients",
     chart: <BarChar />,
-  },
+    imgSrc:"/people.svg"
+    },
   {
     title: "Rating",
     chart: <EarningsChart type="natural" />,
+    imgSrc:"/star.svg"
   },
   {
     title: "Earnings",
     chart: <EarningsChart type="step" />,
+    imgSrc:"/money.svg"
   },
 ];
 
@@ -57,49 +56,27 @@ function Dashboard() {
       </div>
 
       {/* the first section */}
-      <div className="flex flex-wrap gap-4 justify-center items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {statsData.map((stat, index) => (
           <div key={index}>
-          <StatsCard title={stat.title} value={stat.value} />
+          <StatsCard title={stat.title} value={stat.value} imgSrc={stat.imgSrc}  />
           </div>
         ))}
-      {/* </div> */}
+      </div>
 
       {/* the second charts section */}
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-center items-center "> */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {chartsData.map((chartItem, index) => (
           <div key={index}>
-          <ChartsCard title={chartItem.title}>
+          <ChartsCard title={chartItem.title} imgSrc={chartItem.imgSrc} >
             {chartItem.chart}
           </ChartsCard>
           </div>
         ))}
       </div>
 
-      {/* the third section Calendar */}
-      <div className="flex justify-center items-center xl:gap-4 ">
-        <Card>
-          <Calendar />
-        </Card>
-        <div className="hidden xl:inline-block">
-        <Card
-          classname={` hidden xl:flex h-[414px] w-[510px] relative flex-col justify-start items-center gap-2 p-6 `}
-        >
-          <div className="absolute top-5 left-5">
-            <Card classname="w-9 h-9 rounded-full "></Card>
-          </div>
-          <h1 className="font-semibold text-2xl mb-4">Requests</h1>
-          {[...Array(4)].map((_,index)=>(
-            <RequestCard key={index} />
-          ))}
-        </Card>
-
-        </div>
-
-      </div>
-
-      {/* fourth section */}
-      <Timeline />
+      {/* the third section */}
+      <CommonDiagnoses />
     </div>
   );
 }
