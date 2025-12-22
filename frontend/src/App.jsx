@@ -22,9 +22,7 @@ import MainLayout from "./Layouts/MainLayout";
 import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 import Contact from "./Pages/Contact/Contact";
 import FAQ from "./Pages/Common/FAQ/FAQ";
-<<<<<<< HEAD
 import FinanceDashboard from "./Pages/Doctor/Finance/Finance";
-=======
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTreatments";
 import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
@@ -33,7 +31,6 @@ import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
 import Register from './Pages/Customers/Registration/Registration';
 import ResetPassword from './Pages/Customers/Registration/ResetPassword';
 import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
->>>>>>> 686b8efe01a9fca0e9c743db861c297d13b1d8e7
 
 function App() {
   const role = "patient";
