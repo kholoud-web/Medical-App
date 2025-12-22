@@ -10,14 +10,18 @@ import DiagnosisAssistant from "./Pages/Doctor/Diagnosis/DiagnosisAssistant";
 import MyPatients from "./Pages/Doctor/MyPatients/MyPatients";
 import Reports from "./Pages/Doctor/Reports/Reports";
 import Notifications from "./Pages/Doctor/Notifications/Notifications";
+import DoctorSettings from "./Pages/Doctor/Settings";
 import NotificationCenter from "./Pages/Admin/NotificationCenter/NotificationCenter";
 import DrugChecker from "./Pages/Admin/DrugChecker/DrugChecker";
 import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
 import DiagnosisModule from "./Pages/Patient/DiagnosisModule";
 import Directory from "./Pages/Patient/Directory";
+import PatientHelp from "./Pages/Patient/Help";
 import Payment from "./Pages/Patient/Payment";
+import PatientSettings from "./Pages/Patient/Settings";
 import Service from "./Pages/Service/Service";
 import LandingPage from "./Pages/Common/LandingPage/LandingPage";
+import About from "./Pages/Common/LandingPage/components/About";
 import MainLayout from "./Layouts/MainLayout";
 import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 import Contact from "./Pages/Contact/Contact";
@@ -27,6 +31,8 @@ import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
 
 function App() {
   const role = "doctor";
+  const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
+  const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
   const router = createBrowserRouter([
     { path: "landing", element: <LandingPage /> },
@@ -36,6 +42,7 @@ function App() {
     children: [
       { index: true, element: <LandingPage /> },
       { path: "services", element: <Service /> },
+      { path: "about", element: <About /> },
        { path: "contact", element: <Contact/>},
       { path: "find-doctor", element: <FindDoctor /> },
        { path: "faq", element: <FAQ />},
@@ -70,9 +77,11 @@ function App() {
                 { path: "payment", element: <Payment /> },
               ]
           : []),
-          
         {
-          path: "HelpSupport", element: <HelpSupport />
+          path: "settings", element: settingsElement
+        },
+        {
+          path: "help", element: helpElement
         },
         {
           path: "MedicalFiles", element: <MedicalFiles />
