@@ -109,8 +109,8 @@ export default function HelpSupport(){
           </AccordionDetails>
         </Accordion>
 
-        <Accordion  expanded={expanded === "panel1"}
-          onChange={() => handleToggle("panel1")}
+        <Accordion  expanded={expanded === "panel2"}
+          onChange={() => handleToggle("panel2")}
           disableGutters
           elevation={0}
           sx={{mb:2, borderRadius:2,border:"1px solid #6B6B6B"}}
@@ -135,7 +135,7 @@ export default function HelpSupport(){
                   fontWeight: 500
                 }}
               >
-                {expanded === "panel1" ? "Hide" : "Show"}
+                {expanded === "panel2" ? "Hide" : "Show"}
               </Typography>
             </Box>
           </AccordionSummary>
@@ -146,8 +146,8 @@ export default function HelpSupport(){
           </AccordionDetails>
         </Accordion>
 
-        <Accordion  expanded={expanded === "panel1"}
-          onChange={() => handleToggle("panel1")}
+        <Accordion  expanded={expanded === "panel3"}
+          onChange={() => handleToggle("panel3")}
           disableGutters
           elevation={0}
            sx={{mb:2, borderRadius:2,border:"1px solid #6B6B6B"}}
@@ -172,7 +172,7 @@ export default function HelpSupport(){
                   fontWeight: 500
                 }}
               >
-                {expanded === "panel1" ? "Hide" : "Show"}
+                {expanded === "panel3" ? "Hide" : "Show"}
               </Typography>
             </Box>
           </AccordionSummary>
