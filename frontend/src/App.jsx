@@ -23,6 +23,7 @@ import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 import Contact from "./Pages/Contact/Contact";
 import FAQ from "./Pages/Common/FAQ/FAQ";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
+import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTreatments";
 import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
 import Physiotherapy from "./Pages/Patient/Physiotherapy/Physiotherapy";
 import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
@@ -96,6 +97,9 @@ function App() {
         },
         {
           path: "MedicalFiles", element: <MedicalFiles />
+        },
+        {
+          path: "SuggestedTreatments", element: <SuggestedTreatments />
         },
         { path: "*", element: <NotFound /> },
       ],
