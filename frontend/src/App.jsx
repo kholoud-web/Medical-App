@@ -13,6 +13,7 @@ import Notifications from "./Pages/Doctor/Notifications/Notifications";
 import NotificationCenter from "./Pages/Admin/NotificationCenter/NotificationCenter";
 import DrugChecker from "./Pages/Admin/DrugChecker/DrugChecker";
 import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
+import DiagnosisModule from "./Pages/Patient/DiagnosisModule";
 import Directory from "./Pages/Patient/Directory";
 import Payment from "./Pages/Patient/Payment";
 import Service from "./Pages/Service/Service";
@@ -21,12 +22,36 @@ import MainLayout from "./Layouts/MainLayout";
 import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 import Contact from "./Pages/Contact/Contact";
 import FAQ from "./Pages/Common/FAQ/FAQ";
+<<<<<<< HEAD
 import FinanceDashboard from "./Pages/Doctor/Finance/Finance";
+=======
+import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
+import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTreatments";
+import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
+import Physiotherapy from "./Pages/Patient/Physiotherapy/Physiotherapy";
+import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
+import Register from './Pages/Customers/Registration/Registration';
+import ResetPassword from './Pages/Customers/Registration/ResetPassword';
+import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
+>>>>>>> 686b8efe01a9fca0e9c743db861c297d13b1d8e7
 
 function App() {
-  const role = "doctor";
+  const role = "patient";
 
   const router = createBrowserRouter([
+       {
+    path: "/register", 
+    element: <Register />,
+    
+  },
+     
+{
+  path: "/reset-password",
+  element: <ResetPassword /> 
+},
+ {
+  path:"/reset-success" ,element:<ResetSuccess />
+},
     { path: "landing", element: <LandingPage /> },
       {
     path: "/",
@@ -35,6 +60,7 @@ function App() {
       { index: true, element: <LandingPage /> },
       { path: "services", element: <Service /> },
        { path: "contact", element: <Contact/>},
+      { path: "find-doctor", element: <FindDoctor /> },
        { path: "faq", element: <FAQ />},
        { path: "*", element: <NotFound /> },
     ],
@@ -65,11 +91,20 @@ function App() {
               { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
               { path: "directory", element: <Directory /> },
               { path: "payment", element: <Payment /> },
+              { path: "physiotherapy",element:<Physiotherapy/>},
+              {path:"AiPerformance",element:<AiPerformance/>},
+              { path: "diagnosis-module", element: <DiagnosisModule /> },
             ]
           : []),
           
         {
-          path: "help", element: <HelpSupport />
+          path: "HelpSupport", element: <HelpSupport />
+        },
+        {
+          path: "MedicalFiles", element: <MedicalFiles />
+        },
+        {
+          path: "SuggestedTreatments", element: <SuggestedTreatments />
         },
         { path: "*", element: <NotFound /> },
       ],
