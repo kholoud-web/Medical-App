@@ -24,12 +24,14 @@ import Contact from "./Pages/Contact/Contact";
 import FAQ from "./Pages/Common/FAQ/FAQ";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
+import Physiotherapy from "./Pages/Patient/Physiotherapy/Physiotherapy";
+import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
 import Register from './Pages/Customers/Registration/Registration';
 import ResetPassword from './Pages/Customers/Registration/ResetPassword';
 import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
 
 function App() {
-  const role = "doctor";
+  const role = "patient";
 
   const router = createBrowserRouter([
        {
@@ -78,13 +80,15 @@ function App() {
               { path: "drugChecker", element: <DrugChecker /> },
 
             ]
-            : role === "patient"
-              ? [
-                { path: "diagnosis-module", element: <DiagnosisModule /> },
-                { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
-                { path: "directory", element: <Directory /> },
-                { path: "payment", element: <Payment /> },
-              ]
+          : role === "patient"
+          ? [
+              { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
+              { path: "directory", element: <Directory /> },
+              { path: "payment", element: <Payment /> },
+              { path: "physiotherapy",element:<Physiotherapy/>},
+              {path:"AiPerformance",element:<AiPerformance/>},
+              { path: "diagnosis-module", element: <DiagnosisModule /> },
+            ]
           : []),
           
         {
