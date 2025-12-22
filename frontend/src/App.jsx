@@ -19,6 +19,7 @@ import Directory from "./Pages/Patient/Directory";
 import PatientHelp from "./Pages/Patient/Help";
 import Payment from "./Pages/Patient/Payment";
 import PatientSettings from "./Pages/Patient/Settings";
+import Login from "./Pages/Auth/Login";
 import Service from "./Pages/Service/Service";
 import LandingPage from "./Pages/Common/LandingPage/LandingPage";
 import About from "./Pages/Common/LandingPage/components/About";
@@ -35,6 +36,7 @@ function App() {
   const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
   const router = createBrowserRouter([
+    { path: "login", element: <Login /> },
     { path: "landing", element: <LandingPage /> },
       {
     path: "/",
