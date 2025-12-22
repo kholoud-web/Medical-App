@@ -21,6 +21,7 @@ import MainLayout from "./Layouts/MainLayout";
 import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 import Contact from "./Pages/Contact/Contact";
 import FAQ from "./Pages/Common/FAQ/FAQ";
+import FinanceDashboard from "./Pages/Doctor/Finance/Finance";
 
 function App() {
   const role = "doctor";
@@ -51,6 +52,7 @@ function App() {
             { path: "my-patients", element: <MyPatients /> },
             { path: "reports", element: <Reports /> },
             { path: "notifications", element: <Notifications /> },
+
           ]
           : role === "admin"
             ? [
