@@ -13,6 +13,7 @@ import Notifications from "./Pages/Doctor/Notifications/Notifications";
 import NotificationCenter from "./Pages/Admin/NotificationCenter/NotificationCenter";
 import DrugChecker from "./Pages/Admin/DrugChecker/DrugChecker";
 import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
+import DiagnosisModule from "./Pages/Patient/DiagnosisModule";
 import Directory from "./Pages/Patient/Directory";
 import Payment from "./Pages/Patient/Payment";
 import Service from "./Pages/Service/Service";
@@ -25,11 +26,27 @@ import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
 import Physiotherapy from "./Pages/Patient/Physiotherapy/Physiotherapy";
 import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
+import Register from './Pages/Customers/Registration/Registration';
+import ResetPassword from './Pages/Customers/Registration/ResetPassword';
+import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
 
 function App() {
   const role = "patient";
 
   const router = createBrowserRouter([
+       {
+    path: "/register", 
+    element: <Register />,
+    
+  },
+     
+{
+  path: "/reset-password",
+  element: <ResetPassword /> 
+},
+ {
+  path:"/reset-success" ,element:<ResetSuccess />
+},
     { path: "landing", element: <LandingPage /> },
       {
     path: "/",
@@ -69,7 +86,8 @@ function App() {
               { path: "directory", element: <Directory /> },
               { path: "payment", element: <Payment /> },
               { path: "physiotherapy",element:<Physiotherapy/>},
-              {path:"AiPerformance",element:<AiPerformance/>}
+              {path:"AiPerformance",element:<AiPerformance/>},
+              { path: "diagnosis-module", element: <DiagnosisModule /> },
             ]
           : []),
           
