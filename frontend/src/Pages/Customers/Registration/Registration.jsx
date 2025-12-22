@@ -1,112 +1,117 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; // استيراد أداة التنقل
-import bgImage from './Image/LoginImg.jpg'; 
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import bgImage from "./Image/LoginImg.jpg";
 
-const Register = () => {
-  const navigate = useNavigate(); // تعريف دالة التنقل
+export default function Register() {
+  const navigate = useNavigate();
 
   const handleConfirm = (e) => {
-    e.preventDefault(); // منع تحديث الصفحة عند الضغط على الزر
-    
-    // يمكنك إضافة منطق التحقق من البيانات هنا (Validation)
-    
-    // الانتقال إلى صفحة إعادة تعيين كلمة المرور
-    navigate('/reset-password'); 
+    e.preventDefault();
+    navigate("/reset-password");
   };
 
   return (
-    <div 
-      className="min-h-screen w-full flex items-center justify-center bg-cover bg-center bg-no-repeat p-4"
+    <div
+      className="relative min-h-screen w-full flex items-center justify-center bg-cover bg-center"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
-      {/* طبقة تظليل للخلفية لزيادة تباين النموذج */}
-      <div className="absolute inset-0 bg-black/20"></div>
+      
+      <div className="absolute inset-0 bg-black/40"></div>
 
-      {/* نموذج التسجيل بتأثير الزجاج (Glassmorphism) */}
-      <div className="relative z-10 w-full max-w-lg bg-black/40 backdrop-blur-md border border-white/10 rounded-[2.5rem] p-10 shadow-2xl">
+     
+      <div className="relative z-10 w-[55%] max-w-5xl rounded-[32px]  bg-black/40 backdrop-blur-md p-12 shadow-2xl flex justify-center">
         
-        {/* زر اختيار نوع المستخدم */}
-        <div className="absolute top-6 left-6">
-          <select className="bg-white/10 text-white border border-white/20 rounded-lg px-3 py-1 text-xs outline-none cursor-pointer hover:bg-white/20 transition">
-            <option className="bg-gray-800">Patient</option>
-            <option className="bg-gray-800">Doctor</option>
+        {/* Select */}
+        <div className="absolute top-4 left-4">
+          <select className="bg-black/50 text-white text-sm px-3 py-1.5 rounded-md border border-white/20 outline-none">
+            <option>Patient</option>
+            <option>Doctor</option>
           </select>
         </div>
 
-        <h1 className="text-4xl font-bold text-white text-center mb-10 tracking-tight">
-          Registration
-        </h1>
-
-        <form className="space-y-5" onSubmit={handleConfirm}>
+       
+        <div className="w-full flex flex-col items-center">
           
-          {/* الاسم الأول والثاني */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label className="text-white text-sm font-medium ml-1">First name</label>
-              <input 
-                required
-                type="text" 
-                className="w-full p-3.5 rounded-xl bg-white outline-none focus:ring-2 focus:ring-blue-400 transition-all shadow-inner text-gray-800" 
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-white text-sm font-medium ml-1">Last name</label>
-              <input 
-                required
-                type="text" 
-                className="w-full p-3.5 rounded-xl bg-white outline-none focus:ring-2 focus:ring-blue-400 transition-all shadow-inner text-gray-800" 
-              />
-            </div>
-          </div>
+       
+          <h1 className="text-2xl font-bold text-white text-center mb-6">
+            Registration
+          </h1>
 
-          {/* البريد الإلكتروني */}
-          <div className="space-y-2">
-            <label className="text-white text-sm font-medium ml-1">Email</label>
-            <input 
-              required
-              type="email" 
-              placeholder="Enter your email or phone number.." 
-              className="w-full p-3.5 rounded-xl bg-white outline-none focus:ring-2 focus:ring-blue-400 transition-all shadow-inner placeholder:text-gray-400 text-gray-800" 
-            />
-          </div>
-
-          {/* كلمة المرور */}
-          <div className="space-y-2">
-            <label className="text-white text-sm font-medium ml-1">Password</label>
-            <input 
-              required
-              type="password" 
-              placeholder="create password at least 8ch .." 
-              className="w-full p-3.5 rounded-xl bg-white outline-none focus:ring-2 focus:ring-blue-400 transition-all shadow-inner placeholder:text-gray-400 text-gray-800" 
-            />
-          </div>
-
-          {/* الجنس */}
-          <div className="space-y-2">
-            <label className="text-white text-sm font-medium ml-1">Gender</label>
-            <div className="flex gap-8 mt-2 px-1">
-              <label className="flex items-center text-white gap-2 cursor-pointer group">
-                <input type="radio" name="gender" className="w-4 h-4 accent-blue-500 cursor-pointer" /> 
-                <span className="group-hover:text-blue-300 transition">Male</span>
-              </label>
-              <label className="flex items-center text-white gap-2 cursor-pointer group">
-                <input type="radio" name="gender" className="w-4 h-4 accent-blue-500 cursor-pointer" /> 
-                <span className="group-hover:text-blue-300 transition">Female</span>
-              </label>
-            </div>
-          </div>
-
-          {/* زر التأكيد */}
-          <button 
-            type="submit"
-            className="w-full bg-[#1b75ff] hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-blue-500/20 active:scale-[0.98] mt-6"
+          <form
+            onSubmit={handleConfirm}
+            className="space-y-4 mt-2 flex flex-col items-center"
           >
-            Confirm
-          </button>
-        </form>
+            <div className="w-[430px]">
+              <label className="block text-white text-sm mb-1">
+                First name
+              </label>
+              <input
+                required
+                type="text"
+                className="w-full h-[40px] rounded-lg bg-white px-4 text-gray-800 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div className="w-[430px]">
+              <label className="block text-white text-sm mb-1">
+                Second name
+              </label>
+              <input
+                required
+                type="text"
+                className="w-full h-[40px] rounded-lg bg-white px-4 text-gray-800 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div className="w-[430px]">
+              <label className="block text-white text-sm mb-1">
+                Email
+              </label>
+              <input
+                required
+                type="email"
+                placeholder="Enter your email or phone number.."
+                className="w-full h-[40px] rounded-lg bg-white px-4 text-gray-800 placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div className="w-[430px]">
+              <label className="block text-white text-sm mb-1">
+                Password
+              </label>
+              <input
+                required
+                type="password"
+                placeholder="create password at least 8ch .."
+                className="w-full h-[40px] rounded-lg bg-white px-4 text-gray-800 placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div className="w-[430px] pt-2">
+              <label className="block text-white text-sm mb-2">
+                Gender
+              </label>
+              <div className="flex gap-10">
+                <label className="flex items-center gap-2 text-white">
+                  <input type="radio" name="gender" className="accent-blue-500" />
+                  Male
+                </label>
+                <label className="flex items-center gap-2 text-white">
+                  <input type="radio" name="gender" className="accent-blue-500" />
+                  Female
+                </label>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="w-[333px] h-[38px] mt-6 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition"
+            >
+              Confirm
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
-};
-
-export default Register;
+}

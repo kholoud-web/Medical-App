@@ -1,73 +1,72 @@
-import React from 'react';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import bgImage from "./Image/LoginImg.jpg";
+import { IoIosArrowBack } from "react-icons/io";
 
-import bgImage from './Image/LoginImg.jpg'; 
-import { IoIosArrowBack } from "react-icons/io"; 
+export default function ResetPassword() {
+  const navigate = useNavigate();
 
-const ResetPassword = () => {
+  const handleConfirm = () => {
+    navigate("/reset-success");
+  };
+
   return (
-    <div 
-      className="min-h-screen w-full flex items-center justify-center bg-cover bg-center bg-no-repeat p-4"
+    <div
+      className="relative min-h-screen w-full flex items-center justify-center bg-cover bg-center"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
-      
-      <div className="absolute inset-0 bg-black/30"></div>
+      <div className="absolute inset-0 bg-black/40"></div>
 
-      
-      <div className="relative z-10 w-full max-w-md bg-black/40 backdrop-blur-md border border-white/20 rounded-[2.5rem] p-10 shadow-2xl">
+      <button
+        onClick={() => navigate(-1)}
+        className="absolute top-6 left-6 z-20 text-white hover:text-blue-400 transition"
+      >
+        <IoIosArrowBack size={26} />
+      </button>
+
+      <div className="relative z-10 w-[55%] max-w-5xl rounded-[32px] bg-black/40 backdrop-blur-md p-12 shadow-2xl flex justify-center">
         
-        <button 
-          onClick={() => window.history.back()}
-          className="absolute top-8 left-8 text-white hover:text-blue-400 transition-colors"
-        >
-          <IoIosArrowBack size={24} />
-        </button>
-
-      
-        <h2 className="text-4xl font-bold text-white text-center mb-10 mt-2">
-          Reset Password
-        </h2>
-
-        <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+        <div className="w-full flex flex-col items-center">
           
-        
-          <div className="flex flex-col gap-2">
-            <label className="text-white text-sm font-medium ml-1">Email</label>
-            <input 
-              type="email" 
-              placeholder="Enter your email or phone number.."
-              className="w-full px-4 py-3 rounded-xl bg-white outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-inner placeholder:text-gray-400 text-gray-800"
-            />
-          </div>
+          <h2 className="text-2xl font-bold text-white text-center mb-6">
+            Reset Password
+          </h2>
 
-         
-          <div className="flex flex-col gap-2">
-            <label className="text-white text-sm font-medium ml-1">New password</label>
-            <input 
-              type="password" 
-              className="w-full px-4 py-3 rounded-xl bg-white outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-inner text-gray-800"
-            />
-          </div>
+          <form className="space-y-6 flex flex-col items-center">
+            <div className="w-[430px]">
+              <label className="block text-white text-sm mb-1">Email</label>
+              <input
+                type="email"
+                className="w-full h-[40px] rounded-lg bg-white px-4 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
 
-        
-          <div className="flex flex-col gap-2">
-            <label className="text-white text-sm font-medium ml-1">Confirm password</label>
-            <input 
-              type="password" 
-              className="w-full px-4 py-3 rounded-xl bg-white outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-inner text-gray-800"
-            />
-          </div>
+            <div className="w-[430px]">
+              <label className="block text-white text-sm mb-1">New password</label>
+              <input
+                type="password"
+                className="w-full h-[40px] rounded-lg bg-white px-4 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
 
-         
-          <button 
-            type="submit" 
-            className="w-full py-3.5 mt-4 bg-[#4a83ff] hover:bg-blue-600 text-white font-bold text-lg rounded-xl shadow-lg transform active:scale-[0.98] transition-all duration-200"
+            <div className="w-[430px]">
+              <label className="block text-white text-sm mb-1">Confirm password</label>
+              <input
+                type="password"
+                className="w-full h-[40px] rounded-lg bg-white px-4 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </form>
+
+          <button
+            onClick={handleConfirm}
+            className="w-[333px] h-[38px] mt-20 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition"
           >
             Confirm
           </button>
-        </form>
+
+        </div>
       </div>
     </div>
   );
-};
-
-export default ResetPassword;
+}
