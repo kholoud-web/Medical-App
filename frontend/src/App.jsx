@@ -25,6 +25,7 @@ import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
 import Register from './Pages/Customers/Registration/Registration';
 import ResetPassword from './Pages/Customers/Registration/ResetPassword';
+import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
 
 function App() {
   const role = "doctor";
@@ -39,6 +40,9 @@ function App() {
 {
   path: "/reset-password",
   element: <ResetPassword /> 
+},
+ {
+  path:"/reset-success" ,element:<ResetSuccess />
 },
     { path: "landing", element: <LandingPage /> },
       {
