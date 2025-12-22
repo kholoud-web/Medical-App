@@ -22,7 +22,7 @@ import { MdOutlineAddBox } from "react-icons/md";
 
 
 export default function SideBar() {
-    const role = "Doctor";
+    const role = "patient";
     const DoctorNavBar=[
         {
             icon:<MdOutlineDashboard className='inline-block mr-2' />,

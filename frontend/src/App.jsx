@@ -31,37 +31,38 @@ import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
 import Register from './Pages/Customers/Registration/Registration';
 import ResetPassword from './Pages/Customers/Registration/ResetPassword';
 import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
+import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 
 function App() {
   const role = "patient";
 
   const router = createBrowserRouter([
-       {
-    path: "/register", 
-    element: <Register />,
+//        {
+//     path: "/register", 
+//     element: <Register />,
     
-  },
+//   },
      
-{
-  path: "/reset-password",
-  element: <ResetPassword /> 
-},
- {
-  path:"/reset-success" ,element:<ResetSuccess />
-},
-    { path: "landing", element: <LandingPage /> },
-      {
-    path: "/",
-    element: <MainLayout />,
-    children: [
-      { index: true, element: <LandingPage /> },
-      { path: "services", element: <Service /> },
-       { path: "contact", element: <Contact/>},
-      { path: "find-doctor", element: <FindDoctor /> },
-       { path: "faq", element: <FAQ />},
-       { path: "*", element: <NotFound /> },
-    ],
-  },
+// {
+//   path: "/reset-password",
+//   element: <ResetPassword /> 
+// },
+//  {
+//   path:"/reset-success" ,element:<ResetSuccess />
+// },
+  
+  //     {
+  //   path: "/",
+  //   element: <MainLayout />,
+  //   children: [
+  //     { index: true, element: <LandingPage /> },
+  //     { path: "services", element: <Service /> },
+  //      { path: "contact", element: <Contact/>},
+  //     { path: "find-doctor", element: <FindDoctor /> },
+  //      { path: "faq", element: <FAQ />},
+  //      { path: "*", element: <NotFound /> },
+  //   ],
+  // },
     {
       path: "/",
       element: <Layout />,
@@ -75,6 +76,7 @@ function App() {
             { path: "my-patients", element: <MyPatients /> },
             { path: "reports", element: <Reports /> },
             { path: "notifications", element: <Notifications /> },
+            {path:"finances",element:<FinanceDashboard/>}
 
           ]
           : role === "admin"
@@ -85,6 +87,7 @@ function App() {
             ]
           : role === "patient"
           ? [
+            { path: "dashboard", element:<PatientDashboard/>},
               { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
               { path: "directory", element: <Directory /> },
               { path: "payment", element: <Payment /> },
