@@ -13,6 +13,7 @@ import Notifications from "./Pages/Doctor/Notifications/Notifications";
 import NotificationCenter from "./Pages/Admin/NotificationCenter/NotificationCenter";
 import DrugChecker from "./Pages/Admin/DrugChecker/DrugChecker";
 import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
+import DiagnosisModule from "./Pages/Patient/DiagnosisModule";
 import Directory from "./Pages/Patient/Directory";
 import Payment from "./Pages/Patient/Payment";
 import Service from "./Pages/Service/Service";
@@ -77,12 +78,13 @@ function App() {
               { path: "drugChecker", element: <DrugChecker /> },
 
             ]
-          : role === "patient"
-          ? [
-              { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
-              { path: "directory", element: <Directory /> },
-              { path: "payment", element: <Payment /> },
-            ]
+            : role === "patient"
+              ? [
+                { path: "diagnosis-module", element: <DiagnosisModule /> },
+                { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
+                { path: "directory", element: <Directory /> },
+                { path: "payment", element: <Payment /> },
+              ]
           : []),
           
         {
