@@ -37,32 +37,32 @@ function App() {
   const role = "patient";
 
   const router = createBrowserRouter([
-//        {
-//     path: "/register", 
-//     element: <Register />,
+       {
+    path: "/register", 
+    element: <Register />,
     
-//   },
+  },
      
-// {
-//   path: "/reset-password",
-//   element: <ResetPassword /> 
-// },
-//  {
-//   path:"/reset-success" ,element:<ResetSuccess />
-// },
+{
+  path: "/reset-password",
+  element: <ResetPassword /> 
+},
+ {
+  path:"/reset-success" ,element:<ResetSuccess />
+},
   
-  //     {
-  //   path: "/",
-  //   element: <MainLayout />,
-  //   children: [
-  //     { index: true, element: <LandingPage /> },
-  //     { path: "services", element: <Service /> },
-  //      { path: "contact", element: <Contact/>},
-  //     { path: "find-doctor", element: <FindDoctor /> },
-  //      { path: "faq", element: <FAQ />},
-  //      { path: "*", element: <NotFound /> },
-  //   ],
-  // },
+      {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      { index: true, element: <LandingPage /> },
+      { path: "services", element: <Service /> },
+       { path: "contact", element: <Contact/>},
+      { path: "find-doctor", element: <FindDoctor /> },
+       { path: "faq", element: <FAQ />},
+       { path: "*", element: <NotFound /> },
+    ],
+  },
     {
       path: "/",
       element: <Layout />,
@@ -76,7 +76,7 @@ function App() {
             { path: "my-patients", element: <MyPatients /> },
             { path: "reports", element: <Reports /> },
             { path: "notifications", element: <Notifications /> },
-            {path:"finances",element:<FinanceDashboard/>}
+            // {path:"finances",element:<Finance/>}
 
           ]
           : role === "admin"
