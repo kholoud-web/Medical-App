@@ -22,7 +22,7 @@ import { MdOutlineAddBox } from "react-icons/md";
 
 
 export default function SideBar() {
-    const role = "Admin";
+    const role = "patient";
     const DoctorNavBar=[
         {
             icon:<MdOutlineDashboard className='inline-block mr-2' />,
@@ -67,7 +67,30 @@ export default function SideBar() {
         }
     ]
 
-     const AdminNavBar=[
+    const AdminNavBar=[
+       {
+            icon:<MdOutlineDashboard className='inline-block mr-2' />,
+            title:"Dashboard",
+            link:"/dashboard"
+        },
+        {
+            icon:<img src='/plus_icon.png' className='inline-block mr-2 w-4 h-4' />,
+            title: "Doctor Management",
+            link:"/doctor-management"
+        },
+        {
+            icon:<img src='/user_syting.png' className='inline-block mr-2 w-4 h-4' />,
+            title: "Patient Management",
+            link:"/patient-management"
+        },
+        {
+            icon:<img src='/Vector (3).png' className='inline-block mr-2 w-4 h-4' />,
+            title: "System Settings",
+            link:"/system-settings"
+        }
+    ]
+
+     const PatientNavBar=[
         {
             icon:<MdOutlineDashboard className='inline-block mr-2' />,
             title:"Dashboard",
@@ -174,7 +197,7 @@ export default function SideBar() {
             </NavLink>
         </li>
     ))
-) : role === "Admin" ? AdminNavBar.map((item, index) => (
+) : role === "patient" ? PatientNavBar.map((item, index) => (
         <li key={index} className="my-1">
             <NavLink
                 to={item.link}
@@ -187,7 +210,22 @@ export default function SideBar() {
                 {item.icon} {item.title}
             </NavLink>
         </li>
-    )): ""}
+    )):role === "admin" ? (
+        AdminNavBar.map((item, index) => (
+        <li key={index} className="my-1">
+            <NavLink
+                to={item.link}
+                className={({ isActive }) =>
+                    isActive
+                        ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
+                        : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
+                }
+            >
+                {item.icon} {item.title}
+            </NavLink>
+        </li>
+    ))
+    ) :""}
 
        </ul>
 

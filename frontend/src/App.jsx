@@ -23,9 +23,11 @@ import Contact from "./Pages/Contact/Contact";
 import FAQ from "./Pages/Common/FAQ/FAQ";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
+import Physiotherapy from "./Pages/Patient/Physiotherapy/Physiotherapy";
+import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
 
 function App() {
-  const role = "doctor";
+  const role = "patient";
 
   const router = createBrowserRouter([
     { path: "landing", element: <LandingPage /> },
@@ -66,6 +68,8 @@ function App() {
               { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
               { path: "directory", element: <Directory /> },
               { path: "payment", element: <Payment /> },
+              { path: "physiotherapy",element:<Physiotherapy/>},
+              {path:"AiPerformance",element:<AiPerformance/>}
             ]
           : []),
           
