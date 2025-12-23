@@ -105,8 +105,8 @@ export default function SideBar() {
         },
         {
             icon:<TiMessages   className='inline-block mr-2' />,
-            title: "Inqiries",
-            link:"/inqiries",
+            title: "Inquiries",
+            link:"/inquiries",
 
         }       ,
         {

@@ -27,6 +27,7 @@ import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
 import Register from './Pages/Customers/Registration/Registration';
 import ResetPassword from './Pages/Customers/Registration/ResetPassword';
 import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
+import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 
 function App() {
   const role = "doctor";
@@ -54,6 +55,7 @@ function App() {
       { path: "services", element: <Service /> },
        { path: "contact", element: <Contact/>},
       { path: "find-doctor", element: <FindDoctor /> },
+     
        { path: "faq", element: <FAQ />},
        { path: "*", element: <NotFound /> },
     ],
@@ -71,6 +73,7 @@ function App() {
             { path: "my-patients", element: <MyPatients /> },
             { path: "reports", element: <Reports /> },
             { path: "notifications", element: <Notifications /> },
+             {path:"inquiries", element: <Inquiries/>},
           ]
           : role === "admin"
             ? [
