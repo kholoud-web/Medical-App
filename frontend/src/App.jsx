@@ -24,8 +24,8 @@ import FAQ from "./Pages/Common/FAQ/FAQ";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTreatments";
 import PatientProfile from "./Pages/Patient/PatientProfile/PatientProfile";
-  
-
+import DoctorProfile from "./Pages/Admin/DoctorProfile/DoctorProfile";
+import SystemSetting from "./Pages/Admin/SystemSetting/SystemSetting";
 
 function App() {
   const role = "doctor";
@@ -82,6 +82,12 @@ function App() {
         },
         {
            path:"PatientProfile", element: <PatientProfile />
+        },
+        {
+          path:"DoctorProfile", element:<DoctorProfile/>
+        },
+        {
+          path:"systemSetting", element:<SystemSetting/>
         }
         
       ],
