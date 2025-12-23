@@ -36,6 +36,7 @@ import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
 import Register from './Pages/Customers/Registration/Registration';
 import ResetPassword from './Pages/Customers/Registration/ResetPassword';
 import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
+import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 
 function App() {
@@ -69,6 +70,7 @@ function App() {
       { path: "about", element: <About /> },
        { path: "contact", element: <Contact/>},
       { path: "find-doctor", element: <FindDoctor /> },
+     
        { path: "faq", element: <FAQ />},
        { path: "*", element: <NotFound /> },
     ],
@@ -86,6 +88,7 @@ function App() {
             { path: "my-patients", element: <MyPatients /> },
             { path: "reports", element: <Reports /> },
             { path: "notifications", element: <Notifications /> },
+             {path:"inquiries", element: <Inquiries/>},
             {path:"finances",element:<Finance />}
 
           ]
