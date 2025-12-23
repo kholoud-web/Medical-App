@@ -6,7 +6,7 @@ function PrimButton({ children, className = "", type = "button", ...props }) {
       type={type}
       className={`
         outline-none
-        rounded-3xl
+        rounded-lg
         bg-primary-blue
         text-center
         font-semibold

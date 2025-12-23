@@ -22,6 +22,7 @@ import MainLayout from "./Layouts/MainLayout";
 import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 import Contact from "./Pages/Contact/Contact";
 import FAQ from "./Pages/Common/FAQ/FAQ";
+import Finance from "./Pages/Doctor/Finance/Finance";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTreatments";
 import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
@@ -30,9 +31,10 @@ import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
 import Register from './Pages/Customers/Registration/Registration';
 import ResetPassword from './Pages/Customers/Registration/ResetPassword';
 import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
+import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 
 function App() {
-  const role = "patient";
+  const role = "doctor";
 
   const router = createBrowserRouter([
        {
@@ -48,7 +50,7 @@ function App() {
  {
   path:"/reset-success" ,element:<ResetSuccess />
 },
-    { path: "landing", element: <LandingPage /> },
+  
       {
     path: "/",
     element: <MainLayout />,
@@ -74,6 +76,8 @@ function App() {
             { path: "my-patients", element: <MyPatients /> },
             { path: "reports", element: <Reports /> },
             { path: "notifications", element: <Notifications /> },
+            {path:"finances",element:<Finance />}
+
           ]
           : role === "admin"
             ? [
@@ -83,6 +87,7 @@ function App() {
             ]
           : role === "patient"
           ? [
+            { path: "dashboard", element:<PatientDashboard/>},
               { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
               { path: "directory", element: <Directory /> },
               { path: "payment", element: <Payment /> },
