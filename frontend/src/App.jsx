@@ -23,6 +23,9 @@ import Contact from "./Pages/Contact/Contact";
 import FAQ from "./Pages/Common/FAQ/FAQ";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTreatments";
+import PatientProfile from "./Pages/Patient/PatientProfile/PatientProfile";
+  
+
 
 function App() {
   const role = "doctor";
@@ -77,7 +80,10 @@ function App() {
         {
           path: "SuggestedTreatments", element: <SuggestedTreatments />
         },
-        { path: "*", element: <NotFound /> },
+        {
+           path:"PatientProfile", element: <PatientProfile />
+        }
+        
       ],
     },
   ]);
