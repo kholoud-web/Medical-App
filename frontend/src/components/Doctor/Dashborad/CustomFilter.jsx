@@ -8,7 +8,7 @@ function CustomFilter({ options = []  , handleClick}) {
         <button
           key={index}
           onClick={() => handleClick(option)}
-          className={`px-4 py-1 w-32 text-sm rounded-full transition-colors
+          className={`px-4 py-1 w-32 text-sm rounded-lg transition-colors
             ${
               option.active
                 ? "bg-primary-blue text-white"
