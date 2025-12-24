@@ -65,7 +65,7 @@ function Dashboard() {
       </div>
 
       {/* the second charts section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {chartsData.map((chartItem, index) => (
           <div key={index}>
           <ChartsCard title={chartItem.title} imgSrc={chartItem.imgSrc} >
