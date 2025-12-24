@@ -64,7 +64,10 @@ export default function PatientProfile() {
       <Grid container spacing={2}>
         <Grid size={5} >
              <Card sx={{display:"flex", justifyContent:"center",width:"100%",
-                alignItems:"center",p:"1px",borderRadius:"12px" ,background:"linear-gradient(45deg,#C6D8FD,#207EFF",overflow:"visible"}}>
+                alignItems:"center",p:"1px",borderRadius:"12px" ,background:
+      "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
+      "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
+    border: "2px solid transparent",}}>
                     <Box  sx={{
                           backgroundColor: "#fff",
                           borderRadius: "11px", 
@@ -108,7 +111,10 @@ export default function PatientProfile() {
              </Card>
         </Grid>
         <Grid size={7}>
-            <Card sx={{backgroundColor:"#F7F7F7",p:2}}>
+            <Card sx={{background:
+      "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
+      "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
+    border: "2px solid transparent",p:2}}>
                 <Typography sx={{color:"#505050",fontSize:"20px",fontWeight:"600"}}>Consultation History</Typography>
          {cards.map((card,index)=>{
             return(
