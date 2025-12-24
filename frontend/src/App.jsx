@@ -33,6 +33,7 @@ import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTr
 import PatientProfile from "./Pages/Patient/PatientProfile/PatientProfile";
 import DoctorProfile from "./Pages/Admin/DoctorProfile/DoctorProfile";
 import SystemSetting from "./Pages/Admin/SystemSetting/SystemSetting";
+import DoctorsManagement from "./Pages/Admin/DoctorsManagement/DoctorsManagement";
 import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
 import Physiotherapy from "./Pages/Patient/Physiotherapy/Physiotherapy";
 import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
@@ -43,7 +44,7 @@ import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 
 function App() {
-  const role = "doctor";
+  const role = "admin";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
   const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
@@ -99,6 +100,7 @@ function App() {
             ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
               { path: "drugChecker", element: <DrugChecker /> },
+              { path: "doctorsManagement", element: <DoctorsManagement /> },
 
             ]
           : role === "patient"
