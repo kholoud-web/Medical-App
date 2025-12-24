@@ -42,11 +42,10 @@ import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
 import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 
-
 function App() {
   const role = "doctor";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
-  const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
+  // const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
   const router = createBrowserRouter([
     { path: "login", element: <Login /> },
