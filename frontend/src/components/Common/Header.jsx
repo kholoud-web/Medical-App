@@ -15,6 +15,7 @@ function Header() {
       <div className=" flex px-7 gap-2 items-center bg-white  drop-shadow-lg z-[10000]">
        <div className="flex"> 
         <div className="md:w-72 ">
+
           <img src="/logo.svg" alt="Logo" />
         </div>
        
