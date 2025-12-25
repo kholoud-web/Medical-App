@@ -38,6 +38,7 @@ import ResetPassword from './Pages/Customers/Registration/ResetPassword';
 import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
 import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
+import Consultations from "./Pages/Doctor/Consultation/Consultations";
 
 function App() {
   const role = "doctor";
@@ -84,6 +85,7 @@ function App() {
             { path: "appointments", element: <Appointments /> },
             { path: "dashboard", element: <Dashboard /> },
             { path: "diagnosis", element: <DiagnosisAssistant /> },
+            { path: "Consultation", element: <Consultations /> },
             { path: "treatment", element: <Treatment /> },
             { path: "my-patients", element: <MyPatients /> },
             { path: "reports", element: <Reports /> },
