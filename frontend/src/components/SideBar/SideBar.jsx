@@ -19,7 +19,7 @@ import { BiInjection } from "react-icons/bi";
 import { TbMessageCirclePlus } from "react-icons/tb";
 import { MdOutlineAddBox } from "react-icons/md";
 
-export default function SideBar({ showSideBar }) {
+export default function SideBar({ showSideBar, setShowSideBar }) {
   const role = "Doctor";
   const DoctorNavBar = [
     {
@@ -209,6 +209,7 @@ export default function SideBar({ showSideBar }) {
                       ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
                       : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
                   }
+                    onClick={() => setShowSideBar(false)}
                 >
                   {item.icon} {item.title}
                 </NavLink>
@@ -224,6 +225,7 @@ export default function SideBar({ showSideBar }) {
                       ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
                       : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
                   }
+                    onClick={() => setShowSideBar(false)}
                 >
                   {item.icon} {item.title}
                 </NavLink>
@@ -239,6 +241,7 @@ export default function SideBar({ showSideBar }) {
                       ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
                       : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
                   }
+                    onClick={() => setShowSideBar(false)}
                 >
                   {item.icon} {item.title}
                 </NavLink>
