@@ -59,7 +59,7 @@ export default function Reports() {
             key={index}
             className="space-y-2 bg-gradient-to-t h-full from-[#C6D8FD] to-[#207EFF] p-[2px] rounded-xl flex"
           >
-            <div className="bg-white rounded-xl p-4 space-y-2">
+            <div className="bg-white rounded-xl p-4 space-y-2 w-full">
               <div className="flex items-center justify-center mb-10">
                 <img
                   src={item.icon}
