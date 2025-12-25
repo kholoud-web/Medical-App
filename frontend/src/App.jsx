@@ -33,9 +33,9 @@ import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTr
 import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
 import Physiotherapy from "./Pages/Patient/Physiotherapy/Physiotherapy";
 import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
-import Register from './Pages/Customers/Registration/Registration';
-import ResetPassword from './Pages/Customers/Registration/ResetPassword';
-import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
+import Register from './Pages/Auth/Registration';
+import ResetPassword from './Pages/Auth/ResetPassword';
+import ResetSuccess from "./Pages/Auth/ResetSuccess";
 import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 
@@ -47,19 +47,9 @@ function App() {
   const router = createBrowserRouter([
     { path: "login", element: <Login /> },
     { path: "landing", element: <LandingPage /> },
-       {
-    path: "/register", 
-    element: <Register />,
-    
-  },
-     
-{
-  path: "/reset-password",
-  element: <ResetPassword /> 
-},
- {
-  path:"/reset-success" ,element:<ResetSuccess />
-},
+    { path: "/register", element: <Register />,},
+    { path: "/reset-password", element: <ResetPassword /> },
+    { path:"/reset-success" ,element:<ResetSuccess />},
   
       {
     path: "/",
