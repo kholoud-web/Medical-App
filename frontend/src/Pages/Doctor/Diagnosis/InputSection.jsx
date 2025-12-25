@@ -28,14 +28,12 @@ export default function InputSection() {
   return (
     <div className="bg-treat-bg-Gray p-6 rounded-2xl shadow-md border border-blue-200">
 
-      {/* ---- Title ---- */}
       <h2 className="text-center font-semibold text-lg mb-4">
         Diagnosis Assistant
       </h2>
 
       <div className="space-y-4">
 
-        {/* ---- Patient Symptoms ---- */}
         <div className="relative">
           <input
             type="text"
@@ -49,8 +47,6 @@ export default function InputSection() {
               error ? "border-red-500" : "border-gray-300"
             }`}
           />
-
-          {/* النجمة الحمرا حسب الصورة */}
           {!symptoms && (
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-red-500 text-lg">
               *
@@ -58,21 +54,18 @@ export default function InputSection() {
           )}
         </div>
 
-        {/* ---- Error Message ---- */}
         {error && (
           <p className="text-sm text-red-700 bg-red-100 p-2 rounded-md">
             {error}
           </p>
         )}
 
-        {/* ---- Notes ---- */}
         <textarea
           placeholder="Notes / Description"
           rows="2"
           className="w-full p-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 placeholder-gray-500 resize-none"
         ></textarea>
 
-        {/* ---- Diagnosis Title ---- */}
         <input
           type="text"
           placeholder="Diagnosis Title"
@@ -80,7 +73,6 @@ export default function InputSection() {
         />
       </div>
 
-      {/* ---- Buttons ---- */}
       <div className="flex justify-between mt-6">
         <button
           onClick={handleAnalyzeClick}

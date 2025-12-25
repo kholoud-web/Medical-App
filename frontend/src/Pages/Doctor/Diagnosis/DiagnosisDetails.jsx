@@ -29,10 +29,8 @@ export default function DiagnosisDetails() {
       <h2 className="text-md font-semibold text-gray-800">Diagnosis Details</h2>
       <p className="text-sm text-gray-600 mb-4">Type 2 Diabetes Mellitus</p>
 
-      {/* SECTION (Symptoms + Clinical Findings) */}
       <div className="flex justify-between gap-10">
 
-        {/* Symptoms */}
         <div className="w-1/2">
           <h3 className="text-md font-semibold text-blue-500 mb-2">Symptoms</h3>
 
@@ -60,7 +58,6 @@ export default function DiagnosisDetails() {
           )}
         </div>
 
-        {/* Clinical Findings */}
         <div className="w-1/2">
           <h3 className="text-md font-semibold text-blue-500 mb-2">
             Clinical Findings
@@ -115,7 +112,6 @@ export default function DiagnosisDetails() {
 
       </div>
 
-      {/* Suggested Medications */}
       <div className="mt-6">
         <h3 className="text-md font-semibold text-blue-500 mb-1">
           Suggested Medications
@@ -145,7 +141,6 @@ export default function DiagnosisDetails() {
         )}
       </div>
 
-      {/* BUTTONS */}
       <div className="flex justify-end mt-4 gap-3">
         {!editMode ? (
           <button

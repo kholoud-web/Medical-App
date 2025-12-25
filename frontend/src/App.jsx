@@ -30,37 +30,31 @@ import FAQ from "./Pages/Common/FAQ/FAQ";
 import Finance from "./Pages/Doctor/Finance/Finance";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTreatments";
+import PatientProfile from "./Pages/Patient/PatientProfile/PatientProfile";
+import DoctorProfile from "./Pages/Admin/DoctorProfile/DoctorProfile";
+import SystemSetting from "./Pages/Admin/SystemSetting/SystemSetting";
+import DoctorsManagement from "./Pages/Admin/DoctorsManagement/DoctorsManagement";
 import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
 import Physiotherapy from "./Pages/Patient/Physiotherapy/Physiotherapy";
 import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
-import Register from './Pages/Customers/Registration/Registration';
-import ResetPassword from './Pages/Customers/Registration/ResetPassword';
-import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
+import Register from './Pages/Auth/Registration';
+import ResetPassword from './Pages/Auth/ResetPassword';
+import ResetSuccess from "./Pages/Auth/ResetSuccess";
 import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 import Consultations from "./Pages/Doctor/Consultation/Consultations";
 
 function App() {
-  const role = "doctor";
+  const role = "admin";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
   const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
   const router = createBrowserRouter([
     { path: "login", element: <Login /> },
     { path: "landing", element: <LandingPage /> },
-       {
-    path: "/register", 
-    element: <Register />,
-    
-  },
-     
-{
-  path: "/reset-password",
-  element: <ResetPassword /> 
-},
- {
-  path:"/reset-success" ,element:<ResetSuccess />
-},
+    { path: "/register", element: <Register />,},
+    { path: "/reset-password", element: <ResetPassword /> },
+    { path:"/reset-success" ,element:<ResetSuccess />},
   
       {
     path: "/",
@@ -98,6 +92,7 @@ function App() {
             ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
               { path: "drugChecker", element: <DrugChecker /> },
+              { path: "doctorsManagement", element: <DoctorsManagement /> },
 
             ]
           : role === "patient"
@@ -123,7 +118,16 @@ function App() {
         {
           path: "SuggestedTreatments", element: <SuggestedTreatments />
         },
-        { path: "*", element: <NotFound /> },
+        {
+           path:"PatientProfile", element: <PatientProfile />
+        },
+        {
+          path:"DoctorProfile", element:<DoctorProfile/>
+        },
+        {
+          path:"systemSetting", element:<SystemSetting/>
+        }
+        
       ],
     },
   ]);
