@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Login() {
-  const [role, setRole] = useState("patient");
+  const [role, setRole] = useState("Admin");
 
   return (
     <div
