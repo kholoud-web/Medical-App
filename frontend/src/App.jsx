@@ -30,7 +30,7 @@ import FAQ from "./Pages/Common/FAQ/FAQ";
 import Finance from "./Pages/Doctor/Finance/Finance";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTreatments";
-import PatientProfile from "./Pages/Patient/PatientProfile/PatientProfile";
+import PatientProfile from "./Pages/Admin/PatientProfile";
 import DoctorProfile from "./Pages/Admin/DoctorProfile/DoctorProfile";
 import SystemSetting from "./Pages/Admin/SystemSetting/SystemSetting";
 import DoctorsManagement from "./Pages/Admin/DoctorsManagement/DoctorsManagement";
@@ -47,7 +47,7 @@ import Consultations from "./Pages/Doctor/Consultation/Consultations";
 function App() {
   const role = "doctor";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
-  const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
+  // const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
   const router = createBrowserRouter([
     { path: "login", element: <Login /> },
@@ -107,11 +107,15 @@ function App() {
             ]
           : []),
         {
-          path: "settings", element: settingsElement
+          path: "settings", element: <settingsElement/>
         },
         {
           path: "help", element: helpElement
         },
+        {
+          path:"helpSupport", element:<HelpSupport/>
+        },
+
         {
           path: "MedicalFiles", element: <MedicalFiles />
         },

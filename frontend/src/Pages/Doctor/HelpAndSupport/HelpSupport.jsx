@@ -39,8 +39,11 @@ export default function HelpSupport(){
           width: "100%",
           maxWidth: 900,
           p: 4,
-          borderRadius: 3,
-           backgroundColor: "#F7F7F7",
+          borderRadius: "8px",
+           background:
+      "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
+      "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
+    border: "2px solid transparent",
         }}
       >       
         {/* Title */}
