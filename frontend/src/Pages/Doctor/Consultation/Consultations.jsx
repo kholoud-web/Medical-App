@@ -2,6 +2,9 @@ import ConsultationsHeader from "./components/ConsultationsHeader";
 import ConsultationCard from "./components/ConsultationCard";
 import ConsultationPanel from "./components/ConsultationPanel";
 
+import { useState } from "react";
+import ModifyDiagnosisModal from './components/ModifyDiagnosisModal ';
+import RejectDiagnosisModal from './components/RejectDiagnosisModal ';
 
 const data = [
   {
@@ -52,6 +55,9 @@ const data = [
 ];
 
 const Consultations = () => {
+  const [selectedConsultation , setSelectedConsultation] = useState(null);
+  const [openModify, setOpenModify] = useState(false);
+  const [openReject, setOpenReject] = useState(false);
   return (
     <div className="flex flex-col lg:flex-row bg-white min-h-screen">
       
@@ -75,15 +81,35 @@ const Consultations = () => {
             {/* القائمة */}
             <div className="space-y-3">
               {data.map((item, index) => (
-                <ConsultationCard key={index} data={item} />
+                <ConsultationCard
+                 key={index} 
+                 data={item} 
+                 onView={() => setSelectedConsultation(item)}
+                 />
               ))}
             </div>
           </div>
 
           {/* البانل الجانبي: يصغر عرضه في الشاشات المتوسطة ويختفي في الصغيرة */}
           <div className="hidden lg:block lg:w-[280px] xl:w-[360px] flex-shrink-0">
-            <ConsultationPanel />
+            <ConsultationPanel  
+            data={selectedConsultation}
+            onModify={() => setOpenModify(true)}
+            onReject={() => setOpenReject(true)}
+            />
           </div>
+           {/* MODALS */}
+            {openModify && (
+              <ModifyDiagnosisModal
+                onClose={() => setOpenModify(false)}
+              />
+            )}
+
+            {openReject && (
+              <RejectDiagnosisModal
+                onClose={() => setOpenReject(false)}
+              />
+          )}
         </div>
       </div>
     </div>
