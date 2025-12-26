@@ -42,10 +42,14 @@ import ResetPassword from './Pages/Auth/ResetPassword';
 import ResetSuccess from "./Pages/Auth/ResetSuccess";
 import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
+<<<<<<< Updated upstream
 import Consultations from "./Pages/Doctor/Consultation/Consultations";
+=======
+import PatientsManagement from "./Pages/Admin/PatientTable/PatientsManagement";
+>>>>>>> Stashed changes
 
 function App() {
-  const role = "doctor";
+  const role = "admin";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
   // const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
@@ -92,7 +96,11 @@ function App() {
             ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
               { path: "drugChecker", element: <DrugChecker /> },
+<<<<<<< Updated upstream
               { path: "doctorsManagement", element: <DoctorsManagement /> },
+=======
+              { path: "PatientsManagement", element: <PatientsManagement /> }
+>>>>>>> Stashed changes
 
             ]
           : role === "patient"
