@@ -221,6 +221,7 @@ export default function DiagnosisModule() {
               ))}
             </div>
           </section>
+
         </div>
       </div>
 

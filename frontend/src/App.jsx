@@ -25,19 +25,27 @@ import FAQ from "./Pages/Common/FAQ/FAQ";
 import Finance from "./Pages/Doctor/Finance/Finance";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTreatments";
+import PatientProfile from "./Pages/Patient/PatientProfile/PatientProfile";
+import DoctorProfile from "./Pages/Admin/DoctorProfile/DoctorProfile";
+import SystemSetting from "./Pages/Admin/SystemSetting/SystemSetting";
 import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
 import Physiotherapy from "./Pages/Patient/Physiotherapy/Physiotherapy";
 import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
 import Register from './Pages/Customers/Registration/Registration';
 import ResetPassword from './Pages/Customers/Registration/ResetPassword';
 import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
+import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 import RequestWithdrawal from "./Pages/Doctor/Finance/RequestWithdrawal/RequestWithdrawal";
 
 function App() {
   const role = "doctor";
+  const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
+  const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
   const router = createBrowserRouter([
+    { path: "login", element: <Login /> },
+    { path: "landing", element: <LandingPage /> },
        {
     path: "/register", 
     element: <Register />,
@@ -58,6 +66,7 @@ function App() {
     children: [
       { index: true, element: <LandingPage /> },
       { path: "services", element: <Service /> },
+      { path: "about", element: <About /> },
        { path: "contact", element: <Contact/>},
       { path: "find-doctor", element: <FindDoctor /> },
        { path: "faq", element: <FAQ />},
@@ -78,7 +87,8 @@ function App() {
             { path: "reports", element: <Reports /> },
             { path: "notifications", element: <Notifications /> },
             {path:"finances",element:<Finance />},
-            { path: "/withdrawal", element: <RequestWithdrawal /> }
+            { path: "/withdrawal", element: <RequestWithdrawal /> },
+             {path:"inquiries", element: <Inquiries/>},
 
           ]
           : role === "admin"
@@ -98,9 +108,11 @@ function App() {
               { path: "diagnosis-module", element: <DiagnosisModule /> },
             ]
           : []),
-          
         {
-          path: "HelpSupport", element: <HelpSupport />
+          path: "settings", element: settingsElement
+        },
+        {
+          path: "help", element: helpElement
         },
         {
           path: "MedicalFiles", element: <MedicalFiles />
@@ -108,7 +120,16 @@ function App() {
         {
           path: "SuggestedTreatments", element: <SuggestedTreatments />
         },
-        { path: "*", element: <NotFound /> },
+        {
+           path:"PatientProfile", element: <PatientProfile />
+        },
+        {
+          path:"DoctorProfile", element:<DoctorProfile/>
+        },
+        {
+          path:"systemSetting", element:<SystemSetting/>
+        }
+        
       ],
     },
   ]);
