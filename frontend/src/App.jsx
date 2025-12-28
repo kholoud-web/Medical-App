@@ -44,7 +44,7 @@ import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 
 function App() {
-  const role = "doctor";
+  const role = "patient";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
   const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
@@ -89,7 +89,7 @@ function App() {
           : role === "admin"
             ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
-              { path: "drugChecker", element: <DrugChecker /> },
+              
               { path: "doctorsManagement", element: <DoctorsManagement /> },
 
             ]
@@ -97,6 +97,7 @@ function App() {
           ? [
             { path: "dashboard", element:<PatientDashboard/>},
               { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
+              { path: "drugChecker", element: <DrugChecker /> },
               { path: "directory", element: <Directory /> },
               { path: "payment", element: <Payment /> },
               { path: "physiotherapy",element:<Physiotherapy/>},

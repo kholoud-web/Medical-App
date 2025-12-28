@@ -6,7 +6,4 @@ export const API ={
     CheckDrugChecker: `${BASE_URL}/DrugChecker/check`,
     GetDrugChecker: (keyword) =>
     `${BASE_URL}/DrugChecker/suggestions?keyword=${keyword}`,
-
-    
-
 }
