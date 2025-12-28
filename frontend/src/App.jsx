@@ -42,11 +42,8 @@ import ResetPassword from './Pages/Auth/ResetPassword';
 import ResetSuccess from "./Pages/Auth/ResetSuccess";
 import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
-<<<<<<< Updated upstream
 import Consultations from "./Pages/Doctor/Consultation/Consultations";
-=======
 import PatientsManagement from "./Pages/Admin/PatientTable/PatientsManagement";
->>>>>>> Stashed changes
 
 function App() {
   const role = "admin";
@@ -95,18 +92,18 @@ function App() {
           : role === "admin"
             ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
+              
               { path: "drugChecker", element: <DrugChecker /> },
-<<<<<<< Updated upstream
               { path: "doctorsManagement", element: <DoctorsManagement /> },
-=======
               { path: "PatientsManagement", element: <PatientsManagement /> }
->>>>>>> Stashed changes
+
 
             ]
           : role === "patient"
           ? [
             { path: "dashboard", element:<PatientDashboard/>},
               { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
+              { path: "drugChecker", element: <DrugChecker /> },
               { path: "directory", element: <Directory /> },
               { path: "payment", element: <Payment /> },
               { path: "physiotherapy",element:<Physiotherapy/>},

@@ -18,9 +18,11 @@ import { FaPersonThroughWindow } from "react-icons/fa6";
 import { BiInjection } from "react-icons/bi";
 import { TbMessageCirclePlus } from "react-icons/tb";
 import { MdOutlineAddBox } from "react-icons/md";
+import { MdOutlinePayment } from "react-icons/md";
+
 
 export default function SideBar({ showSideBar, setShowSideBar }) {
-  const role = "Doctor";
+  const role = "admin";
   const DoctorNavBar = [
     {
       icon: <MdOutlineDashboard className="inline-block mr-2" />,
@@ -42,25 +44,11 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
       title: "Diagnosis",
       link: "/diagnosis",
     },
-    {
-      icon: <PiHandCoinsThin className="inline-block mr-2" />,
-      title: "Treatment",
-      link: "/treatment",
-    },
-    {
-      icon: <FaChartLine className="inline-block mr-2" />,
-      title: "Reports",
-      link: "/reports",
-    },
+   
     {
       icon: <LuChartColumn className="inline-block mr-2" />,
       title: "Finances",
       link: "/finances",
-    },
-    {
-      icon: <MdOutlineEventNote className="inline-block mr-2" />,
-      title: "Appointments",
-      link: "/appointments",
     },
   ];
 
@@ -102,19 +90,9 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
       link: "/DiagnosisModule",
     },
     {
-      icon: <LuChartColumn className="inline-block mr-2" />,
-      title: "Finances",
-      link: "/finances",
-    },
-    {
       icon: <TbMessageCirclePlus className="inline-block mr-2" />,
       title: "Ai Diagnosis Result",
       link: "/AiDiagnosisResult",
-    },
-    {
-      icon: <FaSearchPlus className="inline-block mr-2" />,
-      title: "Diagnosis",
-      link: "/diagnosis",
     },
     {
       icon: <BiInjection className="inline-block mr-2" />,
@@ -132,35 +110,15 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
       link: "/inquiries",
     },
     {
-      icon: <VscNote className="inline-block mr-2" />,
-      title: "Complaints",
-      link: "/complaints",
-    },
-    {
-      icon: <FiUsers className="inline-block mr-2" />,
-      title: "My patients",
-      link: "/my-patients",
-    },
-    {
-      icon: <LuNotebookText className="inline-block mr-2" />,
-      title: "Directory",
-      link: "/directory",
-    },
-    {
-      icon: <MdOutlineEventNote className="inline-block mr-2" />,
-      title: "Appointments",
-      link: "/appointments",
-    },
-    {
       icon: <FiFilePlus className="inline-block mr-2" />,
       title: "Medical Files",
       link: "/medicalFiles",
     },
     {
-      icon: <PiHandCoinsThin className="inline-block mr-2" />,
-      title: "Treatment",
-      link: "/treatment",
-    },
+      icon: <MdOutlinePayment  className="inline-block mr-2" />,
+      title: "Payments",
+      link: "/payments",
+    }
   ];
 
   const generalMenu = [
@@ -363,7 +321,7 @@ export default function SideBar() {
 
       <h2 className="text-2xl font-bold px-3">MENU</h2>
       <ul className="my-1 font-bold">
-        {role === "Doctor"
+        {role === "doctor"
           ? DoctorNavBar.map((item, index) => (
               <li key={index} className="my-1">
                 <NavLink
