@@ -31,7 +31,7 @@ export default function SuggestedTreatments() {
      // action modal
      const [open, setOpen] = useState(false);
      //form
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [isModalOpen, setIsModalOpen] = useState(false);
   //print
   const[printOpen, setPrintOpen]= useState(false);
     
@@ -46,7 +46,10 @@ export default function SuggestedTreatments() {
       <Grid container spacing={2}>
         {/* Left Main Card */}
         <Grid size={{ xs: 12, md: 8 }}>
-          <Card sx={{ borderRadius: 3,backgroundColor:"#F7F7F7", borderColor: "linear-gradient(135deg, #4f7cff, #6fb1ff)",
+          <Card sx={{ borderRadius: 3,background:
+      "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
+      "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
+    border: "2px solid transparent",
  }}>
             <CardContent>
               <Typography variant="h6" fontWeight={600} mb={2} sx={{color:"#505050"}}>
@@ -83,7 +86,10 @@ export default function SuggestedTreatments() {
                   <Grid size={{xs:12,md:6}} key={index}>
                     <Card
                       variant="outlined"
-                      sx={{ borderRadius: 2, height: "100%" ,backgroundColor:"#F7F7F7",p:1}}
+                      sx={{ borderRadius: 2, height: "100%" ,background:
+      "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
+      "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
+    border: "2px solid transparent",p:1}}
                     >
                       <CardContent>
           <Box display="flex" alignItems="center" justifyContent="space-between">
@@ -133,7 +139,10 @@ export default function SuggestedTreatments() {
             </Card>
 
               {/* Side Effects */}
-              <Card sx={{ borderRadius: 3,backgroundColor:"#F7F7F7",mt:3,p:3}}>
+              <Card sx={{ borderRadius: 3,background:
+      "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
+      "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
+    border: "2px solid transparent",mt:3,p:3}}>
             <Box display="flex" alignItems="center" sx={{mb:2}} >
               <WarningAmberIcon color="error" sx={{width:"40px", height:"40px",borderRadius:"50%",p:1 ,backgroundColor:"#FFC0C0",border:"3px solid #FFC0C0",mr:1}}/>
               <Typography fontWeight={600} sx={{color:"#505050"}}>
@@ -168,7 +177,10 @@ export default function SuggestedTreatments() {
           <Grid container spacing={3}>
             {/* Alternatives */}
             <Grid size={{xs:12}}>
-              <Card sx={{ borderRadius: 3,backgroundColor:"#F7F7F7" }}>
+              <Card sx={{ borderRadius: 3,background:
+      "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
+      "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
+    border: "2px solid transparent", }}>
                 <CardContent>
                   <Box display="flex" alignItems="center" gap={1} mb={2}>
                     <CompareArrowsIcon sx={{color:"white",backgroundColor:"#4682FA4D",width:"35px",height:"35px",borderRadius:"50%",p:1}} />
@@ -202,7 +214,10 @@ export default function SuggestedTreatments() {
 
             {/* Actions */}
             <Grid size={{xs:12}}>
-              <Card sx={{ borderRadius: 3 ,backgroundColor:"#F7F7F7",p:1}}>
+              <Card sx={{ borderRadius: 3 ,background:
+      "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
+      "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
+    border: "2px solid transparent",p:1}}>
                 <CardContent>
                   <Button onClick={()=>setOpen(true)}
                     fullWidth
@@ -225,7 +240,7 @@ export default function SuggestedTreatments() {
                     textAlign="center"
                   >
                     Any questions? 
-                     <Link  href="#" underline="hover" onClick={()=>setIsModalOpen(true)}
+                     <Link  href="#" underline="hover"
                       sx={{ fontWeight: 500,color:"#4682FA",fontSize:"12px"} }
                       >
                         Contact team
@@ -242,7 +257,7 @@ export default function SuggestedTreatments() {
       {/* modal for interaction*/}
 
         <InteractionModal open={open} onClose={()=>setOpen(false)}/>
-        <FormModal  open={isModalOpen} onClose={()=>setIsModalOpen(false)}/>
+        {/* <FormModal  open={isModalOpen} onClose={()=>setIsModalOpen(false)}/> */}
           <PrintModal  open={printOpen} onClose={()=>setPrintOpen(false)}/>
     </Box>
   );

@@ -1,0 +1,38 @@
+export const helpRequests = [
+  {
+    id: 1,
+    name: "John Smith",
+    avatar: "https://i.pravatar.cc/150?u=1",
+    age: 45,
+    gender: "Male",
+    subject: "Prescription Renewal Request",
+    status: "NEW",
+  },
+  {
+    id: 2,
+    name: "Emma Johnson",
+    avatar: "https://i.pravatar.cc/150?u=1",
+    age: 32,
+    gender: "Female",
+    subject: "Question about medication side effects",
+    status: "REPLIED",
+  },
+  {
+    id: 3,
+    name: "Robert Wilson",
+    avatar: "https://i.pravatar.cc/150?u=1",
+    age: 64,
+    gender: "Male",
+    subject: "Email verification not received",
+    status: "REPLIED",
+  },
+  {
+    id: 4,
+    name: "Jennifer Martinez",
+    avatar: "https://i.pravatar.cc/150?u=1",
+    age: 41,
+    gender: "Male",
+    subject: "Search function not responding",
+    status: "NEW",
+  },
+];
