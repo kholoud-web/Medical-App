@@ -32,6 +32,7 @@ import Register from './Pages/Customers/Registration/Registration';
 import ResetPassword from './Pages/Customers/Registration/ResetPassword';
 import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
+import RequestWithdrawal from "./Pages/Doctor/Finance/RequestWithdrawal/RequestWithdrawal";
 
 function App() {
   const role = "doctor";
@@ -76,7 +77,8 @@ function App() {
             { path: "my-patients", element: <MyPatients /> },
             { path: "reports", element: <Reports /> },
             { path: "notifications", element: <Notifications /> },
-            {path:"finances",element:<Finance />}
+            {path:"finances",element:<Finance />},
+            { path: "/withdrawal", element: <RequestWithdrawal /> }
 
           ]
           : role === "admin"
