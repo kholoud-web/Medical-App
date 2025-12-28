@@ -19,11 +19,6 @@ export default function InputSection() {
     }
   };
 
-  const handleSaveClick = () => {
-    if (validateInput()) {
-      alert("Saving diagnosis...");
-    }
-  };
 
   return (
     <div className="bg-treat-bg-Gray p-6 rounded-2xl shadow-md border border-blue-200">
@@ -73,19 +68,12 @@ export default function InputSection() {
         />
       </div>
 
-      <div className="flex justify-between mt-6">
+      <div className="text-center mt-6">
         <button
           onClick={handleAnalyzeClick}
           className="w-[48%] py-2 bg-blue-500 text-white rounded-full font-semibold hover:bg-blue-600 transition"
         >
           Analyze with AI
-        </button>
-
-        <button
-          onClick={handleSaveClick}
-          className="w-[48%] py-2 bg-blue-500 text-white rounded-full font-semibold hover:bg-blue-600 transition"
-        >
-          Save diagnosis
         </button>
       </div>
     </div>

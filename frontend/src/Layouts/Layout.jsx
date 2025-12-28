@@ -5,9 +5,9 @@ import Header from '../components/Common/Header'
 
 export default function Layout() {
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex flex-col overflow-hidden min-h-screen'>
     <Header />
-    <div className='md:flex w-full'>
+    <div className='md:flex overflow-hidden w-full'>
         <div className='w-72 h-full bg-white'><SideBar/></div>
         <div className='w-full flex-1 p-5'><Outlet/></div>
     </div>

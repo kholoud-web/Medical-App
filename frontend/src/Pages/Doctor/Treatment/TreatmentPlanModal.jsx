@@ -5,7 +5,8 @@ export default function TreatmentPlanModal({ onClose }) {
   return (
     <div className="fixed inset-0  flex items-center justify-center  backdrop-blur-sm">
 
-    <div className="w-[660px] max-h-[90vh] bg-white rounded-xl  overflow-hidden flex flex-col">
+    <div className="w-full sm:w-[560px] md:w-[620px] max-h-[90vh] bg-white rounded-xl overflow-hidden flex flex-col">
+
 
 
         <div className="flex items-center justify-between px-6 py-4 border-b">
