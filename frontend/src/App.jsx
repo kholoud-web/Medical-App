@@ -25,7 +25,7 @@ import FAQ from "./Pages/Common/FAQ/FAQ";
 import Finance from "./Pages/Doctor/Finance/Finance";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTreatments";
-import PatientProfile from "./Pages/Admin/PatientProfile";
+import PatientProfile from "./Pages/Admin/PatientProfile/PatientProfile";
 import DoctorProfile from "./Pages/Admin/DoctorProfile/DoctorProfile";
 import SystemSetting from "./Pages/Admin/SystemSetting/SystemSetting";
 import DoctorsManagement from "./Pages/Admin/DoctorsManagement/DoctorsManagement";
@@ -39,7 +39,11 @@ import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 import RequestWithdrawal from "./Pages/Doctor/Finance/RequestWithdrawal/RequestWithdrawal";
 import Consultations from "./Pages/Doctor/Consultation/Consultations";
-import PatientsManagement from "./Pages/Admin/PatientTable/PatientsManagement";
+import PatientsManagement from "./Pages/Admin/PatientsManagement/PatientsManagement";
+import Login from "./Pages/Auth/Login";
+// import About from "./Pages/About/About";
+
+
 
 function App() {
   const role = "doctor";
@@ -59,7 +63,7 @@ function App() {
     children: [
       { index: true, element: <LandingPage /> },
       { path: "services", element: <Service /> },
-      { path: "about", element: <About /> },
+      // { path: "about", element: <About /> },
        { path: "contact", element: <Contact/>},
       { path: "find-doctor", element: <FindDoctor /> },
        { path: "faq", element: <FAQ />},
