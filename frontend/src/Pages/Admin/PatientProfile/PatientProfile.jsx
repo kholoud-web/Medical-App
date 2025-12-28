@@ -83,7 +83,10 @@ export default function PatientProfile() {
                 </CardContent>
                 </Box>
              </Card>
-             <Card sx={{p:3,mt:2}}>
+             <Card sx={{p:3,mt:2,background:
+      "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
+      "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
+    border: "2px solid transparent",}}>
                 <CardContent>
                   <Typography sx={{color:"#505050",fontSize:"20px",fontWeight:"600",my:2}}>
                     Personal Information

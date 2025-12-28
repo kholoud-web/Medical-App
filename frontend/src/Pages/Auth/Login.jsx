@@ -4,7 +4,7 @@ import bgImage from './Image/LoginImg.jpg'
 
 
 export default function Login() {
-  const [role, setRole] = useState("patient");
+  const [role, setRole] = useState("Admin");
 
   return (
     <div

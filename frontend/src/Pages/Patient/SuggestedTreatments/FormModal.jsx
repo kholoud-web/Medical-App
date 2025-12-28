@@ -1,12 +1,8 @@
 import { useState } from "react";
-import Dialog from '@mui/material/Dialog';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField';
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
 import { Form } from "react-router-dom";
 import Divider  from "@mui/material/Divider";
 import Link from '@mui/material/Link';
@@ -37,12 +33,26 @@ export default function FormModal ({ open, onClose }) {
   };
 
   return (
-      <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm" sx={{zIndex:"5000",p:3,width:"100%",height:"100%"
-
-    }}>
+      <Modal open={open} onClose={onClose}  sx={{
+    zIndex: (theme) => theme.zIndex.modal + 1,
+  }}>
+        <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "100%",
+              maxWidth: 900,
+              borderRadius: 3,
+              backgroundColor:"#F7F7F7",
+              p:3,
+               zIndex: 1301
+            }}
+          >
     
-        <DialogTitle>Contact Support</DialogTitle>
-        <DialogContent>
+        <Typography>Contact Support</Typography>
+        <Box>
           <Form id="contact-form" onSubmit={handleSubmit}>
            <Box sx={{display:"flex" ,alignItems:"center"}}>
             <Box sx>
@@ -112,19 +122,18 @@ export default function FormModal ({ open, onClose }) {
                 <Typography sx={{fontWeight:"400",color:"#4682FA"}}> <Link>support@healthcare.com</Link>  </Typography>
             </Box>
           </Box>
-        </DialogContent>
-        <DialogActions sx={{mt:2}}>
+        </Box>
+        <Box sx={{mt:2,p:2}}>
           <Button onClick={onClose} sx={{backgroundColor:"white",color:"#4682FA",fontSize:"20px",border:"1px solid #4682FA"}}>
             Cancel
           </Button>
-          <Button type="submit" form="contact-form" variant="contained" sx={{backgroundColor:"#4682FA",color:"white",fontSize:"20px"}}>
+          <Button type="submit" form="contact-form" variant="contained" sx={{backgroundColor:"#4682FA",color:"white",fontSize:"20px",ml:1}}>
             Send Message
           </Button>
-        </DialogActions>
-       
-      </Dialog>
+        </Box>
+       </Box>
+      </Modal>
     
   );
 };
-
 
