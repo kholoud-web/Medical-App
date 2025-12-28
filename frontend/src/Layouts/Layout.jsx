@@ -2,12 +2,14 @@ import React from 'react'
 import SideBar from '../components/SideBar/SideBar'
 import { Outlet } from 'react-router-dom'
 import Header from '../components/Common/Header'
+import { useState } from 'react'
 
 export default function Layout() {
+  const [showSideBar,setShowSideBar]=useState(false)
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex flex-col overflow-hidden min-h-screen'>
     <Header />
-    <div className='md:flex w-full'>
+    <div className='md:flex overflow-hidden w-full'>
         <div className='w-72 h-full bg-white'><SideBar/></div>
         <div className='w-full flex-1 p-5'><Outlet/></div>
     </div>
