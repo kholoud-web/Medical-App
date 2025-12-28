@@ -9,7 +9,7 @@ const typeColors = {
   Inquiry: "text-blue-600",
 };
 
-const ConsultationCard = ({ data }) => {
+const ConsultationCard = ({ data, onView }) => {
   return (
     <div className="overflow-auto max-h-64 border border-blue-400 rounded-xl p-4 bg-gray-100 hover:shadow transition">
       <div className=" grid grid-cols-6 gap-4 items-center">
@@ -49,7 +49,10 @@ const ConsultationCard = ({ data }) => {
 
         {/* Actions */}
         <div className="col-span-1 flex justify-end gap-2">
-          <button className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200">
+          <button
+            onClick={onView}
+            className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-200"
+          >
             👁
           </button>
           <button className="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200">

@@ -89,6 +89,7 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
     },
   ];
 
+<<<<<<< Updated upstream
   const PatientNavBar = [
     {
       icon: <MdOutlineDashboard className="inline-block mr-2" />,
@@ -174,6 +175,169 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
       link: "/help",
     },
   ];
+=======
+export default function SideBar() {
+    const role = "admin";
+    const DoctorNavBar=[
+        {
+            icon:<MdOutlineDashboard className='inline-block mr-2' />,
+            title:"Dashboard",
+            link:"/dashboard"
+        },
+        {
+            icon:<FiUsers className='inline-block mr-2' />,
+            title: "My patients",
+            link:"/my-patients"
+        },
+        {
+            icon:<CiCircleQuestion  className='inline-block mr-2' />,
+            title: "Consultations",
+            link:"/consultations"
+        },
+        {
+            icon:<FaSearchPlus  className='inline-block mr-2' />,
+            title: "Diagnosis",
+            link:"/diagnosis"
+        },
+        {
+            icon:<PiHandCoinsThin   className='inline-block mr-2' />,
+            title: "Treatment",
+            link:"/treatment",
+
+        }       ,
+        {
+            icon:<FaChartLine  className='inline-block mr-2' />,
+            title: "Reports",
+            link:"/reports"
+        },
+        {
+            icon:<LuChartColumn  className='inline-block mr-2' />,
+            title: "Finances",
+            link:"/finances"
+        },
+        {
+            icon:<MdOutlineEventNote className='inline-block mr-2' />,
+            title: "Appointments",
+            link:"/appointments"
+        }
+    ]
+
+    const AdminNavBar=[
+       {
+            icon:<MdOutlineDashboard className='inline-block mr-2' />,
+            title:"Dashboard",
+            link:"/dashboard"
+        },
+        {
+            icon:<img src='/plus_icon.png' className='inline-block mr-2 w-4 h-4' />,
+            title: "Doctor Management",
+            link:"/doctor-management"
+        },
+        {
+            icon:<img src='/user_syting.png' className='inline-block mr-2 w-4 h-4' />,
+            title: "Patient Management",
+            link:"/patient-management"
+        },
+        {
+            icon:<img src='/Vector (3).png' className='inline-block mr-2 w-4 h-4' />,
+            title: "System Settings",
+            link:"/system-settings"
+        }
+    ]
+
+     const PatientNavBar=[
+        {
+            icon:<MdOutlineDashboard className='inline-block mr-2' />,
+            title:"Dashboard",
+            link:"/dashboard"
+        },
+        {
+            icon:<MdOutlineAddBox  className='inline-block mr-2' />,
+            title:"Diagnosis Module",
+            link:"/DiagnosisModule"
+        },
+                {
+            icon:<LuChartColumn  className='inline-block mr-2' />,
+            title: "Finances",
+            link:"/finances"
+        },
+        {
+            icon:<TbMessageCirclePlus  className='inline-block mr-2' />,
+            title: "Ai Diagnosis Result",
+            link:"/AiDiagnosisResult"
+        },
+         {
+            icon:<FaSearchPlus  className='inline-block mr-2' />,
+            title: "Diagnosis",
+            link:"/diagnosis"
+        },
+        {
+            icon:<BiInjection   className='inline-block mr-2' />,
+            title: "Drug Checker",
+            link:"/drugChecker"
+        },
+        {
+            icon:<FaPersonThroughWindow  className='inline-block mr-2' />,
+            title: "physiotherapy",
+            link:"/physiotherapy"
+        },
+        {
+            icon:<TiMessages   className='inline-block mr-2' />,
+            title: "Inquiries",
+            link:"/inquiries",
+
+        }       ,
+        {
+            icon:<VscNote   className='inline-block mr-2' />,
+            title: "Complaints",
+            link:"/complaints"
+        },
+                {
+            icon:<FiUsers className='inline-block mr-2' />,
+            title: "My patients",
+            link:"/my-patients"
+        },
+        {
+            icon:<LuNotebookText   className='inline-block mr-2' />,
+            title: "Directory",
+            link:"/directory"
+        },
+        {
+            icon:<MdOutlineEventNote className='inline-block mr-2' />,
+            title: "Appointments",
+            link:"/appointments"
+        },
+        {
+            icon:<FiFilePlus  className='inline-block mr-2' />,
+            title: "Medical Files",
+            link:"/medicalFiles"
+        },
+        {
+            icon:<PiHandCoinsThin   className='inline-block mr-2' />,
+            title: "Treatment",
+            link:"/treatment",
+
+        }       ,
+    ]
+
+    const generalMenu =[
+        {
+            icon:<IoSettingsOutline  className='inline-block mr-2' />,
+            title: "Settings",
+            link:"/settings"
+        },
+        {
+            icon:<CiCircleQuestion  className='inline-block mr-2' />,
+            title: "Help",
+            link:"/help"
+        },
+    ];
+        const filteredGeneralMenu =
+        role === "admin"
+        ? generalMenu.filter(item => item.title === "Settings")
+        : generalMenu;
+        
+>>>>>>> Stashed changes
   return (
 <div
   className={`
@@ -206,6 +370,7 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
                   to={item.link}
                   className={({ isActive }) =>
                     isActive
+<<<<<<< Updated upstream
                       ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
                       : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
                   }
@@ -214,6 +379,57 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
                   {item.icon} {item.title}
                 </NavLink>
               </li>
+=======
+                        ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
+                        : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
+                }
+            >
+                {item.icon} {item.title}
+            </NavLink>
+        </li>
+    ))
+) : role === "patient" ? PatientNavBar.map((item, index) => (
+        <li key={index} className="my-1">
+            <NavLink
+                to={item.link}
+                className={({ isActive }) =>
+                    isActive
+                        ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
+                        : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
+                }
+            >
+                {item.icon} {item.title}
+            </NavLink>
+        </li>
+    )):role === "admin" ? (
+        AdminNavBar.map((item, index) => (
+        <li key={index} className="my-1">
+            <NavLink
+                to={item.link}
+                className={({ isActive }) =>
+                    isActive
+                        ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
+                        : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
+                }
+            >
+                {item.icon} {item.title}
+            </NavLink>
+        </li>
+    ))
+    ) :""}
+
+       </ul>
+
+
+
+       <h2 className='text-2xl font-bold px-3'>GENERAL</h2>
+       <ul className=' font-bold'>
+        {
+            filteredGeneralMenu.map((item,index)=>(
+                <li key={index} className='my-2'>
+                    <NavLink to={item.link} className= {({isActive})=>isActive ? "bg-primary-blue text-white py-3 px-3 rounded-xl" :"py-3 px-3"}>{item.icon} {item.title}</NavLink>
+                </li>
+>>>>>>> Stashed changes
             ))
           : role === "patient"
           ? PatientNavBar.map((item, index) => (
