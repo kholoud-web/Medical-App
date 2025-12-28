@@ -46,7 +46,7 @@ import Consultations from "./Pages/Doctor/Consultation/Consultations";
 import PatientsManagement from "./Pages/Admin/PatientTable/PatientsManagement";
 
 function App() {
-  const role = "admin";
+  const role = "doctor";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
   // const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
