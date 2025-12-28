@@ -89,7 +89,10 @@ export default function DoctorProfile() {
       <Grid container spacing={2}>
         <Grid size={5} >
              <Card sx={{display:"flex", justifyContent:"center",width:"100%",
-                alignItems:"center",p:"1px",borderRadius:"12px" ,background:"linear-gradient(45deg,#C6D8FD,#207EFF",overflow:"visible"}}>
+                alignItems:"center",p:"1px",borderRadius:"12px" ,background:
+      "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
+      "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
+    border: "2px solid transparent",}}>
                     <Box  sx={{
                           backgroundColor: "#fff",
                           borderRadius: "11px", 
@@ -108,7 +111,10 @@ export default function DoctorProfile() {
              </Card>
              <Card sx={{p:2,mt:2,display: "flex",
                   flexDirection: "column",
-                  alignItems: "flex-start",}}>
+                  alignItems: "flex-start",background:
+      "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
+      "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
+    border: "2px solid transparent",}}>
                 <CardContent>
                   <Typography sx={{color:"#505050",fontSize:"20px",fontWeight:"600",my:2}}>
                     Personal Information
@@ -138,7 +144,10 @@ export default function DoctorProfile() {
              </Card>
         </Grid>
         <Grid size={7}>
-            <Card sx={{p:3,backgroundColor:"#F7F7F7" , display:"flex",flexWrap:"wrap",gap:3,}}>
+            <Card sx={{p:3,background:
+      "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
+      "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
+    border: "2px solid transparent" , display:"flex",flexWrap:"wrap",gap:3,}}>
               {iconCards.map((iconCard,index)=>{
                   return(
                     <Box key={index} sx={{border:"1px solid #565656",p:2,
@@ -152,7 +161,10 @@ export default function DoctorProfile() {
               })
             }
             </Card>
-            <Card sx={{backgroundColor:"#F7F7F7",p:2,mt:2}}>
+            <Card sx={{background:
+      "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
+      "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
+    border: "2px solid transparent",p:2,mt:2}}>
                 <Typography sx={{color:"#505050",fontWeight:"600", fontSize:"20px"}}>Consultation History</Typography>
          {cards.map((card,index)=>{
             return(

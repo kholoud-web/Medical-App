@@ -7,7 +7,7 @@ import { FaBars } from "react-icons/fa6";
 
 
 
-function Header() {
+function Header({showSideBar,setShowSideBar}) {
   const role = "admin";
   const date = dayjs().format("dddd, MMMM D, YYYY");
   return (
@@ -49,10 +49,13 @@ function Header() {
         <img src="/avatar.svg" alt="user" className="w-10 h-10 object-cover "/>
       </div>
 
-      <div className="md:hidden flex cursor-pointer">
-        <FaBars />
+      <div
+  className="md:hidden flex cursor-pointer text-2xl"
+  onClick={() => setShowSideBar(prev => !prev)}
+>
+  <FaBars />
+</div>
 
-      </div>
         
       </div>
     </>

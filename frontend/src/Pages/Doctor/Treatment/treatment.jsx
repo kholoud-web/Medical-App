@@ -1,86 +1,83 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { MdOutlineSend, MdOutlineEdit } from "react-icons/md";
-import { FaWheelchair } from "react-icons/fa";
-import { FaNotesMedical } from "react-icons/fa";
-import  patientImg  from "./image/image.png"
-import { AiOutlineUser } from "react-icons/ai";
+import React, { useState } from "react";
+import patientImg from "./image/image.png";
+import TreatmentListicon from "./icons/Treatment List.svg";
+import IconHand from "./icons/Hand With a Pill.svg";
+import ActionCard from "./ActionCard";
+import TreatmentPlanModal from "./TreatmentPlanModal";
+import PrescriptionModal from "./PrescriptionModal";
 
 export default function Treatment() {
-  return (
-    <div className="p-6 space-y-8 max-w-screen-xl mx-auto">
+  const [openPlan, setOpenPlan] = useState(false);
+  const [openPrescription, setOpenPrescription] = useState(false);
 
-      {/* Title */}
-      <div className="text-center space-y-2">
-        <h1 className="text-4xl font-extrabold">Treatment Management</h1>
-        <p className="text-gray-500 text-lg">
+  return (
+    <div className="p-4 sm:p-6 space-y-6 sm:space-y-8 max-w-screen-xl mx-auto">
+
+      {/* Page Title */}
+      <div className="space-y-1 sm:space-y-2">
+        <h1 className="text-xl sm:text-2xl font-extrabold">
+          Treatment Management
+        </h1>
+        <p className="text-gray-500 text-sm sm:text-lg">
           Manage treatment plans and activities for your patients.
         </p>
       </div>
 
-      {/* Patient card with blue outline like in the design */}
+      {/* Patient Card */}
       <div className="border-2 border-blue-300 rounded-2xl p-1">
-        <div className="bg-treat-bg-Gray rounded-xl p-6 flex items-center justify-between">
-          <div className="flex items-center gap-5">
-            <img
-  src={patientImg}
-  alt="patient"
-  className="w-20 h-20 rounded-full object-cover shadow-sm"
-/>
-            <div>
-              <h2 className="font-semibold text-xl">Emily Williams</h2>
-              <p className="text-gray-500 mt-1">Patient ID: <span className="font-medium">#PAT-2025-0123</span></p>
-            </div>
+        <div className="bg-treat-bg-Gray rounded-xl p-4 sm:p-6 flex flex-col sm:flex-row items-center gap-4 sm:gap-5">
+
+          <img
+            src={patientImg}
+            alt="patient"
+            className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover shadow-sm"
+          />
+
+          <div className="text-center sm:text-left">
+            <h2 className="font-semibold text-lg sm:text-xl">
+              Emily Williams
+            </h2>
+            <p className="text-gray-500 mt-1 text-sm sm:text-base">
+              Patient ID: <span className="font-medium">#PAT-2025-0123</span>
+            </p>
           </div>
 
-          
-            <Link
-  to="/patient-profile"
-  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow"
->
-  <AiOutlineUser className="w-5 h-5" />
-  View Full Profile
-</Link>
         </div>
       </div>
 
-      {/* Quick Actions box with blue outline */}
-      <div className="border-2 border-blue-300 rounded-2xl p-1">
-        <div className="bg-treat-bg-Gray rounded-xl p-6 space-y-4">
+      {/* Quick Actions */}
+      <div className="w-full max-w-4xl border-2 border-blue-300 rounded-2xl p-1 overflow-hidden">
+
+        <div className="bg-treat-bg-Gray rounded-xl h-full p-4 sm:p-8">
           <div>
-            <h3 className="text-xl font-semibold">Quick Actions</h3>
-            <p className="text-gray-500 text-sm mt-1">Select an action to proceed with the patient's treatment plan.</p>
+            <h3 className="text-lg sm:text-xl font-semibold mt-2 sm:mt-4">
+              Quick Actions
+            </h3>
+            <p className="text-gray-500 text-xs sm:text-sm mt-2 sm:mt-4">
+              Select an action to proceed with the patient's treatment plan.
+            </p>
           </div>
 
-          <div className=" grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 max-[640px]:grid-cols-1">
-            {/* Action card */}
-            <ActionCard icon={<MdOutlineSend size={20} />} title="Send Treatment Plan" />
-            <ActionCard icon={<MdOutlineEdit size={20} />} title="Modify Prescription" />
-            <ActionCard icon={<FaWheelchair size={20} />} title="Refer For Physical Therapy" />
-            <ActionCard icon={<FaNotesMedical size={20} />} title="Add Medical Instructions" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-4">
+            <ActionCard
+              icon={<img src={TreatmentListicon} className="w-6 h-6 sm:w-8 sm:h-8" />}
+              title="Add Treatment Plan"
+              onClick={() => setOpenPlan(true)}
+            />
+
+            <ActionCard
+              icon={<img src={IconHand} className="w-6 h-6 sm:w-8 sm:h-8" />}
+              title="Add Prescription"
+              onClick={() => setOpenPrescription(true)}
+            />
           </div>
         </div>
       </div>
 
+      {openPlan && <TreatmentPlanModal onClose={() => setOpenPlan(false)} />}
+      {openPrescription && (
+        <PrescriptionModal onClose={() => setOpenPrescription(false)} />
+      )}
     </div>
-  );
-}
-
-/* small sub-component for action cards */
-export function ActionCard({ icon, title , btnText=""}) {
-  return (
-    <button className="flex items-center justify-between gap-4 border-blue-300 border bg-white rounded-xl p-4 hover:shadow-md  duration-150 focus:outline-none">
-      <div className="flex items-center justify-between gap-4">
-          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-50 text-blue-600">
-            {icon}
-          </div>
-          <div className="text-left">
-            <p className="font-medium">{title}</p>
-          </div> 
-      </div>
-
-
-      {btnText!=="" && <div className="text-[#4682FA] hover:text-blue-700">{btnText}</div>}
-    </button>
   );
 }

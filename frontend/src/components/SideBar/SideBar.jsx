@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
 import { MdOutlineEventNote } from "react-icons/md";
 import { MdOutlineDashboard } from "react-icons/md";
 import { FiUsers } from "react-icons/fi";
@@ -18,11 +18,124 @@ import { FaPersonThroughWindow } from "react-icons/fa6";
 import { BiInjection } from "react-icons/bi";
 import { TbMessageCirclePlus } from "react-icons/tb";
 import { MdOutlineAddBox } from "react-icons/md";
+import { MdOutlinePayment } from "react-icons/md";
 
 
+export default function SideBar({ showSideBar, setShowSideBar }) {
+  const role = "admin";
+  const DoctorNavBar = [
+    {
+      icon: <MdOutlineDashboard className="inline-block mr-2" />,
+      title: "Dashboard",
+      link: "/dashboard",
+    },
+    {
+      icon: <FiUsers className="inline-block mr-2" />,
+      title: "My patients",
+      link: "/my-patients",
+    },
+    {
+      icon: <FiFilePlus className="inline-block mr-2" />,
+      title: "Consultations",
+      link: "/consultations",
+    },
+    {
+      icon: <FaSearchPlus className="inline-block mr-2" />,
+      title: "Diagnosis",
+      link: "/diagnosis",
+    },
+   
+    {
+      icon: <LuChartColumn className="inline-block mr-2" />,
+      title: "Finances",
+      link: "/finances",
+    },
+  ];
 
+  const AdminNavBar = [
+    {
+      icon: <MdOutlineDashboard className="inline-block mr-2" />,
+      title: "Dashboard",
+      link: "/dashboard",
+    },
+    {
+      icon: <img src="/plus_icon.png" className="inline-block mr-2 w-4 h-4" />,
+      title: "Doctor Management",
+      link: "/doctor-management",
+    },
+    {
+      icon: (
+        <img src="/user_syting.png" className="inline-block mr-2 w-4 h-4" />
+      ),
+      title: "Patient Management",
+      link: "/patient-management",
+    },
+    {
+      icon: <img src="/Vector (3).png" className="inline-block mr-2 w-4 h-4" />,
+      title: "System Settings",
+      link: "/system-settings",
+    },
+  ];
+
+<<<<<<< Updated upstream
+  const PatientNavBar = [
+    {
+      icon: <MdOutlineDashboard className="inline-block mr-2" />,
+      title: "Dashboard",
+      link: "/dashboard",
+    },
+    {
+      icon: <MdOutlineAddBox className="inline-block mr-2" />,
+      title: "Diagnosis Module",
+      link: "/DiagnosisModule",
+    },
+    {
+      icon: <TbMessageCirclePlus className="inline-block mr-2" />,
+      title: "Ai Diagnosis Result",
+      link: "/AiDiagnosisResult",
+    },
+    {
+      icon: <BiInjection className="inline-block mr-2" />,
+      title: "Drug Checker",
+      link: "/drugChecker",
+    },
+    {
+      icon: <FaPersonThroughWindow className="inline-block mr-2" />,
+      title: "physiotherapy",
+      link: "/physiotherapy",
+    },
+    {
+      icon: <TiMessages className="inline-block mr-2" />,
+      title: "Inquiries",
+      link: "/inquiries",
+    },
+    {
+      icon: <FiFilePlus className="inline-block mr-2" />,
+      title: "Medical Files",
+      link: "/medicalFiles",
+    },
+    {
+      icon: <MdOutlinePayment  className="inline-block mr-2" />,
+      title: "Payments",
+      link: "/payments",
+    }
+  ];
+
+  const generalMenu = [
+    {
+      icon: <IoSettingsOutline className="inline-block mr-2" />,
+      title: "Settings",
+      link: "/settings",
+    },
+    {
+      icon: <CiCircleQuestion className="inline-block mr-2" />,
+      title: "Help",
+      link: "/help",
+    },
+  ];
+=======
 export default function SideBar() {
-    const role = "patient";
+    const role = "admin";
     const DoctorNavBar=[
         {
             icon:<MdOutlineDashboard className='inline-block mr-2' />,
@@ -176,19 +289,55 @@ export default function SideBar() {
             title: "Help",
             link:"/help"
         },
-    ]
+    ];
+        const filteredGeneralMenu =
+        role === "admin"
+        ? generalMenu.filter(item => item.title === "Settings")
+        : generalMenu;
+        
+>>>>>>> Stashed changes
   return (
-    <div className='space-y-4 text-lg h-min-screen overflow-y-auto scrollbar-hide md:block hidden top-0 left-0 z-[9999] bg-white shadow-[4px_0_15px_rgba(0,0,0,0.2)] px-8 py-5 '>
+<div
+  className={`
+    space-y-4 text-lg overflow-y-auto scrollbar-hide
+    max-[540px]:w-full max-[700px]:w-1/2 md:w-64 lg:w-64 xl:w-72
 
-       <h2 className='text-2xl font-bold px-3'>MENU</h2>
-       <ul className='my-1 font-bold'>
-        {role === "Doctor" ? (
-    DoctorNavBar.map((item, index) => (
-        <li key={index} className="my-1">
-            <NavLink
-                to={item.link}
-                className={({ isActive }) =>
+    top-24 
+    fixed md:top-0 left-0 z-[9999]
+    h-screen
+    bg-white shadow-[4px_0_15px_rgba(0,0,0,0.2)]
+    px-8 py-5
+    transform transition-transform duration-300 ease-in-out
+    
+    ${showSideBar ? "translate-x-0" : "-translate-x-full"}
+    md:translate-x-0
+    top-26
+    max:[400px]:top-14
+    md:static
+  `}
+>
+
+
+
+      <h2 className="text-2xl font-bold px-3">MENU</h2>
+      <ul className="my-1 font-bold">
+        {role === "doctor"
+          ? DoctorNavBar.map((item, index) => (
+              <li key={index} className="my-1">
+                <NavLink
+                  to={item.link}
+                  className={({ isActive }) =>
                     isActive
+<<<<<<< Updated upstream
+                      ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
+                      : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
+                  }
+                    onClick={() => setShowSideBar(false)}
+                >
+                  {item.icon} {item.title}
+                </NavLink>
+              </li>
+=======
                         ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
                         : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
                 }
@@ -234,19 +383,70 @@ export default function SideBar() {
        <h2 className='text-2xl font-bold px-3'>GENERAL</h2>
        <ul className=' font-bold'>
         {
-            generalMenu.map((item,index)=>(
+            filteredGeneralMenu.map((item,index)=>(
                 <li key={index} className='my-2'>
                     <NavLink to={item.link} className= {({isActive})=>isActive ? "bg-primary-blue text-white py-3 px-3 rounded-xl" :"py-3 px-3"}>{item.icon} {item.title}</NavLink>
                 </li>
+>>>>>>> Stashed changes
             ))
-        }
-        <li>
-             <button className='font-bold py-1 px-3 '>
-            <FiLogOut className='inline-block mr-2 ' /><span className='text-red-500'>Logout</span>
-       </button>
-        </li>
-       </ul>
+          : role === "patient"
+          ? PatientNavBar.map((item, index) => (
+              <li key={index} className="my-1">
+                <NavLink
+                  to={item.link}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
+                      : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
+                  }
+                    onClick={() => setShowSideBar(false)}
+                >
+                  {item.icon} {item.title}
+                </NavLink>
+              </li>
+            ))
+          : role === "admin"
+          ? AdminNavBar.map((item, index) => (
+              <li key={index} className="my-1">
+                <NavLink
+                  to={item.link}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
+                      : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
+                  }
+                    onClick={() => setShowSideBar(false)}
+                >
+                  {item.icon} {item.title}
+                </NavLink>
+              </li>
+            ))
+          : ""}
+      </ul>
 
+      <h2 className="text-2xl font-bold px-3">GENERAL</h2>
+      <ul className=" font-bold">
+        {generalMenu.map((item, index) => (
+          <li key={index} className="my-2">
+            <NavLink
+              to={item.link}
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-primary-blue text-white py-3 px-3 rounded-xl"
+                  : "py-3 px-3"
+              }
+            >
+              {item.icon} {item.title}
+            </NavLink>
+          </li>
+        ))}
+        <li>
+          <button className="font-bold py-1 px-3 ">
+            <FiLogOut className="inline-block mr-2 " />
+            <span className="text-red-500">Logout</span>
+          </button>
+        </li>
+      </ul>
     </div>
-  )
+  );
 }

@@ -30,39 +30,32 @@ import FAQ from "./Pages/Common/FAQ/FAQ";
 import Finance from "./Pages/Doctor/Finance/Finance";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTreatments";
-import PatientProfile from "./Pages/Patient/PatientProfile/PatientProfile";
+import PatientProfile from "./Pages/Admin/PatientProfile";
 import DoctorProfile from "./Pages/Admin/DoctorProfile/DoctorProfile";
 import SystemSetting from "./Pages/Admin/SystemSetting/SystemSetting";
+import DoctorsManagement from "./Pages/Admin/DoctorsManagement/DoctorsManagement";
 import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
 import Physiotherapy from "./Pages/Patient/Physiotherapy/Physiotherapy";
 import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
-import Register from './Pages/Customers/Registration/Registration';
-import ResetPassword from './Pages/Customers/Registration/ResetPassword';
-import ResetSuccess from "./Pages/Customers/Registration/ResetSuccess";
+import Register from './Pages/Auth/Registration';
+import ResetPassword from './Pages/Auth/ResetPassword';
+import ResetSuccess from "./Pages/Auth/ResetSuccess";
 import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
+import Consultations from "./Pages/Doctor/Consultation/Consultations";
+import PatientsManagement from "./Pages/Admin/PatientTable/PatientsManagement";
 
 function App() {
   const role = "doctor";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
-  const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
+  // const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
   const router = createBrowserRouter([
     { path: "login", element: <Login /> },
     { path: "landing", element: <LandingPage /> },
-       {
-    path: "/register", 
-    element: <Register />,
-    
-  },
-     
-{
-  path: "/reset-password",
-  element: <ResetPassword /> 
-},
- {
-  path:"/reset-success" ,element:<ResetSuccess />
-},
+    { path: "/register", element: <Register />,},
+    { path: "/reset-password", element: <ResetPassword /> },
+    { path:"/reset-success" ,element:<ResetSuccess />},
   
       {
     path: "/",
@@ -87,6 +80,7 @@ function App() {
             { path: "appointments", element: <Appointments /> },
             { path: "dashboard", element: <Dashboard /> },
             { path: "diagnosis", element: <DiagnosisAssistant /> },
+            { path: "Consultation", element: <Consultations /> },
             { path: "treatment", element: <Treatment /> },
             { path: "my-patients", element: <MyPatients /> },
             { path: "reports", element: <Reports /> },
@@ -98,13 +92,18 @@ function App() {
           : role === "admin"
             ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
+              
               { path: "drugChecker", element: <DrugChecker /> },
+              { path: "doctorsManagement", element: <DoctorsManagement /> },
+              { path: "PatientsManagement", element: <PatientsManagement /> }
+
 
             ]
           : role === "patient"
           ? [
             { path: "dashboard", element:<PatientDashboard/>},
               { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
+              { path: "drugChecker", element: <DrugChecker /> },
               { path: "directory", element: <Directory /> },
               { path: "payment", element: <Payment /> },
               { path: "physiotherapy",element:<Physiotherapy/>},
@@ -113,11 +112,15 @@ function App() {
             ]
           : []),
         {
-          path: "settings", element: settingsElement
+          path: "settings", element: <settingsElement/>
         },
         {
           path: "help", element: helpElement
         },
+        {
+          path:"helpSupport", element:<HelpSupport/>
+        },
+
         {
           path: "MedicalFiles", element: <MedicalFiles />
         },

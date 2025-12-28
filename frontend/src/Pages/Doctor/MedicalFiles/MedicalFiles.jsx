@@ -45,6 +45,7 @@ export default function MedicalFiles(){
     setOpen(true);
   }
 
+
     return(
          <Box
       sx={{
@@ -52,8 +53,7 @@ export default function MedicalFiles(){
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: "8px", 
-        padding: 2,       
+        padding: "2px",           
       }}
     >
       <Card
@@ -61,8 +61,11 @@ export default function MedicalFiles(){
           width: "100%",
           maxWidth: 900,
           p: 4,
-          borderRadius: "8px",
-           backgroundColor: "#F7F7F7",
+          borderRadius:"8px",
+            background:
+      "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
+      "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
+    border: "2px solid transparent",
         }}
       >       
         <Box sx={{display:"flex"}}>
