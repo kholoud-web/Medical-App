@@ -1,8 +1,12 @@
 import IconYes from "./Icons/yes.svg";
 import IconProgress from "./Icons/progress.svg";
+import { useDispatch } from "react-redux";
+import { openInquiryModal } from "@/RiduxToolkit/Slices/InquirySlice";
 
-export default function InquiryCard({ inquiry, onOpen }) {
-  const isReplied = inquiry.status === "Replied";
+
+export default function InquiryCard({ inquiry }) {
+    const dispatch = useDispatch();
+  const isReplied = inquiry.status === "completed";
 
   return (
     <div className="bg-gray-50 border rounded-xl p-4 space-y-3">
@@ -36,7 +40,7 @@ export default function InquiryCard({ inquiry, onOpen }) {
 
    
       <button
-        onClick={() => onOpen(inquiry)}
+        onClick={() => dispatch(openInquiryModal(inquiry))}
         className="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm py-1.5 rounded-lg transition"
       >
         View details

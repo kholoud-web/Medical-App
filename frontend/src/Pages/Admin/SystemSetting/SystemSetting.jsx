@@ -17,10 +17,15 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Chip from '@mui/material/Chip';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import AddIcon from '@mui/icons-material/Add';
+import AddAdminOverlay from './AddAdminOverlay';
 
   export default function SystemSetting(){
       const [open , setOpen]= useState(false);
       const [openTable , setOpenTable]=useState(false);
+      const [openAdmin , setOpenAdmin]=useState(false);
+
+
       // table
       const rows = [
   {
@@ -54,12 +59,22 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
     return(
         <Box sx={{p:{xs:2,md:3}}}>
         <Box sx={{display:"flex" ,flexDirection:"column" ,gap:2,p:3}}>
+          {/* //header */}
+         <Box sx={{display:"flex",justifyContent:"space-between",alignItems:"conter",gap:2}}>
+          <Box>
          <Typography sx={{color:"#505050",fontSize:"32px",fontWeight:"600"}}>
             System  Settings
          </Typography>
          <Typography sx={{color:"#6B6B6B",fontSize:"20px",fontWeight:"500",mb:4}}>
             Configure system-wide rules and AI behavior
          </Typography>
+         </Box>
+         <Button onClick={()=>setOpenAdmin(true)}
+         startIcon={<AddIcon/>}
+         sx={{backgroundColor:"#4682FA",borderRadius:"8px",color:"#FFFFFF",
+          width:"113px",height:"30px",textTransform:"capitalize"
+         }}>Add Admin</Button>
+         </Box> 
          
             <Card sx={{borderRadius:"8px",  background:
       "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
@@ -295,6 +310,10 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
               </Box>
           </Box>
              </Modal>
+
+             {/* modal for admin */}
+
+            <AddAdminOverlay open={openAdmin} onClose={()=> setOpenAdmin(false)}/>
 
         </Box>
     )
