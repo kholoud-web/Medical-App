@@ -45,11 +45,25 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
       link: "/diagnosis",
     },
    
+
+
+
+
+
+
+
+
+
     {
       icon: <LuChartColumn className="inline-block mr-2" />,
       title: "Finances",
       link: "/finances",
     },
+
+
+
+
+
   ];
 
   const AdminNavBar = [
@@ -88,11 +102,21 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
       title: "Diagnosis Module",
       link: "/DiagnosisModule",
     },
+
+
+
+
+
     {
       icon: <TbMessageCirclePlus className="inline-block mr-2" />,
       title: "Ai Diagnosis Result",
       link: "/AiDiagnosisResult",
     },
+
+
+
+
+
     {
       icon: <BiInjection className="inline-block mr-2" />,
       title: "Drug Checker",
@@ -108,6 +132,26 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
       title: "Inquiries",
       link: "/inquiries",
     },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     {
       icon: <FiFilePlus className="inline-block mr-2" />,
       title: "Medical Files",
