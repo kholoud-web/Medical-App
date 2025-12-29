@@ -46,9 +46,9 @@ import Login from "./Pages/Auth/Login";
 
 
 function App() {
-  const role = "doctor";
+  const role = "patient";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
-  // const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
+  const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
   const router = createBrowserRouter([
     { path: "login", element: <Login /> },
@@ -79,7 +79,6 @@ function App() {
             { path: "appointments", element: <Appointments /> },
             { path: "dashboard", element: <Dashboard /> },
             { path: "diagnosis", element: <DiagnosisAssistant /> },
-            { path: "Consultation", element: <Consultations /> },
             { path: "treatment", element: <Treatment /> },
             { path: "my-patients", element: <MyPatients /> },
             { path: "reports", element: <Reports /> },
@@ -93,10 +92,7 @@ function App() {
             ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
               
-              { path: "drugChecker", element: <DrugChecker /> },
               { path: "doctorsManagement", element: <DoctorsManagement /> },
-              { path: "PatientsManagement", element: <PatientsManagement /> }
-
 
             ]
           : role === "patient"
@@ -112,15 +108,11 @@ function App() {
             ]
           : []),
         {
-          path: "settings", element: <settingsElement/>
+          path: "settings", element: settingsElement
         },
         {
           path: "help", element: helpElement
         },
-        {
-          path:"helpSupport", element:<HelpSupport/>
-        },
-
         {
           path: "MedicalFiles", element: <MedicalFiles />
         },

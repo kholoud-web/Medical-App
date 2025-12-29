@@ -22,7 +22,7 @@ import { MdOutlinePayment } from "react-icons/md";
 
 
 export default function SideBar({ showSideBar, setShowSideBar }) {
-  const role = "admin";
+  const role = "patient";
   const DoctorNavBar = [
     {
       icon: <MdOutlineDashboard className="inline-block mr-2" />,
