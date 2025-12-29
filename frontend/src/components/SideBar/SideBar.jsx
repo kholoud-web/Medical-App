@@ -73,19 +73,19 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
       link: "/dashboard",
     },
     {
-      icon: <img src="/plus_icon.png" className="inline-block mr-2 w-4 h-4" />,
+      icon: <img src="/plus_icon.png" className="inline-block w-4 h-4 mr-2" />,
       title: "Doctor Management",
       link: "/doctor-management",
     },
     {
       icon: (
-        <img src="/user_syting.png" className="inline-block mr-2 w-4 h-4" />
+        <img src="/user_syting.png" className="inline-block w-4 h-4 mr-2" />
       ),
       title: "Patient Management",
       link: "/patient-management",
     },
     {
-      icon: <img src="/Vector (3).png" className="inline-block mr-2 w-4 h-4" />,
+      icon: <img src="/Vector (3).png" className="inline-block w-4 h-4 mr-2" />,
       title: "System Settings",
       link: "/system-settings",
     },
@@ -177,8 +177,8 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
     },
   ];
   return (
-<div
-  className={`
+    <div
+      className={`
     space-y-4 text-lg overflow-y-auto scrollbar-hide
     max-[540px]:w-full max-[700px]:w-1/2 md:w-64 lg:w-64 xl:w-72
 
@@ -195,11 +195,8 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
     max:[400px]:top-14
     md:static
   `}
->
-
-
-
-      <h2 className="text-2xl font-bold px-3">MENU</h2>
+    >
+      <h2 className="px-3 text-2xl font-bold">MENU</h2>
       <ul className="my-1 font-bold">
         {role === "doctor"
           ? DoctorNavBar.map((item, index) => (
@@ -211,7 +208,7 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
                       ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
                       : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
                   }
-                    onClick={() => setShowSideBar(false)}
+                  onClick={() => setShowSideBar(false)}
                 >
                   {item.icon} {item.title}
                 </NavLink>
@@ -227,7 +224,7 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
                       ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
                       : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
                   }
-                    onClick={() => setShowSideBar(false)}
+                  onClick={() => setShowSideBar(false)}
                 >
                   {item.icon} {item.title}
                 </NavLink>
@@ -243,7 +240,7 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
                       ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
                       : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
                   }
-                    onClick={() => setShowSideBar(false)}
+                  onClick={() => setShowSideBar(false)}
                 >
                   {item.icon} {item.title}
                 </NavLink>
@@ -252,8 +249,8 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
           : ""}
       </ul>
 
-      <h2 className="text-2xl font-bold px-3">GENERAL</h2>
-      <ul className=" font-bold">
+      <h2 className="px-3 text-2xl font-bold">GENERAL</h2>
+      <ul className="font-bold ">
         {generalMenu.map((item, index) => (
           <li key={index} className="my-2">
             <NavLink
@@ -269,7 +266,7 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
           </li>
         ))}
         <li>
-          <button className="font-bold py-1 px-3 ">
+          <button className="px-3 py-1 font-bold ">
             <FiLogOut className="inline-block mr-2 " />
             <span className="text-red-500">Logout</span>
           </button>

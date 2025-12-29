@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   FiAlertCircle,
   FiEdit3,
@@ -11,6 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import PrimButton from "@/components/Common/PrimButton";
 import { useLocale } from "@/context/LocaleContext";
+import { createDiagnosis } from "@/api/diagnosisModule";
 
 const uploads = [
   { id: 1, name: "skin-scan-front.png", size: "1.2 MB", status: "uploading" },
@@ -58,6 +59,12 @@ export default function DiagnosisModule() {
   const [isCaseModalOpen, setIsCaseModalOpen] = useState(false);
   const [caseDescription, setCaseDescription] = useState("");
   const [caseDraft, setCaseDraft] = useState("");
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState("");
+  const imageInputRef = useRef(null);
+  const fileInputRef = useRef(null);
   const maxCaseLength = 2000;
 
   const handleAddSymptom = () => {
@@ -79,6 +86,60 @@ export default function DiagnosisModule() {
   const handleCaseSave = () => {
     setCaseDescription(caseDraft);
     setIsCaseModalOpen(false);
+  };
+
+  const handleFilesSelected = (event) => {
+    const files = Array.from(event.target.files || []);
+    if (!files.length) return;
+    setSelectedFiles((prev) => {
+      const next = new Map(
+        prev.map((file) => [`${file.name}-${file.size}-${file.lastModified}`, file])
+      );
+      files.forEach((file) => {
+        next.set(`${file.name}-${file.size}-${file.lastModified}`, file);
+      });
+      return Array.from(next.values());
+    });
+    event.target.value = "";
+  };
+
+  const handleAnalyze = async () => {
+    setSubmitError("");
+    setSubmitSuccess("");
+
+    if (!symptoms.length && !caseDescription.trim() && selectedFiles.length === 0) {
+      setSubmitError("Add symptoms, a description, or files first.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const doctorId =
+        localStorage.getItem("doctor_id") || localStorage.getItem("doctorId");
+      const response = await createDiagnosis({
+        doctorId,
+        symptoms: symptoms.join(", "),
+        description: caseDescription.trim(),
+        files: selectedFiles,
+      });
+
+      if (!response || response.success === false) {
+        setSubmitError(response?.message || response?.errorMessage || "Diagnosis failed.");
+        return;
+      }
+
+      setSubmitSuccess(response.message || "Diagnosis submitted successfully.");
+      navigate("/ai-diagnosis-result", { state: { diagnosis: response } });
+    } catch (err) {
+      const message =
+        err?.response?.data?.message ||
+        err?.response?.data?.errorMessage ||
+        err?.message ||
+        "Diagnosis failed.";
+      setSubmitError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -109,6 +170,7 @@ export default function DiagnosisModule() {
               <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
                 <button
                   type="button"
+                  onClick={() => imageInputRef.current?.click()}
                   className="inline-flex items-center gap-2 rounded-xl border border-primary-blue/40 bg-white px-4 py-2 text-xs font-semibold text-primary-blue shadow-sm hover:bg-primary-blue/5 transition"
                 >
                   <FiImage size={14} />
@@ -116,12 +178,30 @@ export default function DiagnosisModule() {
                 </button>
                 <button
                   type="button"
+                  onClick={() => fileInputRef.current?.click()}
                   className="inline-flex items-center gap-2 rounded-xl border border-primary-blue/40 bg-white px-4 py-2 text-xs font-semibold text-neutral-700 shadow-sm hover:bg-primary-blue/5 transition"
                 >
                   <FiFileText size={14} />
                   {t("diagnosis.module.upload.file")}
                 </button>
               </div>
+
+              <input
+                ref={imageInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleFilesSelected}
+                className="hidden"
+              />
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".pdf,.doc,.docx,.txt,.zip"
+                multiple
+                onChange={handleFilesSelected}
+                className="hidden"
+              />
 
               <div className="flex flex-col sm:flex-row gap-2 text-[11px] text-neutral-400 w-full pt-1">
                 <span>{t("diagnosis.module.upload.formats")}</span>
@@ -175,10 +255,17 @@ export default function DiagnosisModule() {
 
             <PrimButton
               className="w-full py-3 text-sm shadow-[0_8px_20px_rgba(56,104,200,0.18)] hover:-translate-y-0.5 transition"
-              onClick={() => navigate("/ai-diagnosis-result")}
+              onClick={handleAnalyze}
+              disabled={isSubmitting}
             >
               {t("diagnosis.module.manual.analyze")}
             </PrimButton>
+            {submitError ? (
+              <p className="text-xs text-rose-500">{submitError}</p>
+            ) : null}
+            {submitSuccess ? (
+              <p className="text-xs text-emerald-600">{submitSuccess}</p>
+            ) : null}
           </section>
 
           <section className="rounded-2xl border border-primary-blue/20 bg-white p-5 space-y-3">

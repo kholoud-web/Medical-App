@@ -53,23 +53,23 @@ function App() {
   const router = createBrowserRouter([
     { path: "login", element: <Login /> },
     { path: "landing", element: <LandingPage /> },
-    { path: "/register", element: <Register />,},
+    { path: "/register", element: <Register />, },
     { path: "/reset-password", element: <ResetPassword /> },
-    { path:"/reset-success" ,element:<ResetSuccess />},
-  
-      {
-    path: "/",
-    element: <MainLayout />,
-    children: [
-      { index: true, element: <LandingPage /> },
-      { path: "services", element: <Service /> },
-      // { path: "about", element: <About /> },
-       { path: "contact", element: <Contact/>},
-      { path: "find-doctor", element: <FindDoctor /> },
-       { path: "faq", element: <FAQ />},
-       { path: "*", element: <NotFound /> },
-    ],
-  },
+    { path: "/reset-success", element: <ResetSuccess /> },
+
+    {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        { index: true, element: <LandingPage /> },
+        { path: "services", element: <Service /> },
+        // { path: "about", element: <About /> },
+        { path: "contact", element: <Contact /> },
+        { path: "find-doctor", element: <FindDoctor /> },
+        { path: "faq", element: <FAQ /> },
+        { path: "*", element: <NotFound /> },
+      ],
+    },
     {
       path: "/",
       element: <Layout />,
@@ -84,41 +84,41 @@ function App() {
             { path: "my-patients", element: <MyPatients /> },
             { path: "reports", element: <Reports /> },
             { path: "notifications", element: <Notifications /> },
-            {path:"finances",element:<Finance />},
+            { path: "finances", element: <Finance /> },
             { path: "/withdrawal", element: <RequestWithdrawal /> },
-             {path:"inquiries", element: <Inquiries/>},
+            { path: "inquiries", element: <Inquiries /> },
 
           ]
           : role === "admin"
             ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
-              
+
               { path: "drugChecker", element: <DrugChecker /> },
               { path: "doctorsManagement", element: <DoctorsManagement /> },
               { path: "PatientsManagement", element: <PatientsManagement /> }
 
 
             ]
-          : role === "patient"
-          ? [
-            { path: "dashboard", element:<PatientDashboard/>},
-              { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
-              { path: "drugChecker", element: <DrugChecker /> },
-              { path: "directory", element: <Directory /> },
-              { path: "payment", element: <Payment /> },
-              { path: "physiotherapy",element:<Physiotherapy/>},
-              {path:"AiPerformance",element:<AiPerformance/>},
-              { path: "diagnosis-module", element: <DiagnosisModule /> },
-            ]
-          : []),
+            : role === "patient"
+              ? [
+                { path: "dashboard", element: <PatientDashboard /> },
+                { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
+                { path: "drugChecker", element: <DrugChecker /> },
+                { path: "directory", element: <Directory /> },
+                { path: "payment", element: <Payment /> },
+                { path: "physiotherapy", element: <Physiotherapy /> },
+                { path: "AiPerformance", element: <AiPerformance /> },
+                { path: "diagnosis-module", element: <DiagnosisModule /> },
+              ]
+              : []),
         {
-          path: "settings", element: <settingsElement/>
+          path: "settings", element: <settingsElement />
         },
         {
           path: "help", element: helpElement
         },
         {
-          path:"helpSupport", element:<HelpSupport/>
+          path: "helpSupport", element: <HelpSupport />
         },
 
         {
@@ -128,15 +128,15 @@ function App() {
           path: "SuggestedTreatments", element: <SuggestedTreatments />
         },
         {
-           path:"PatientProfile", element: <PatientProfile />
+          path: "PatientProfile", element: <PatientProfile />
         },
         {
-          path:"DoctorProfile", element:<DoctorProfile/>
+          path: "DoctorProfile", element: <DoctorProfile />
         },
         {
-          path:"systemSetting", element:<SystemSetting/>
+          path: "systemSetting", element: <SystemSetting />
         }
-        
+
       ],
     },
   ]);
