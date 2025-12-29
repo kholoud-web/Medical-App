@@ -10,19 +10,14 @@ import DiagnosisAssistant from "./Pages/Doctor/Diagnosis/DiagnosisAssistant";
 import MyPatients from "./Pages/Doctor/MyPatients/MyPatients";
 import Reports from "./Pages/Doctor/Reports/Reports";
 import Notifications from "./Pages/Doctor/Notifications/Notifications";
-import DoctorSettings from "./Pages/Doctor/Settings";
 import NotificationCenter from "./Pages/Admin/NotificationCenter/NotificationCenter";
 import DrugChecker from "./Pages/Admin/DrugChecker/DrugChecker";
 import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
 import DiagnosisModule from "./Pages/Patient/DiagnosisModule";
 import Directory from "./Pages/Patient/Directory";
-import PatientHelp from "./Pages/Patient/Help";
 import Payment from "./Pages/Patient/Payment";
-import PatientSettings from "./Pages/Patient/Settings";
-import Login from "./Pages/Auth/Login";
 import Service from "./Pages/Service/Service";
 import LandingPage from "./Pages/Common/LandingPage/LandingPage";
-import About from "./Pages/Common/LandingPage/components/About";
 import MainLayout from "./Layouts/MainLayout";
 import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 import Contact from "./Pages/Contact/Contact";
@@ -30,7 +25,7 @@ import FAQ from "./Pages/Common/FAQ/FAQ";
 import Finance from "./Pages/Doctor/Finance/Finance";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTreatments";
-import PatientProfile from "./Pages/Admin/PatientProfile";
+import PatientProfile from "./Pages/Admin/PatientProfile/PatientProfile";
 import DoctorProfile from "./Pages/Admin/DoctorProfile/DoctorProfile";
 import SystemSetting from "./Pages/Admin/SystemSetting/SystemSetting";
 import DoctorsManagement from "./Pages/Admin/DoctorsManagement/DoctorsManagement";
@@ -42,16 +37,18 @@ import ResetPassword from './Pages/Auth/ResetPassword';
 import ResetSuccess from "./Pages/Auth/ResetSuccess";
 import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
-<<<<<<< Updated upstream
+import RequestWithdrawal from "./Pages/Doctor/Finance/RequestWithdrawal/RequestWithdrawal";
 import Consultations from "./Pages/Doctor/Consultation/Consultations";
-=======
-import PatientsManagement from "./Pages/Admin/PatientTable/PatientsManagement";
->>>>>>> Stashed changes
+import PatientsManagement from "./Pages/Admin/PatientsManagement/PatientsManagement";
+import Login from "./Pages/Auth/Login";
+// import About from "./Pages/About/About";
+
+
 
 function App() {
-  const role = "admin";
+  const role = "patient";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
-  // const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
+  const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
   const router = createBrowserRouter([
     { path: "login", element: <Login /> },
@@ -66,10 +63,9 @@ function App() {
     children: [
       { index: true, element: <LandingPage /> },
       { path: "services", element: <Service /> },
-      { path: "about", element: <About /> },
+      // { path: "about", element: <About /> },
        { path: "contact", element: <Contact/>},
       { path: "find-doctor", element: <FindDoctor /> },
-     
        { path: "faq", element: <FAQ />},
        { path: "*", element: <NotFound /> },
     ],
@@ -83,30 +79,27 @@ function App() {
             { path: "appointments", element: <Appointments /> },
             { path: "dashboard", element: <Dashboard /> },
             { path: "diagnosis", element: <DiagnosisAssistant /> },
-            { path: "Consultation", element: <Consultations /> },
             { path: "treatment", element: <Treatment /> },
             { path: "my-patients", element: <MyPatients /> },
             { path: "reports", element: <Reports /> },
             { path: "notifications", element: <Notifications /> },
+            {path:"finances",element:<Finance />},
+            { path: "/withdrawal", element: <RequestWithdrawal /> },
              {path:"inquiries", element: <Inquiries/>},
-            {path:"finances",element:<Finance />}
 
           ]
           : role === "admin"
             ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
-              { path: "drugChecker", element: <DrugChecker /> },
-<<<<<<< Updated upstream
+              
               { path: "doctorsManagement", element: <DoctorsManagement /> },
-=======
-              { path: "PatientsManagement", element: <PatientsManagement /> }
->>>>>>> Stashed changes
 
             ]
           : role === "patient"
           ? [
             { path: "dashboard", element:<PatientDashboard/>},
               { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
+              { path: "drugChecker", element: <DrugChecker /> },
               { path: "directory", element: <Directory /> },
               { path: "payment", element: <Payment /> },
               { path: "physiotherapy",element:<Physiotherapy/>},
@@ -115,15 +108,11 @@ function App() {
             ]
           : []),
         {
-          path: "settings", element: <settingsElement/>
+          path: "settings", element: settingsElement
         },
         {
           path: "help", element: helpElement
         },
-        {
-          path:"helpSupport", element:<HelpSupport/>
-        },
-
         {
           path: "MedicalFiles", element: <MedicalFiles />
         },

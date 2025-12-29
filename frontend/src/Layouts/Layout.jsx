@@ -7,10 +7,10 @@ import { useState } from 'react'
 export default function Layout() {
   const [showSideBar,setShowSideBar]=useState(false)
   return (
-    <div className='flex flex-col min-h-screen'>
-    <Header  showSideBar={showSideBar} setShowSideBar={setShowSideBar} />
-    <div className='md:flex w-full'>
-        <div className=''><SideBar showSideBar={showSideBar} setShowSideBar={setShowSideBar} /></div>
+    <div className='flex flex-col overflow-hidden min-h-screen'>
+    <Header />
+    <div className='md:flex overflow-hidden w-full'>
+        <div className='w-72 h-full bg-white'><SideBar/></div>
         <div className='w-full flex-1 p-5'><Outlet/></div>
     </div>
     </div>
