@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import bgImage from './Image/LoginImg.jpg'
+
 
 export default function Login() {
   const [role, setRole] = useState("Admin");
@@ -7,10 +9,7 @@ export default function Login() {
   return (
     <div
       className="relative min-h-screen bg-cover bg-center"
-      style={{
-        backgroundImage:
-          "url('https://images.pexels.com/photos/6129047/pexels-photo-6129047.jpeg?auto=compress&cs=tinysrgb&w=1600')",
-      }}
+      style={{ backgroundImage: `url(${bgImage})` }}
     >
       <div className="min-h-screen bg-slate-900/60 flex items-center justify-center p-6">
         <div className="absolute left-6 top-6">

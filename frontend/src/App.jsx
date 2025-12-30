@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-
 import Layout from "./Layouts/Layout";
 import NotFound from "./Pages/NotFound/NotFound";
 import Appointments from "./Pages/Doctor/Appointments/Appointments";
@@ -10,19 +9,14 @@ import DiagnosisAssistant from "./Pages/Doctor/Diagnosis/DiagnosisAssistant";
 import MyPatients from "./Pages/Doctor/MyPatients/MyPatients";
 import Reports from "./Pages/Doctor/Reports/Reports";
 import Notifications from "./Pages/Doctor/Notifications/Notifications";
-import DoctorSettings from "./Pages/Doctor/Settings";
 import NotificationCenter from "./Pages/Admin/NotificationCenter/NotificationCenter";
 import DrugChecker from "./Pages/Admin/DrugChecker/DrugChecker";
 import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
 import DiagnosisModule from "./Pages/Patient/DiagnosisModule";
 import Directory from "./Pages/Patient/Directory";
-import PatientHelp from "./Pages/Patient/Help";
 import Payment from "./Pages/Patient/Payment";
-import PatientSettings from "./Pages/Patient/Settings";
-import Login from "./Pages/Auth/Login";
 import Service from "./Pages/Service/Service";
 import LandingPage from "./Pages/Common/LandingPage/LandingPage";
-import About from "./Pages/Common/LandingPage/components/About";
 import MainLayout from "./Layouts/MainLayout";
 import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 import Contact from "./Pages/Contact/Contact";
@@ -44,96 +38,83 @@ import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 import Consultations from "./Pages/Doctor/Consultation/Consultations";
 import PatientsManagement from "./Pages/Admin/PatientsManagement/PatientsManagement";
+import RequestWithdrawal from "./Pages/Doctor/Finance/RequestWithdrawal/RequestWithdrawal";
+import Login from "./Pages/Auth/Login";
+
+// --- تنبيه: تأكد من استيراد هذه المكونات من مساراتها الصحيحة ---
+// import PatientHelp from "./Pages/Patient/Help/PatientHelp";
+// import DoctorSettings from "./Pages/Doctor/Settings/DoctorSettings";
+// import PatientSettings from "./Pages/Patient/Settings/PatientSettings";
 
 function App() {
-  const role = "doctor";
-  const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
-  // const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
+  const role = "patient"; 
+
+  // تأكد أن هذه المكونات معرفة في الأعلى (Imports)
+  const helpElement = role === "patient" ? <HelpSupport /> : <HelpSupport />; 
+  const settingsElement = role === "doctor" ? <SystemSetting /> : <SystemSetting />;
 
   const router = createBrowserRouter([
     { path: "login", element: <Login /> },
     { path: "landing", element: <LandingPage /> },
-    { path: "/register", element: <Register />,},
-    { path: "/reset-password", element: <ResetPassword /> },
-    { path:"/reset-success" ,element:<ResetSuccess />},
-  
-      {
-    path: "/",
-    element: <MainLayout />,
-    children: [
-      { index: true, element: <LandingPage /> },
-      { path: "services", element: <Service /> },
-      { path: "about", element: <About /> },
-       { path: "contact", element: <Contact/>},
-      { path: "find-doctor", element: <FindDoctor /> },
-     
-       { path: "faq", element: <FAQ />},
-       { path: "*", element: <NotFound /> },
-    ],
-  },
+    { path: "register", element: <Register /> },
+    { path: "reset-password", element: <ResetPassword /> },
+    { path: "reset-success", element: <ResetSuccess /> },
+    {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        { index: true, element: <LandingPage /> },
+        { path: "services", element: <Service /> },
+        { path: "contact", element: <Contact /> },
+        { path: "find-doctor", element: <FindDoctor /> },
+        { path: "faq", element: <FAQ /> },
+        { path: "*", element: <NotFound /> },
+      ],
+    },
     {
       path: "/",
       element: <Layout />,
       children: [
         ...(role === "doctor"
           ? [
-            { path: "appointments", element: <Appointments /> },
-            { path: "dashboard", element: <Dashboard /> },
-            { path: "diagnosis", element: <DiagnosisAssistant /> },
-            { path: "Consultation", element: <Consultations /> },
-            { path: "treatment", element: <Treatment /> },
-            { path: "my-patients", element: <MyPatients /> },
-            { path: "reports", element: <Reports /> },
-            { path: "notifications", element: <Notifications /> },
-             {path:"inquiries", element: <Inquiries/>},
-            {path:"finances",element:<Finance />}
-
-          ]
+              { path: "appointments", element: <Appointments /> },
+              { path: "dashboard", element: <Dashboard /> },
+              { path: "diagnosis", element: <DiagnosisAssistant /> },
+              { path: "treatment", element: <Treatment /> },
+              { path: "my-patients", element: <MyPatients /> },
+              { path: "reports", element: <Reports /> },
+              { path: "notifications", element: <Notifications /> },
+              { path: "finances", element: <Finance /> },
+              { path: "withdrawal", element: <RequestWithdrawal /> },
+              { path: "inquiries", element: <Inquiries /> },
+              { path: "consultations", element: <Consultations /> },
+            ]
           : role === "admin"
-            ? [
+          ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
-              { path: "drugChecker", element: <DrugChecker /> }, 
+              { path: "drugChecker", element: <DrugChecker /> },
               { path: "doctorsManagement", element: <DoctorsManagement /> },
-              { path: "PatientsManagement", element: <PatientsManagement /> }
-
+              { path: "PatientsManagement", element: <PatientsManagement /> },
             ]
           : role === "patient"
           ? [
-            { path: "dashboard", element:<PatientDashboard/>},
+              { path: "dashboard", element: <PatientDashboard /> },
               { path: "ai-diagnosis-result", element: <AiDiagnosisResult /> },
+              { path: "drugChecker", element: <DrugChecker /> },
               { path: "directory", element: <Directory /> },
               { path: "payment", element: <Payment /> },
-              { path: "physiotherapy",element:<Physiotherapy/>},
-              {path:"AiPerformance",element:<AiPerformance/>},
+              { path: "physiotherapy", element: <Physiotherapy /> },
+              { path: "AiPerformance", element: <AiPerformance /> },
               { path: "diagnosis-module", element: <DiagnosisModule /> },
             ]
           : []),
-        {
-          path: "settings", element: <settingsElement/>
-        },
-        {
-          path: "help", element: helpElement
-        },
-        {
-          path:"helpSupport", element:<HelpSupport/>
-        },
-
-        {
-          path: "MedicalFiles", element: <MedicalFiles />
-        },
-        {
-          path: "SuggestedTreatments", element: <SuggestedTreatments />
-        },
-        {
-           path:"PatientProfile", element: <PatientProfile />
-        },
-        {
-          path:"DoctorProfile", element:<DoctorProfile/>
-        },
-        {
-          path:"systemSetting", element:<SystemSetting/>
-        }
-        
+        { path: "settings", element: settingsElement },
+        { path: "help", element: helpElement },
+        { path: "MedicalFiles", element: <MedicalFiles /> },
+        { path: "SuggestedTreatments", element: <SuggestedTreatments /> },
+        { path: "PatientProfile", element: <PatientProfile /> },
+        { path: "DoctorProfile", element: <DoctorProfile /> },
+        { path: "systemSetting", element: <SystemSetting /> },
       ],
     },
   ]);
