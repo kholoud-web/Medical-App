@@ -30,7 +30,7 @@ import FAQ from "./Pages/Common/FAQ/FAQ";
 import Finance from "./Pages/Doctor/Finance/Finance";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTreatments";
-import PatientProfile from "./Pages/Admin/PatientProfile";
+import PatientProfile from "./Pages/Admin/PatientProfile/PatientProfile";
 import DoctorProfile from "./Pages/Admin/DoctorProfile/DoctorProfile";
 import SystemSetting from "./Pages/Admin/SystemSetting/SystemSetting";
 import DoctorsManagement from "./Pages/Admin/DoctorsManagement/DoctorsManagement";
@@ -42,14 +42,11 @@ import ResetPassword from './Pages/Auth/ResetPassword';
 import ResetSuccess from "./Pages/Auth/ResetSuccess";
 import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
-<<<<<<< Updated upstream
 import Consultations from "./Pages/Doctor/Consultation/Consultations";
-=======
-import PatientsManagement from "./Pages/Admin/PatientTable/PatientsManagement";
->>>>>>> Stashed changes
+import PatientsManagement from "./Pages/Admin/PatientsManagement/PatientsManagement";
 
 function App() {
-  const role = "admin";
+  const role = "doctor";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
   // const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
@@ -95,12 +92,9 @@ function App() {
           : role === "admin"
             ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
-              { path: "drugChecker", element: <DrugChecker /> },
-<<<<<<< Updated upstream
+              { path: "drugChecker", element: <DrugChecker /> }, 
               { path: "doctorsManagement", element: <DoctorsManagement /> },
-=======
               { path: "PatientsManagement", element: <PatientsManagement /> }
->>>>>>> Stashed changes
 
             ]
           : role === "patient"
