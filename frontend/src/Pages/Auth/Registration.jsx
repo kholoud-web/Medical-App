@@ -27,6 +27,7 @@ export default function Register() {
     setFormData({ ...formData, [name]: value });
 
     if (errors[name]) setErrors({ ...errors, [name]: "" });
+
     if (serverEmailError && name === "email") setServerEmailError("");
   };
 
@@ -55,46 +56,52 @@ export default function Register() {
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
-    console.log("Sending data to API:", {
-      userName: `${formData.firstName}${formData.secondName}`,
-      email: formData.email,
-      password: formData.password,
-      confirmPassword: formData.confirmPassword,
-      phoneNumber: "+201234567890",
-      gender: formData.gender.charAt(0).toUpperCase() + formData.gender.slice(1),
-      fName: formData.firstName,
-      lName: formData.secondName,
-      birthDate: formData.birthDate,
-      clientUri: "https://frontend-app.com/confirm-email",
-    });
+    // console.log("Sending data to API:", {
+    //   userName: `${formData.firstName}${formData.secondName}`,
+    //   email: formData.email,
+    //   password: formData.password,
+    //   confirmPassword: formData.confirmPassword,
+    //   phoneNumber: "+201234567890",
+    //   gender: formData.gender.charAt(0).toUpperCase() + formData.gender.slice(1),
+    //   fName: formData.firstName,
+    //   lName: formData.secondName,
+    //   birthDate: formData.birthDate,
+    //   clientUri: "https://frontend-app.com/confirm-email",
+    // });
 
-    dispatch(
-      registerUser({
-        userName: `${formData.firstName}${formData.secondName}`,
-        email: formData.email,
-        password: formData.password,
-        confirmPassword: formData.confirmPassword,
-        phoneNumber: "+201234567890",
-        gender: formData.gender.charAt(0).toUpperCase() + formData.gender.slice(1),
-        fName: formData.firstName,
-        lName: formData.secondName,
-        birthDate: formData.birthDate,
-        clientUri: "https://frontend-app.com/confirm-email",
-      })
-    );
+   dispatch(
+  registerUser({
+    userName: `${formData.firstName}${formData.secondName}_${Date.now().toString().slice(-4)}`,
+    email: formData.email,
+    password: formData.password,
+    confirmPassword: formData.confirmPassword,
+    phoneNumber: "+201234567890",
+    gender: formData.gender.charAt(0).toUpperCase() + formData.gender.slice(1),
+    fName: formData.firstName,
+    lName: formData.secondName,
+    birthDate: formData.birthDate,
+    clientUri: "https://frontend-app.com/confirm-email",
+  })
+);
+
   };
 
-  useEffect(() => {
-    if (success) {
-      dispatch(clearAuthState());
-      navigate("/login"); 
-    }
+useEffect(() => {
+  if (success) {
+    dispatch(clearAuthState());
+    navigate("/login");
+  }
+}, [success, navigate, dispatch]);
 
-    if (error?.errors?.Email || error?.message?.includes("exists")) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setServerEmailError("هذا البريد الإلكتروني مسجل بالفعل");
-    }
-  }, [success, error, navigate, dispatch]);
+const emailAlreadyExists = React.useMemo(() => {
+  if (typeof error === "string") {
+    return error.toLowerCase().includes("email")
+      ? "هذا البريد الإلكتروني مسجل بالفعل"
+      : "";
+  }
+  return "";
+}, [error]);
+
 
   return (
     <div
@@ -107,6 +114,8 @@ export default function Register() {
         <div className="w-full flex flex-col items-center">
           <h1 className="text-xl sm:text-2xl font-bold text-white text-center mb-4 sm:mb-6">Registration</h1>
 
+
+{/* /////////////////////////////Form////////////////////////////// */}
           <form onSubmit={handleConfirm} className="w-full flex flex-col items-center space-y-2">
             {/* First Name */}
             <div className="w-full">
@@ -133,20 +142,21 @@ export default function Register() {
             </div>
 
             {/* Email */}
-            <div className="w-full">
-              <label className="block text-white text-[12px] sm:text-[14px] mb-1">Email</label>
-              <input
-                name="email"
-                onChange={handleChange}
-                type="email"
-                placeholder="Enter your email or phone number.."
-                className={`w-full h-[33px] sm:h-[38px] rounded-lg bg-white px-3 sm:px-4 text-gray-800 text-[12px] sm:text-[14px] placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-blue-500
-                  ${errors.email || serverEmailError ? "border border-red-500" : ""}`}
-              />
-              <p className="text-red-500 text-[11px] sm:text-[12px] mt-1 min-h-[14px]">
-                {errors.email || serverEmailError || ""}
-              </p>
-            </div>
+           <div className="w-full">
+  <label className="block text-white text-[12px] sm:text-[14px] mb-1">Email</label>
+  <input
+    name="email"
+    onChange={handleChange}
+    type="email"
+    className={`w-full h-[33px] sm:h-[38px] rounded-lg bg-white px-3 sm:px-4 text-gray-800
+      ${errors.email || serverEmailError ? "border border-red-500" : ""}`}
+  />
+ <p className="text-red-500 text-[11px] mt-1 min-h-[14px]">
+  {errors.email || emailAlreadyExists || ""}
+</p>
+
+</div>
+
 
             {/* Birth Date */}
             <div className="w-full">
