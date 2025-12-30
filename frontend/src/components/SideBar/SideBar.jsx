@@ -36,8 +36,8 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
     },
     {
       icon: <FiFilePlus className="inline-block mr-2" />,
-      title: "Consultations",
-      link: "/consultations",
+      title: "Consultation",
+      link: "/Consultation",
     },
     {
       icon: <FaSearchPlus className="inline-block mr-2" />,
