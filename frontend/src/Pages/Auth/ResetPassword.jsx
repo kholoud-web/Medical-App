@@ -10,96 +10,56 @@ export default function ResetPassword() {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   
-  // Step 1: Email input
   const [email, setEmail] = useState("");
-  const [step, setStep] = useState(1); // 1 = email step, 2 = password step
+  const [step, setStep] = useState(1);
   
-  // Check if token and email are in URL (from email link)
-  useEffect(() => {
-    const tokenFromUrl = searchParams.get("token");
-    const emailFromUrl = searchParams.get("email");
-    
-    if (tokenFromUrl && emailFromUrl) {
-      // User came from email link - extract token and email from URL
-      console.log("Token and email found in URL:", { token: tokenFromUrl, email: emailFromUrl });
-      dispatch(setResetToken({ email: emailFromUrl, token: tokenFromUrl }));
-      setEmail(emailFromUrl);
-      setStep(2); // Go directly to step 2
-    }
-  }, [searchParams, dispatch]);
-  
-  // Step 2: Password input
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   
   const [errors, setErrors] = useState({});
   const [error, setError] = useState("");
   
-  // Cooldown timer for reset link
   const [cooldownSeconds, setCooldownSeconds] = useState(0);
   const [canSendLink, setCanSendLink] = useState(true);
+  const [passwordSubmitted, setPasswordSubmitted] = useState(false);
 
   const { loading, success, error: authError, resetToken, resetEmail } = useSelector((state) => state.auth);
   
-  // Debug: Log state changes
   useEffect(() => {
-    console.log("ResetPassword state:", { step, loading, success, resetEmail, resetToken, error: authError });
-  }, [step, loading, success, resetEmail, resetToken, authError]);
-
-  useEffect(() => {
-    // Check if token and email are in URL (from email link)
-    const tokenFromUrl = new URLSearchParams(window.location.search).get("token");
-    const emailFromUrl = new URLSearchParams(window.location.search).get("email");
+    const tokenFromUrl = searchParams.get("token");
+    const emailFromUrl = searchParams.get("email");
     
     if (tokenFromUrl && emailFromUrl) {
-      // User came from email link - extract token and email from URL
-      console.log("Token and email found in URL from email link:", { token: tokenFromUrl, email: emailFromUrl });
       dispatch(setResetToken({ email: emailFromUrl, token: tokenFromUrl }));
       setEmail(emailFromUrl);
-      setStep(2); // Go directly to step 2 (skip step 1)
-      // Clear URL parameters for security
+      setStep(2);
       window.history.replaceState({}, document.title, window.location.pathname);
     } else {
-      // No token in URL - user needs to start from step 1
       dispatch(clearAuthState());
     }
-  }, [dispatch]);
+  }, [searchParams, dispatch]);
 
-  // Handle success for password reset (step 2) - only redirect after password is actually submitted
-  const [passwordSubmitted, setPasswordSubmitted] = useState(false);
-  
   useEffect(() => {
     if (success && step === 2 && passwordSubmitted) {
-      // Only redirect if password was actually submitted
       navigate("/reset-success");
     }
   }, [success, navigate, step, passwordSubmitted]);
 
-  // Handle success for forgot password
   useEffect(() => {
     if (success && step === 1) {
-      // Forget password succeeded - email was sent with reset link
-      // User needs to check their email and click the link to get the token
-      // Don't move to step 2 yet - wait for token from email link
       const emailToUse = resetEmail || email;
-      console.log("Forgot password success. Email sent with reset link. ResetEmail:", resetEmail, "Email:", email);
       
       if (emailToUse) {
-        // Show success message - user needs to check email
-        setError(""); // Clear any errors
-        // Start cooldown timer (60 seconds)
+        setError("");
         setCanSendLink(false);
         setCooldownSeconds(60);
-        // Don't move to step 2 - user must click email link to get token
         dispatch(clearAuthState());
       } else {
-        console.error("No email found after forgot password success");
         setError("Email verification failed. Please try again.");
       }
     }
   }, [success, resetEmail, step, email, dispatch]);
   
-  // Cooldown timer countdown
   useEffect(() => {
     let interval = null;
     if (cooldownSeconds > 0) {
@@ -122,7 +82,6 @@ export default function ResetPassword() {
 
   useEffect(() => {
     if (authError) {
-      console.log("Auth error in ResetPassword:", authError);
       if (authError.message) {
         setError(authError.message);
       } else if (typeof authError === "string") {
@@ -133,7 +92,7 @@ export default function ResetPassword() {
           : "Failed to reset password. Please try again.");
       }
     } else {
-      setError(""); // Clear error when authError is cleared
+      setError("");
     }
   }, [authError, step]);
 
@@ -151,7 +110,6 @@ export default function ResetPassword() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Real-time password strength checking
   const getPasswordStrength = () => {
     if (!password) return { strength: 0, message: "", checks: {} };
     
@@ -193,7 +151,6 @@ export default function ResetPassword() {
     } else if (password.length < 8) {
       newErrors.password = "Password must be at least 8 characters long";
     } else {
-      // Check password requirements: uppercase, lowercase, digit, special character
       const hasUpperCase = /[A-Z]/.test(password);
       const hasLowerCase = /[a-z]/.test(password);
       const hasDigit = /[0-9]/.test(password);
@@ -224,20 +181,11 @@ export default function ResetPassword() {
       return;
     }
 
-    // Check cooldown
-    if (!canSendLink) {
-      setError(`Please wait ${cooldownSeconds} seconds before requesting another reset link.`);
-      return;
-    }
     if (!canSendLink) {
       setError(`Please wait ${cooldownSeconds} seconds before requesting another reset link.`);
       return;
     }
 
-    console.log("Validating email for password reset:", email);
-    
-    // Call forgot password to validate email and get token internally
-    // This will try to validate the email through the reset-password endpoint
     dispatch(forgotPassword(email));
   };
 
@@ -257,13 +205,8 @@ export default function ResetPassword() {
       return;
     }
 
-    console.log("Submitting password reset. Email:", emailToUse, "Token:", resetToken);
-    
-    // Mark that password is being submitted
     setPasswordSubmitted(true);
 
-    // Token must come from the email link (URL parameter)
-    // If we don't have a valid token, show error
     if (!resetToken || resetToken === "server-stored" || resetToken === null || resetToken === "") {
       setError("Token is required. Please use the reset link sent to your email, or request a new reset link.");
       setPasswordSubmitted(false);
@@ -275,7 +218,7 @@ export default function ResetPassword() {
     dispatch(
       resetPassword({
         email: emailToUse,
-        token: tokenToSend, // Will be empty if forgot password endpoint doesn't exist
+        token: tokenToSend,
         password,
         passwordConfirmation,
       })
@@ -284,113 +227,100 @@ export default function ResetPassword() {
 
   return (
     <div
-      className="relative min-h-screen w-full flex items-center justify-center bg-cover bg-center"
+      className="relative min-h-screen bg-cover bg-center"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
-      <div className="absolute inset-0 bg-black/40"></div>
+      <div className="min-h-screen bg-slate-900/60 flex items-center justify-center p-6">
+        <button
+          onClick={() => navigate(-1)}
+          className="absolute top-6 left-6 z-20 text-white hover:text-blue-400 transition"
+        >
+          <IoIosArrowBack size={26} />
+        </button>
 
-      <button
-        onClick={() => navigate(-1)}
-        className="absolute top-6 left-6 z-20 text-white hover:text-blue-400 transition"
-      >
-        <IoIosArrowBack size={26} />
-      </button>
-
-      <div className="relative z-10 w-[55%] max-w-5xl rounded-[32px] bg-black/40 backdrop-blur-md p-12 shadow-2xl flex justify-center">
-        
-        <div className="w-full flex flex-col items-center">
-          
-          <h2 className="text-2xl font-bold text-white text-center mb-6">
+        <div className="w-full max-w-lg rounded-2xl bg-black/50 text-white border border-white/10 shadow-2xl p-8 backdrop-blur-sm">
+          <h1 className="text-3xl font-semibold text-center mb-6">
             {step === 1 ? "Forgot Password" : "Reset Password"}
-          </h2>
+          </h1>
           
           {step === 1 && (
-            <p className="text-white/70 text-sm text-center mb-4 max-w-md">
-              Enter your email address and we'll send you a reset link
-            </p>
-          )}
-          
-          {step === 2 && !resetToken && (
-            <p className="text-yellow-300 text-sm text-center mb-4 max-w-md">
-              Please use the reset link sent to your email to get the token, or request a new reset link.
-            </p>
-          )}
-
-          {/* Step 1: Email Input */}
-          {step === 1 && (
-            <form onSubmit={handleEmailSubmit} className="space-y-6 flex flex-col items-center w-full">
-              {error && (
-                <div className="w-[430px] rounded-md bg-red-500/20 border border-red-500/50 px-3 py-2 text-sm text-red-200">
-                  {error}
-                </div>
-              )}
-
-              <div className="w-[430px]">
-                <label className="block text-white text-sm mb-1">Email</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={`w-full h-[40px] rounded-lg bg-white px-4 outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.email ? "border-2 border-red-500" : ""
-                  }`}
-                  disabled={loading}
-                  placeholder="Enter your email"
-                />
-                {errors.email && (
-                  <p className="text-red-300 text-xs mt-1">{errors.email}</p>
+            <>
+              <p className="text-white/70 text-sm text-center mb-4">
+                Enter your email address and we'll send you a reset link
+              </p>
+              <form onSubmit={handleEmailSubmit} className="space-y-4">
+                {error && (
+                  <div className="rounded-md bg-red-500/20 border border-red-500/50 px-3 py-2 text-sm text-red-200">
+                    {error}
+                  </div>
                 )}
-              </div>
 
-              <button
-                type="submit"
-                disabled={loading || !canSendLink}
-                className="w-[333px] h-[38px] mt-6 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? "Sending..." : !canSendLink ? `Wait ${cooldownSeconds}s` : "Send Reset Link"}
-              </button>
-              
-              {success && step === 1 && (
-                <div className="w-[430px] mt-4 rounded-md bg-green-500/20 border border-green-500/50 px-3 py-2 text-sm text-green-200">
-                  Reset link has been sent to your email. Please check your inbox and click the link to continue.
+                <div>
+                  <label className="text-sm font-semibold">Email</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email..."
+                    className={`mt-1 w-full rounded-md border border-white/20 bg-white px-3 py-2 text-sm text-neutral-800 placeholder:text-neutral-400 focus:border-primary-blue focus:ring-2 focus:ring-primary-blue/40 outline-none ${
+                      errors.email ? "border-red-500" : ""
+                    }`}
+                    disabled={loading}
+                  />
+                  {errors.email && (
+                    <p className="text-red-300 text-xs mt-1">{errors.email}</p>
+                  )}
                 </div>
-              )}
-            </form>
+
+                <button
+                  type="submit"
+                  disabled={loading || !canSendLink}
+                  className="w-full mt-4 rounded-md bg-primary-blue py-2 text-sm font-semibold shadow hover:bg-primary-blue/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading ? "Sending..." : !canSendLink ? `Wait ${cooldownSeconds}s` : "Send Reset Link"}
+                </button>
+                
+                {success && step === 1 && (
+                  <div className="mt-4 rounded-md bg-green-500/20 border border-green-500/50 px-3 py-2 text-sm text-green-200">
+                    Reset link has been sent to your email. Please check your inbox and click the link to continue.
+                  </div>
+                )}
+              </form>
+            </>
           )}
 
-          {/* Step 2: Password Input */}
           {step === 2 && (
-            <form onSubmit={handlePasswordSubmit} className="space-y-6 flex flex-col items-center w-full">
+            <form onSubmit={handlePasswordSubmit} className="space-y-4">
               {error && (
-                <div className="w-[430px] rounded-md bg-red-500/20 border border-red-500/50 px-3 py-2 text-sm text-red-200">
+                <div className="rounded-md bg-red-500/20 border border-red-500/50 px-3 py-2 text-sm text-red-200">
                   {error}
                 </div>
               )}
 
-              <div className="w-[430px]">
-                <label className="block text-white text-sm mb-1">Email</label>
+              <div>
+                <label className="text-sm font-semibold">Email</label>
                 <input
                   type="email"
                   value={resetEmail || email}
                   disabled
-                  className="w-full h-[40px] rounded-lg bg-gray-200 px-4 outline-none text-gray-600"
+                  className="mt-1 w-full rounded-md border border-white/20 bg-white/50 px-3 py-2 text-sm text-neutral-600"
                 />
                 <p className="text-white/70 text-xs mt-1">
                   Enter your new password below
                 </p>
               </div>
 
-              <div className="w-[430px]">
-                <label className="block text-white text-sm mb-1">New password</label>
+              <div>
+                <label className="text-sm font-semibold">New password</label>
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className={`w-full h-[40px] rounded-lg bg-white px-4 outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.password ? "border-2 border-red-500" : ""
+                  placeholder="Enter new password..."
+                  className={`mt-1 w-full rounded-md border border-white/20 bg-white px-3 py-2 text-sm text-neutral-800 placeholder:text-neutral-400 focus:border-primary-blue focus:ring-2 focus:ring-primary-blue/40 outline-none ${
+                    errors.password ? "border-red-500" : ""
                   }`}
                   disabled={loading}
-                  placeholder="Enter new password"
                 />
                 {password && (
                   <div className="mt-2 space-y-1">
@@ -449,17 +379,17 @@ export default function ResetPassword() {
                 )}
               </div>
 
-              <div className="w-[430px]">
-                <label className="block text-white text-sm mb-1">Confirm password</label>
+              <div>
+                <label className="text-sm font-semibold">Confirm password</label>
                 <input
                   type="password"
                   value={passwordConfirmation}
                   onChange={(e) => setPasswordConfirmation(e.target.value)}
-                  className={`w-full h-[40px] rounded-lg bg-white px-4 outline-none focus:ring-2 focus:ring-blue-500 ${
-                    errors.passwordConfirmation ? "border-2 border-red-500" : ""
+                  placeholder="Confirm new password..."
+                  className={`mt-1 w-full rounded-md border border-white/20 bg-white px-3 py-2 text-sm text-neutral-800 placeholder:text-neutral-400 focus:border-primary-blue focus:ring-2 focus:ring-primary-blue/40 outline-none ${
+                    errors.passwordConfirmation ? "border-red-500" : ""
                   }`}
                   disabled={loading}
-                  placeholder="Confirm new password"
                 />
                 {errors.passwordConfirmation && (
                   <p className="text-red-300 text-xs mt-1">{errors.passwordConfirmation}</p>
@@ -469,13 +399,12 @@ export default function ResetPassword() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-[333px] h-[38px] mt-6 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full mt-4 rounded-md bg-primary-blue py-2 text-sm font-semibold shadow hover:bg-primary-blue/90 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? "Resetting Password..." : "Confirm"}
               </button>
             </form>
           )}
-
         </div>
       </div>
     </div>

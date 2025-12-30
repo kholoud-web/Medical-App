@@ -16,19 +16,16 @@ export default function Login() {
   const { loading, isAuthenticated, role: userRole, error: authError } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    // Clear any previous errors when component mounts
     dispatch(clearAuthState());
   }, [dispatch]);
 
   useEffect(() => {
-    // Redirect to dashboard after successful login
     if (isAuthenticated) {
       navigate("/dashboard");
     }
   }, [isAuthenticated, navigate]);
 
   useEffect(() => {
-    // Display error message
     if (authError) {
       if (authError.message) {
         setError(authError.message);
@@ -44,20 +41,17 @@ export default function Login() {
     e.preventDefault();
     setError("");
 
-    // Basic validation
     if (!email || !password) {
       setError("Please fill in all fields");
       return;
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError("Please enter a valid email address");
       return;
     }
 
-    // Dispatch login action
     dispatch(loginUser({ email, password }));
   };
 
@@ -134,9 +128,11 @@ export default function Login() {
             </button>
           </form>
 
-          <p className="mt-4 text-xs text-center text-neutral-200">
-            Don&apos;t Have Account
-          </p>
+          <Link to="/register">
+            <p className="mt-4 text-xs text-center text-neutral-200 hover:text-blue-400 cursor-pointer transition">
+              Don&apos;t Have Account? Sign up
+            </p>
+          </Link>
         </div>
       </div>
     </div>
