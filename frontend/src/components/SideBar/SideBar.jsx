@@ -45,25 +45,11 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
       link: "/diagnosis",
     },
    
-
-
-
-
-
-
-
-
-
     {
       icon: <LuChartColumn className="inline-block mr-2" />,
       title: "Finances",
       link: "/finances",
     },
-
-
-
-
-
   ];
 
   const AdminNavBar = [
@@ -100,23 +86,13 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
     {
       icon: <MdOutlineAddBox className="inline-block mr-2" />,
       title: "Diagnosis Module",
-      link: "/DiagnosisModule",
+      link: "/diagnosis-module",
     },
-
-
-
-
-
     {
       icon: <TbMessageCirclePlus className="inline-block mr-2" />,
       title: "Ai Diagnosis Result",
-      link: "/AiDiagnosisResult",
+      link: "/ai-diagnosis-result",
     },
-
-
-
-
-
     {
       icon: <BiInjection className="inline-block mr-2" />,
       title: "Drug Checker",
@@ -132,26 +108,6 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
       title: "Inquiries",
       link: "/inquiries",
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     {
       icon: <FiFilePlus className="inline-block mr-2" />,
       title: "Medical Files",
@@ -160,7 +116,7 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
     {
       icon: <MdOutlinePayment  className="inline-block mr-2" />,
       title: "Payments",
-      link: "/payments",
+      link: "/payment",
     }
   ];
 
