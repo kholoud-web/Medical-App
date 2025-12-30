@@ -1,6 +1,6 @@
 import axios from "axios";
+import { store } from "@/RiduxToolkit/Store";
 
-// Create axios instance
 const axiosInstance = axios.create({
   baseURL: "http://diagnosis.runasp.net",
   headers: {
@@ -8,10 +8,10 @@ const axiosInstance = axios.create({
   },
 });
 
-// Request interceptor to add token to headers
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const state = store.getState();
+    const token = state.auth.token;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -22,22 +22,12 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// Response interceptor to handle errors
 axiosInstance.interceptors.response.use(
   (response) => {
     return response;
   },
   (error) => {
-    // Handle 401 Unauthorized - token expired or invalid
     if (error.response?.status === 401) {
-      // Clear auth data and redirect to login
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      localStorage.removeItem("email");
-      localStorage.removeItem("role");
-      localStorage.removeItem("expiresAt");
-      
-      // Redirect to login page if not already there
       if (window.location.pathname !== "/login") {
         window.location.href = "/login";
       }
