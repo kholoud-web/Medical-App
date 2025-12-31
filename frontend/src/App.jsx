@@ -47,7 +47,7 @@ import Login from "./Pages/Auth/Login";
 // import PatientSettings from "./Pages/Patient/Settings/PatientSettings";
 
 function App() {
-  const role = "patient"; 
+  const role = "doctor"; 
 
   // تأكد أن هذه المكونات معرفة في الأعلى (Imports)
   const helpElement = role === "patient" ? <HelpSupport /> : <HelpSupport />; 
@@ -87,7 +87,7 @@ function App() {
               { path: "finances", element: <Finance /> },
               { path: "withdrawal", element: <RequestWithdrawal /> },
               { path: "inquiries", element: <Inquiries /> },
-              { path: "consultations", element: <Consultations /> },
+              { path: "Consultations", element: <Consultations /> },
             ]
           : role === "admin"
           ? [
