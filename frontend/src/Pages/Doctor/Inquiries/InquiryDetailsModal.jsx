@@ -1,9 +1,18 @@
 import IconYes from "./Icons/yes.svg";
 import IconProgress from "./Icons/progress.svg";
 import IconDownload from "./Icons/download.svg";
+import { useDispatch , useSelector } from "react-redux";
+import { closeInquiryModal } from "@/RiduxToolkit/Slices/inquirySlice";
 
-export default function InquiryDetailsModal({ inquiry, onClose }) {
-  if (!inquiry) return null;
+
+
+export default function InquiryDetailsModal() {
+   const dispatch = useDispatch();
+     const { selectedInquiry: inquiry, isModalOpen } = useSelector(
+    (state) => state.inquiry
+  );
+  
+  if (!isModalOpen || !inquiry) return null;
 
   const isReplied = inquiry.status === "Replied";
 
@@ -16,7 +25,7 @@ export default function InquiryDetailsModal({ inquiry, onClose }) {
       >
    
         <button
-          onClick={onClose}
+          onClick={()=>dispatch(closeInquiryModal())}
           className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl"
         >
           ×
@@ -94,7 +103,7 @@ export default function InquiryDetailsModal({ inquiry, onClose }) {
         )}
 
         <button
-          onClick={onClose}
+          onClick={()=>dispatch(closeInquiryModal)}
           className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg transition"
         >
           Ok
