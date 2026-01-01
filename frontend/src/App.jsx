@@ -10,14 +10,19 @@ import DiagnosisAssistant from "./Pages/Doctor/Diagnosis/DiagnosisAssistant";
 import MyPatients from "./Pages/Doctor/MyPatients/MyPatients";
 import Reports from "./Pages/Doctor/Reports/Reports";
 import Notifications from "./Pages/Doctor/Notifications/Notifications";
+import DoctorSettings from "./Pages/Doctor/Settings";
 import NotificationCenter from "./Pages/Admin/NotificationCenter/NotificationCenter";
 import DrugChecker from "./Pages/Admin/DrugChecker/DrugChecker";
 import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
 import DiagnosisModule from "./Pages/Patient/DiagnosisModule";
 import Directory from "./Pages/Patient/Directory";
+import PatientHelp from "./Pages/Patient/Help";
 import Payment from "./Pages/Patient/Payment";
+import PatientSettings from "./Pages/Patient/Settings";
+import Login from "./Pages/Auth/Login";
 import Service from "./Pages/Service/Service";
 import LandingPage from "./Pages/Common/LandingPage/LandingPage";
+import About from "./Pages/Common/LandingPage/components/About";
 import MainLayout from "./Layouts/MainLayout";
 import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
 import Contact from "./Pages/Contact/Contact";
@@ -25,7 +30,7 @@ import FAQ from "./Pages/Common/FAQ/FAQ";
 import Finance from "./Pages/Doctor/Finance/Finance";
 import MedicalFiles from "./Pages/Doctor/MedicalFiles/MedicalFiles";
 import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTreatments";
-import PatientProfile from "./Pages/Admin/PatientProfile/PatientProfile";
+import PatientProfile from "./Pages/Patient/PatientProfile/PatientProfile";
 import DoctorProfile from "./Pages/Admin/DoctorProfile/DoctorProfile";
 import SystemSetting from "./Pages/Admin/SystemSetting/SystemSetting";
 import DoctorsManagement from "./Pages/Admin/DoctorsManagement/DoctorsManagement";
@@ -37,18 +42,19 @@ import ResetPassword from './Pages/Auth/ResetPassword';
 import ResetSuccess from "./Pages/Auth/ResetSuccess";
 import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
-import RequestWithdrawal from "./Pages/Doctor/Finance/RequestWithdrawal/RequestWithdrawal";
-import Consultations from "./Pages/Doctor/Consultation/Consultations";
-import PatientsManagement from "./Pages/Admin/PatientsManagement/PatientsManagement";
-import Login from "./Pages/Auth/Login";
-// import About from "./Pages/About/About";
-
-
 
 function App() {
+<<<<<<< HEAD
+  const role = "doctor"; 
+
+  // تأكد أن هذه المكونات معرفة في الأعلى (Imports)
+  const helpElement = role === "patient" ? <HelpSupport /> : <HelpSupport />; 
+  const settingsElement = role === "doctor" ? <SystemSetting /> : <SystemSetting />;
+=======
   const role = "patient";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
   const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
+>>>>>>> 40d0f0feb987f4d39b9b446d7a69c3bf56255305
 
   const router = createBrowserRouter([
     { path: "login", element: <Login /> },
@@ -63,9 +69,10 @@ function App() {
     children: [
       { index: true, element: <LandingPage /> },
       { path: "services", element: <Service /> },
-      // { path: "about", element: <About /> },
+      { path: "about", element: <About /> },
        { path: "contact", element: <Contact/>},
       { path: "find-doctor", element: <FindDoctor /> },
+     
        { path: "faq", element: <FAQ />},
        { path: "*", element: <NotFound /> },
     ],
@@ -76,6 +83,20 @@ function App() {
       children: [
         ...(role === "doctor"
           ? [
+<<<<<<< HEAD
+              { path: "appointments", element: <Appointments /> },
+              { path: "dashboard", element: <Dashboard /> },
+              { path: "diagnosis", element: <DiagnosisAssistant /> },
+              { path: "treatment", element: <Treatment /> },
+              { path: "my-patients", element: <MyPatients /> },
+              { path: "reports", element: <Reports /> },
+              { path: "notifications", element: <Notifications /> },
+              { path: "finances", element: <Finance /> },
+              { path: "withdrawal", element: <RequestWithdrawal /> },
+              { path: "inquiries", element: <Inquiries /> },
+              { path: "Consultations", element: <Consultations /> },
+            ]
+=======
             { path: "appointments", element: <Appointments /> },
             { path: "dashboard", element: <Dashboard /> },
             { path: "diagnosis", element: <DiagnosisAssistant /> },
@@ -83,11 +104,11 @@ function App() {
             { path: "my-patients", element: <MyPatients /> },
             { path: "reports", element: <Reports /> },
             { path: "notifications", element: <Notifications /> },
-            {path:"finances",element:<Finance />},
-            { path: "/withdrawal", element: <RequestWithdrawal /> },
-             {path:"inquiries", element: <Inquiries/>},
+            
+            {path:"finances",element:<Finance />}
 
           ]
+>>>>>>> 40d0f0feb987f4d39b9b446d7a69c3bf56255305
           : role === "admin"
             ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
@@ -103,6 +124,7 @@ function App() {
               { path: "directory", element: <Directory /> },
               { path: "payment", element: <Payment /> },
               { path: "physiotherapy",element:<Physiotherapy/>},
+               {path:"inquiries", element: <Inquiries/>},
               {path:"AiPerformance",element:<AiPerformance/>},
               { path: "diagnosis-module", element: <DiagnosisModule /> },
             ]
