@@ -1,4 +1,26 @@
+import { useSelector, useDispatch } from "react-redux";
+import { clearModifyData } from "../../../../RiduxToolkit/Slices/modifyConsultationSlice";
+
 const ModifyDiagnosisModal = ({ onClose }) => {
+  const { data, loading, error } = useSelector(
+  (state) => state.modifyConsultation
+);
+{loading && <p>Loading...</p>}
+{error && <p className="text-red-500">{error}</p>}
+
+{data && (
+  <>
+    <input defaultValue={data.name} />
+    <textarea defaultValue={data.notes} />
+  </>
+)}
+const dispatch = useDispatch();
+
+const handleClose = () => {
+  dispatch(clearModifyData());
+  onClose();
+};
+
   return (
     <div className="fixed inset-1 bg-black/30 flex items-center justify-center z-50">
 <div className="bg-white w-[620px] max-w-[90vw] shadow-2xl rounded-2xl p-8 space-y-4">
@@ -25,7 +47,7 @@ const ModifyDiagnosisModal = ({ onClose }) => {
           <button className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg">
             Save
           </button>
-          <button onClick={onClose} className="px-4 py-2 text-sm border rounded-lg">
+          <button onClick={handleClose} className="px-4 py-2 text-sm border rounded-lg">
             Cancel
           </button>
           

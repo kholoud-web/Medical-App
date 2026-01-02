@@ -1,74 +1,64 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchConsultations,
+  acceptConsultation,
+  rejectConsultation,
+  fetchConsultationDetails,
+} from "../../../RiduxToolkit/Slices/ConsultationSlice";
+
 import ConsultationsHeader from "./components/ConsultationsHeader";
 import ConsultationCard from "./components/ConsultationCard";
 import ConsultationPanel from "./components/ConsultationPanel";
-
-import { useState } from "react";
-import ModifyDiagnosisModal from './components/ModifyDiagnosisModal ';
-import RejectDiagnosisModal from './components/RejectDiagnosisModal ';
-
-const data = [
-  {
-    name: "Aisha Mohamed",
-    age: "34.F",
-    type: "Inquiry",
-    symptoms: "Fever, cough, shortness of breath for 2 days",
-    response: "Viral Upper Respiratory Infection, Possible COVID-19",
-    status: "New",
-    date: "2025/12/5 • AM 10:30",
-  },
-  {
-    name: "Omar Salah",
-    age: "48.M",
-    type: "AI",
-    symptoms: "Abdominal pain and nausea for 12 hours",
-    response: "Viral Upper Respiratory Infection, Possible COVID-19",
-    status: "Accepted",
-    date: "2025/12/5 • AM 7:30",
-  },
-  {
-    name: "Nada Alaa",
-    age: "27.F",
-    type: "AI",
-    symptoms: "Rash on forearm after detergent",
-    response: "Viral Upper Respiratory Infection, Possible COVID-19",
-    status: "Rejected",
-    date: "2025/12/4 • PM 8:30",
-  },
-  {
-    name: "Noha Mohamed",
-    age: "31.F",
-    type: "AI",
-    symptoms: "Rash on forearm after detergent",
-    response: "Viral Upper Respiratory Infection, Possible COVID-19",
-    status: "Accepted",
-    date: "2025/12/4 • PM 8:30",
-  },
-  {
-    name: "Ali Salah",
-    age: "31.F",
-    type: "AI",
-    symptoms: "Abdominal pain and nausea for 12 hours.",
-    response: "Viral Upper Respiratory Infection, Possible COVID-19",
-    status: "Rejected",
-    date: "2025/12/4 • PM 8:30",
-  },
-];
+import ModifyDiagnosisModal from "./components/ModifyDiagnosisModal ";
+import RejectDiagnosisModal from "./components/RejectDiagnosisModal ";
+import { fetchModifyData } from "../../../RiduxToolkit/Slices/modifyConsultationSlice";
 
 const Consultations = () => {
-  const [selectedConsultation , setSelectedConsultation] = useState(null);
+  const dispatch = useDispatch();
+  const { consultations, loading, error } = useSelector(
+    (state) => state.consultation
+  );
+
+  const {selectedConsultation} = useSelector((state) => state.consultation);
   const [openModify, setOpenModify] = useState(false);
   const [openReject, setOpenReject] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+
+  //  Fetch data once component mounts
+  useEffect(() => {
+    dispatch(fetchConsultations());
+  }, [dispatch]);
+
+  const filteredConsultations = consultations.filter((item) => {
+  const matchesSearch =
+    item.patientName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.symptoms?.toLowerCase().includes(searchTerm.toLowerCase());
+
+  const matchesStatus =
+    statusFilter === "all" || item.status === statusFilter;
+
+  return matchesSearch && matchesStatus;
+});
+
   return (
     <div className="flex flex-col lg:flex-row bg-white min-h-screen">
-      
-      {/* القسم الرئيسي للجدول */}
-      <div className="flex-1 flex flex-col min-w-0"> {/* min-w-0 تمنع العناصر من دفع الحاوية للخارج */}
-        <ConsultationsHeader />
-        
+      {/* القسم الرئيسي */}
+      <div className="flex-1 flex flex-col min-w-0">
+        <ConsultationsHeader 
+        search={searchTerm}
+        status={statusFilter}
+        onSearchChange={setSearchTerm}
+        onStatusChange={setStatusFilter}
+  />
+
+        {/* Loading/Error Handling */}
+        {loading && <p>Loading consultations...</p>}
+        {error && <p className="text-red-500">{error}</p>}
+
         <div className="flex flex-1 px-4 md:px-6 pb-6 gap-4 md:gap-6">
           <div className="flex-grow space-y-3">
-            
-            {/* صف العناوين: يظهر فقط في الشاشات الكبيرة لتجنب التداخل الموضح في الصورة */}
             <div className="hidden xl:grid border border-blue-400 rounded-xl grid-cols-6 gap-4 bg-gray-100 px-4 py-3 text-sm font-semibold text-gray-700">
               <div>Patient</div>
               <div>Type</div>
@@ -77,38 +67,57 @@ const Consultations = () => {
               <div>Status</div>
               <div>Action</div>
             </div>
-            
-            {/* القائمة */}
+
             <div className="space-y-3">
-              {data.map((item, index) => (
+              {filteredConsultations.map((item) => (
                 <ConsultationCard
-                 key={index} 
-                 data={item} 
-                 onView={() => setSelectedConsultation(item)}
-                 />
+                  key={item.id}
+                  data={item}
+                  onView={() => {
+                    dispatch(fetchConsultationDetails(item.id));
+                }}
+                />
               ))}
             </div>
           </div>
 
-          {/* البانل الجانبي: يصغر عرضه في الشاشات المتوسطة ويختفي في الصغيرة */}
+          {/* Panel جانبي */}
           <div className="hidden lg:block lg:w-[280px] xl:w-[360px] flex-shrink-0">
-            <ConsultationPanel  
-            data={selectedConsultation}
-            onModify={() => setOpenModify(true)}
-            onReject={() => setOpenReject(true)}
+            <ConsultationPanel
+              data={selectedConsultation}
+              onModify={() => {
+                dispatch(fetchModifyData(selectedConsultation.id));
+                setOpenModify(true);
+              }}
+              onReject={() => setOpenReject(true)}
+              onAccept={() =>
+                dispatch(acceptConsultation(selectedConsultation.id))
+              }
             />
           </div>
-           {/* MODALS */}
-            {openModify && (
-              <ModifyDiagnosisModal
-                onClose={() => setOpenModify(false)}
-              />
-            )}
 
-            {openReject && (
-              <RejectDiagnosisModal
-                onClose={() => setOpenReject(false)}
-              />
+          {/* Modals */}
+          {openModify && (
+            <ModifyDiagnosisModal
+              consultation={selectedConsultation}
+              onClose={() => setOpenModify(false)}
+            />
+          )}
+
+          {openReject && (
+            <RejectDiagnosisModal
+              onClose={() => setOpenReject(false)}
+              onSubmit={({ reason, notes }) => {
+                dispatch(
+                  rejectConsultation({
+                    consultationId: selectedConsultation.id,
+                    reason,
+                    notes,
+                  })
+                );
+                setOpenReject(false);
+                }}
+            />
           )}
         </div>
       </div>
