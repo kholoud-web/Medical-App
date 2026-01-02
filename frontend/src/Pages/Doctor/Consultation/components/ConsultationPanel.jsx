@@ -1,4 +1,4 @@
-const ConsultationPanel = ({ data, onModify, onReject }) => {
+const ConsultationPanel = ({ data, onAccept, onModify, onReject }) => {
   if (!data) {
     return (
       <div className="w-[360px] bg-white border border-blue-400 rounded-xl shadow-md p-6 mt-24">
@@ -36,26 +36,7 @@ const ConsultationPanel = ({ data, onModify, onReject }) => {
         </p>
       </div>
 
-      {/* Files */}
-      <div>
-        <p className="text-sm font-semibold text-gray-800 mb-2">
-          Files & Images
-        </p>
-
-        <div className="space-y-2">
-          <div className="flex justify-between items-center border rounded-lg px-3 py-2 text-sm">
-            <span className="text-gray-600">cbc_results.pdf</span>
-            <span className="text-blue-600 font-semibold">PDF</span>
-          </div>
-
-          <div className="flex justify-between items-center border rounded-lg px-3 py-2 text-sm">
-            <span className="text-gray-600">chest_xray.jpg</span>
-            <span className="text-blue-600 font-semibold">Image</span>
-          </div>
-        </div>
-      </div>
-
-      {/* AI Response */}
+      {/* Response */}
       <div>
         <p className="text-sm font-semibold text-gray-800 mb-1">
           Response
@@ -65,19 +46,12 @@ const ConsultationPanel = ({ data, onModify, onReject }) => {
         </div>
       </div>
 
-      {/* Doctor Notes */}
-      <div>
-        <p className="text-sm font-semibold text-gray-800 mb-1">
-          Doctor Notes / Final Diagnosis
-        </p>
-        <div className="border rounded-lg px-3 py-2 text-sm text-gray-700">
-          Viral Upper Respiratory Infection
-        </div>
-      </div>
-
       {/* Actions */}
       <div className="flex justify-center gap-4 pt-4">
-        <button className="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center hover:bg-green-600">
+        <button
+          onClick={onAccept}
+          className="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center hover:bg-green-600"
+        >
           ✓
         </button>
 

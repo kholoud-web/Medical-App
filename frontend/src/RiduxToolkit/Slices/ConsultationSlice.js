@@ -29,12 +29,12 @@ export const acceptConsultation = createAsyncThunk(
   "consultation/accept",
   async (consultationId, { rejectWithValue }) => {
     try {
-      const res = await axios.post(
+       await axios.post(
         `${BASE_URL}/Consultation/accept/${consultationId}`,
         {},
         getAuthHeader()
       );
-      return res.data;
+      return consultationId;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
     }
@@ -56,13 +56,31 @@ export const rejectConsultation = createAsyncThunk(
     }
   }
 );
+// GET details
+export const fetchConsultationDetails = createAsyncThunk(
+  "consultation/details",
+  async (consultationId, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/Consultation/details/${consultationId}`,
+        getAuthHeader()
+      );
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
 // Consultation Slice
 const consultationSlice = createSlice({
     name: "consultation",
     initialState: {
-        consultations: [],
-        loading: false,
-        error: null,
+         consultations: [],
+         selectedConsultation: null,
+         loading: false,
+         detailsLoading: false,
+         error: null,
     },
     reducers: {},
     // Reducers for async actions to handle with states
@@ -96,7 +114,21 @@ extraReducers: (builder) => {
         state.consultations = state.consultations.map((c) =>
           c.id === action.payload ? { ...c, status: "Rejected" } : c
         );
-      });
+      })
+
+      //  details
+      .addCase(fetchConsultationDetails.pending, (state) => {
+        state.detailsLoading = true;
+      })
+      .addCase(fetchConsultationDetails.fulfilled, (state, action) => {
+        state.detailsLoading = false;
+        state.selectedConsultation = action.payload;
+      })
+      .addCase(fetchConsultationDetails.rejected, (state, action) => {
+        state.detailsLoading = false;
+        state.error = action.payload;
+      })
+
   },
 });
 
