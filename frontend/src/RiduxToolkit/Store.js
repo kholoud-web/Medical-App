@@ -12,4 +12,4 @@ export const store = configureStore({
    consultation: consultationReducer,
     inquiry:inquiryReducer,
   },
-});
+}); 
