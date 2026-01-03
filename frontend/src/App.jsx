@@ -42,19 +42,12 @@ import ResetPassword from './Pages/Auth/ResetPassword';
 import ResetSuccess from "./Pages/Auth/ResetSuccess";
 import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
+import Consultations from "./Pages/Doctor/Consultation/Consultations";
 
 function App() {
-<<<<<<< HEAD
-  const role = "doctor"; 
-
-  // تأكد أن هذه المكونات معرفة في الأعلى (Imports)
-  const helpElement = role === "patient" ? <HelpSupport /> : <HelpSupport />; 
-  const settingsElement = role === "doctor" ? <SystemSetting /> : <SystemSetting />;
-=======
-  const role = "patient";
+  const role = "doctor";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
   const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
->>>>>>> 40d0f0feb987f4d39b9b446d7a69c3bf56255305
 
   const router = createBrowserRouter([
     { path: "login", element: <Login /> },
@@ -83,20 +76,6 @@ function App() {
       children: [
         ...(role === "doctor"
           ? [
-<<<<<<< HEAD
-              { path: "appointments", element: <Appointments /> },
-              { path: "dashboard", element: <Dashboard /> },
-              { path: "diagnosis", element: <DiagnosisAssistant /> },
-              { path: "treatment", element: <Treatment /> },
-              { path: "my-patients", element: <MyPatients /> },
-              { path: "reports", element: <Reports /> },
-              { path: "notifications", element: <Notifications /> },
-              { path: "finances", element: <Finance /> },
-              { path: "withdrawal", element: <RequestWithdrawal /> },
-              { path: "inquiries", element: <Inquiries /> },
-              { path: "Consultations", element: <Consultations /> },
-            ]
-=======
             { path: "appointments", element: <Appointments /> },
             { path: "dashboard", element: <Dashboard /> },
             { path: "diagnosis", element: <DiagnosisAssistant /> },
@@ -104,11 +83,11 @@ function App() {
             { path: "my-patients", element: <MyPatients /> },
             { path: "reports", element: <Reports /> },
             { path: "notifications", element: <Notifications /> },
+            { path: "Consultations", element: <Consultations /> },
             
             {path:"finances",element:<Finance />}
 
           ]
->>>>>>> 40d0f0feb987f4d39b9b446d7a69c3bf56255305
           : role === "admin"
             ? [
               { path: "notificationCenter", element: <NotificationCenter /> },
