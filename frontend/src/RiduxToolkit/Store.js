@@ -14,4 +14,4 @@ export const store = configureStore({
     modifyConsultation: modifyConsultationReducer,
     inquiry:inquiryReducer,
   },
-});
+}); 
