@@ -1,8 +1,10 @@
+import { API } from "@/Api/Api";
+import Inquiries from "@/Pages/Doctor/Inquiries/Inquiries";
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 
-const token = "Q2ZESjhBSVVpaXIzYUV4UHJwMmVtTWxWL2tXclhYTkJMWjhDNGRaemNvM284eklJbmtKNi9iR1AxUmw5TjI5UEV5dVNkNUtLZFl3Y1grM1pNYkdjRWtRa3Azd05VZjYybTBvRVNYQzZINDdENlFsWHdBbjU4d1oxUmpiWFY0dFFsZnpJN0wrdkYzQXRra1Zkd1VQU0hVVjQ4SXcyOVdQQ0JMRmIrc3NYWjZlYzUvV012VkdDcFduMGxZWTdwa1g0b2Nac05maHRsdU02YlEwSDljMFBiZHltc2tVSUpabDExR2J6ZWM3R0poV05SbU5JalNiMmxuRWlncHJkaVhXZWFVQTJ3UT09"
+const token = "eyJzdWIiOiJjZGI4ZTBkMi0zMWM4LTQxNzItOTFhZi0yMDJiMWM5ZGRhMzAiLCJlbWFpbCI6ImZhcmhheWEwMDVAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiJjZGI4ZTBkMi0zMWM4LTQxNzItOTFhZi0yMDJiMWM5ZGRhMzAiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJQYXRpZW50IiwiZXhwIjoxNzY3NjI0ODU0LCJpc3MiOiJEaWFnbm9zaXNBUEkiLCJhdWQiOiJEaWFnbm9zaXNDbGllbnQifQ"
 
 export const fetchInquiries = createAsyncThunk(
   "inquiry/fetchInquiries",
@@ -10,7 +12,7 @@ export const fetchInquiries = createAsyncThunk(
     try {
       const response = await axios.get("http://diagnosis.runasp.net/Inquiry/Inquiries",{
         headers:{
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         }
       });
       return response.data;
@@ -27,9 +29,11 @@ export const submitInquiry= createAsyncThunk(
   async(FormData,{rejectWithValue})=>{
     try {
       const response = await axios.post("http://diagnosis.runasp.net/Inquiry",FormData,{
-        headers: {Authorization: `Bearer ${token}`
+        headers: 
+        {Authorization: `Bearer ${token}`
       }
-          })
+         
+      })
       return response.data;
     }catch(error){
       return rejectWithValue(error.response?.data || error.message)
@@ -41,12 +45,11 @@ export const fetchInquiryById = createAsyncThunk(
   "inquiry/fetchInquiryById",
   async (inquiryId, { rejectWithValue }) => { 
     try {
-      const token = getToken();
       const response = await axios.get( 
         `http://diagnosis.runasp.net/Inquiry/${inquiryId}`,
         {
           headers: {
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           }
         }
       );
