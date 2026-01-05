@@ -18,7 +18,7 @@ import Chip from '@mui/material/Chip';
 import AddIcon from '@mui/icons-material/Add';
 import SaveModal from './SaveModal';
 import ReplyModal from './ReplyModal';
-import AddAdmin from './AddAdmin Modal';
+import AddAdmin from './AddAdminOverlay';
 
 
   export default function SystemSetting(){

@@ -1,39 +1,21 @@
-<<<<<<< HEAD
-
 import IconDownload from "./Icons/download.svg";
 import { setSymptoms,  setDescription,
-  addFile, resetInquiry,submitInquiry,fetchInquiryById,} from "@/RiduxToolkit/Slices/InquirySlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-=======
-import IconDownload from "./Icons/download.svg";
-import { setSymptoms,  setDescription,
-  addFile, resetInquiry,submitInquiry,fetchInquiryById,} from "../../../RiduxToolkit/Slices/inquirySlice";
+  addFile, resetInquiry,submitInquiry,fetchInquiryById,} from "../../../RiduxToolkit/Slices/InquirySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
 
 
 export default function InquiryForm({inquiryId}) {
   const dispatch = useDispatch();
-<<<<<<< HEAD
-  const {symptoms,description,files,loading,fetchingInquiry,currentInquiry,error,}= useSelector((state) => state.inquiry);
- 
-=======
   const {symptoms,description,files,loading,fetchingInquiry,}= useSelector((state) => state.inquiry);
  
   
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
 useEffect(() => {
     if (inquiryId) {
       dispatch(fetchInquiryById(inquiryId));
     } else {
-<<<<<<< HEAD
-      dispatch(resetInquiry()); // Reset form for new inquiry
-=======
       dispatch(resetInquiry()); 
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
     }
   }, [inquiryId, dispatch]);
 
@@ -91,13 +73,8 @@ useEffect(() => {
           Symptom <span className="text-red-600">*</span>
         </label>
         <input
-<<<<<<< HEAD
-        value={symptoms}
-        onChange={(e)=>dispatch(setSymptoms(e.target.value))}
-=======
          value={symptoms}
          onChange={(e)=>dispatch(setSymptoms(e.target.value))}
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
           type="text"
           placeholder="e.g pain, swelling, stiffness"
           className="w-full rounded-lg border px-4 py-2 text-sm
@@ -135,10 +112,7 @@ useEffect(() => {
             <img src={IconDownload} alt="download" className="w-4 h-4" />
           </span>
           
-<<<<<<< HEAD
-=======
           
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
            <input
            className="flex items-center justify-center"
           id="fileUpload"
@@ -157,30 +131,16 @@ useEffect(() => {
             ))}
           </ul>
         )}
-<<<<<<< HEAD
-          {/* <span>
-            Upload medical files (lab results, reports, images)
-          </span> */}
-=======
        
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
         </div>
       </div>
 
       <button onClick={handleSubmit}
-<<<<<<< HEAD
-      disabled={loading}
-        className="w-[452px] mx-auto flex items-center justify-center bg-blue-600 hover:bg-blue-700
-        text-white font-medium py-2 rounded-lg transition"
-      >
-       {loading ? "Submitting..." : "Select doctor"}
-=======
         className="w-[452px] mx-auto flex items-center justify-center bg-blue-600 hover:bg-blue-700
         text-white font-medium py-2 rounded-lg transition"
       >
 
         {loading ? "Submitting..." : "Select doctor"}
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
       </button>
     </div>
   );
