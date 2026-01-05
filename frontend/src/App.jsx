@@ -42,6 +42,10 @@ import ResetPassword from './Pages/Auth/ResetPassword';
 import ResetSuccess from "./Pages/Auth/ResetSuccess";
 import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
+<<<<<<< HEAD
+=======
+import Consultations from "./Pages/Doctor/Consultation/Consultations";
+>>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
 
 function App() {
   const role = "doctor";
@@ -82,7 +86,8 @@ function App() {
             { path: "my-patients", element: <MyPatients /> },
             { path: "reports", element: <Reports /> },
             { path: "notifications", element: <Notifications /> },
-             {path:"inquiries", element: <Inquiries/>},
+            { path: "Consultations", element: <Consultations /> },
+            
             {path:"finances",element:<Finance />}
 
           ]
@@ -101,6 +106,7 @@ function App() {
               { path: "directory", element: <Directory /> },
               { path: "payment", element: <Payment /> },
               { path: "physiotherapy",element:<Physiotherapy/>},
+               {path:"inquiries", element: <Inquiries/>},
               {path:"AiPerformance",element:<AiPerformance/>},
               { path: "diagnosis-module", element: <DiagnosisModule /> },
             ]

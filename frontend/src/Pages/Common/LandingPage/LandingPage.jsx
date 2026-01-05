@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import HeroSection from "./components/HeroSection";
 import ServicesSection from "./components/ServicesSection";
 import FindDoctorSection from "./components/FindDoctorSection";
@@ -6,6 +8,13 @@ import WhyChooseUsSections from "./components/WhyChooseUsSections";
 import Testimonials from "./components/Testimonials";
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
+  const handleSignUp = () => {
+    navigate("/register");
+  };
+
   return (
     <div className="font-sans text-gray-800">
       {/* Hero */}
@@ -33,9 +42,14 @@ export default function LandingPage() {
           access all our services.
         </p>
 
-        <button className="bg-white text-blue-500 font-semibold px-8 py-3 rounded shadow hover:bg-gray-100 transition">
-          Sign up now!
-        </button>
+        {!isAuthenticated && (
+          <button
+            onClick={handleSignUp}
+            className="bg-white text-blue-500 font-semibold px-8 py-3 rounded shadow hover:bg-gray-100 transition"
+          >
+            Sign up now!
+          </button>
+        )}
       </section>
     </div>
   );

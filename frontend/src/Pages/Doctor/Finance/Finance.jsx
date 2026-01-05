@@ -3,6 +3,9 @@ import StatCard from "./components/StatsCard";
 import PrimButton from "@/components/Common/PrimButton";
 import TransactionsTable from "./components/TransactionsTable";
 import ChartsSection from "./components/ChartsSection";
+import { useNavigate } from "react-router-dom";
+
+
 
 const stats = [
   { title: "Total Earnings", value: "$25,800", hint: "+10.2% vs last month", positive: true },
@@ -20,6 +23,9 @@ const transactions = [
 
 
 function FinanceDashboard() {
+  
+  const navigate = useNavigate();
+
   return (
     <div className="max-w-screen-xl mx-auto flex flex-col gap-8">
 
@@ -32,7 +38,7 @@ function FinanceDashboard() {
           </p>
         </div>
 
-        <PrimButton className="px-5 py-2">
+        <PrimButton className="px-5 py-2"  onClick={() => navigate("/withdrawal")}>
           Request withdrawal
         </PrimButton>
       </div>
