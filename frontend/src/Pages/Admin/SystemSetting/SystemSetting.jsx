@@ -7,7 +7,6 @@ import  Divider  from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import icon2 from "./icons/icon-park-outline_medicine-chest.svg"
 import icon3 from "./icons/ix_about.svg"  
-import  Modal  from '@mui/material/Modal';
 import { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -16,11 +15,16 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Chip from '@mui/material/Chip';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
+import AddIcon from '@mui/icons-material/Add';
+import SaveModal from './SaveModal';
+import ReplyModal from './ReplyModal';
+import AddAdmin from './AddAdmin Modal';
+
 
   export default function SystemSetting(){
-      const [open , setOpen]= useState(false);
+      const [openSave , setOpenSave]= useState(false);
       const [openTable , setOpenTable]=useState(false);
+      const [openAddAdmin , setOpenAddAdmin] = useState(false);
       // table
       const rows = [
   {
@@ -44,7 +48,7 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
     date: "2025/11/25",
     status: "Pending",
   },
-];
+            ];
    //handle events
    const handleOpenTable = ()=>{
            setOpenTable(true);
@@ -54,13 +58,19 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
     return(
         <Box sx={{p:{xs:2,md:3}}}>
         <Box sx={{display:"flex" ,flexDirection:"column" ,gap:2,p:3}}>
+          <Box sx={{display:"flex" ,justifyContent:"space-between",alignItems:"center"}}>
+            <Box>
          <Typography sx={{color:"#505050",fontSize:"32px",fontWeight:"600"}}>
             System  Settings
          </Typography>
          <Typography sx={{color:"#6B6B6B",fontSize:"20px",fontWeight:"500",mb:4}}>
             Configure system-wide rules and AI behavior
          </Typography>
-         
+         </Box>
+         <Button onClick={()=>setOpenAddAdmin(true)}
+         sx={{backgroundColor:"#4682FA",color:"#FFFFFF",borderRadius:"8px",width:"220px",height:"50px",fontSize:"20px",fontWeight:"500px"}}
+         startIcon={<AddIcon/>}>Add Admin</Button>
+         </Box>
             <Card sx={{borderRadius:"8px",  background:
       "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
       "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
@@ -213,7 +223,7 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
                              Please review carefully before saving
                     </Typography>
                     </Box>
-                    <Button onClick={()=>setOpen(true)}
+                    <Button onClick={()=>setOpenSave(true)}
                     variant='contain' sx={{backgroundColor:"#4682FA",mt:3,color:"white"}}>Save Settings</Button>
                 </Box>
             </Card>
@@ -221,81 +231,12 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
        
        {/* modal save setting */}
         
-               <Modal open={open} onClose={() => setOpen(false)} >
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "100%",
-              maxWidth: 900,
-              borderRadius: 3,
-              backgroundColor:"#F7F7F7",
-              p:3
-            }}
-          >
-           <Box sx={{display:"flex", gap:1}}>
-            <img src={icon3} style={{color:"#F59F00"}}/>
-            <Box>
-           <Typography sx={{color:"#505050",fontSize:"24px",fontWeight:"700"}}>Confirm Settings Update</Typography> 
-          <Typography sx={{color:"#505050",fontSize:"24px",fontWeight:"400"}}>This will affect all system users</Typography> 
-           </Box>
-           </Box>
-           <Typography sx={{color:"#505050",fontSize:"18px",fontWeight:"400",my:3}}>
-              Are you sure you want to save these system settings? All changes will take effect immediately across the entire platform.
-           </Typography>
-    
-              <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
-                <Button sx={{width:"151px",border:"1px solid #666666"}}
-                onClick={() => setOpen(false)}>
-                  Cancel
-                </Button>
-                <Button sx={{width:"151px"}}
-                variant="contained">
-                  Save Setting
-                </Button>
-              </Box>
-          </Box>
-             </Modal>
-
+       <SaveModal open={openSave} onClose={()=>setOpenSave(false)}/>        
              {/*modal for reply btn  */}
-
-               <Modal open={openTable} onClose={()=>setOpenTable(false)} >
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "100%",
-              maxWidth: 900,
-              borderRadius: 3,
-              backgroundColor:"#F7F7F7",
-              p:3
-            }}
-          >
-         
-           <Typography sx={{color:"#505050",fontWeight:"700",fontSize:"24px", mb:2}}>Reply</Typography>
-               <TextareaAutosize
-                     aria-label="Enter Your Reply"
-                     minRows={3}
-                     placeholder="Minimum 3 rows"
-                     style={{ width: "100%",backgroundColor:"#FFFFFF",border:"1px solid #6B6B6B",P:2 }}
-                   />
-              <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 ,mt:2}}>
-                <Button sx={{width:"151px",border:"1px solid #666666"}}
-                onClick={() => setOpenTable(false)}>
-                  Cancel
-                </Button>
-                <Button sx={{width:"151px"}}
-                variant="contained">
-                  Send
-                </Button>
-              </Box>
-          </Box>
-             </Modal>
-
+       <ReplyModal open ={openTable} onClose={()=>setOpenTable(false)}/>
+            
+            {/* Add admin modal */}
+        <AddAdmin open={openAddAdmin} onClose={()=>setOpenAddAdmin(false)}/>
         </Box>
     )
 }

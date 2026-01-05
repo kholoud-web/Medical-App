@@ -1,6 +1,5 @@
 export const BASE_URL = "http://diagnosis.runasp.net"
 
-
 export const API ={
     // Auth
     Login: `${BASE_URL}/Auth/Login`,
