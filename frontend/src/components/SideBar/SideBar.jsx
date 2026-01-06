@@ -24,14 +24,10 @@ import { MdOutlinePayment } from "react-icons/md";
 
 
 export default function SideBar({ showSideBar, setShowSideBar }) {
-<<<<<<< HEAD
-  const role = "patient";
-=======
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { role, isAuthenticated } = useSelector((state) => state.auth);
   const userRole = role || "patient";
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
   const DoctorNavBar = [
     {
       icon: <MdOutlineDashboard className="inline-block mr-2" />,
@@ -95,20 +91,12 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
     {
       icon: <MdOutlineAddBox className="inline-block mr-2" />,
       title: "Diagnosis Module",
-<<<<<<< HEAD
-      link: "/DiagnosisModule",
-=======
       link: "/diagnosis-module",
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
     },
     {
       icon: <TbMessageCirclePlus className="inline-block mr-2" />,
       title: "Ai Diagnosis Result",
-<<<<<<< HEAD
-      link: "/AiDiagnosisResult",
-=======
       link: "/ai-diagnosis-result",
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
     },
     {
       icon: <BiInjection className="inline-block mr-2" />,
@@ -133,11 +121,7 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
     {
       icon: <MdOutlinePayment  className="inline-block mr-2" />,
       title: "Payments",
-<<<<<<< HEAD
-      link: "/payments",
-=======
       link: "/payment",
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
     }
   ];
 
@@ -153,8 +137,6 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
       link: "/help",
     },
   ];
-<<<<<<< HEAD
-=======
 
   const handleLogout = () => {
     dispatch(logout());
@@ -164,7 +146,6 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
     }
   };
 
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
   return (
 <div
   className={`
@@ -184,32 +165,11 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
 
       <h2 className="text-2xl font-bold px-3">MENU</h2>
       <ul className="my-1 font-bold">
-<<<<<<< HEAD
-        {role === "doctor"
-          ? DoctorNavBar.map((item, index) => (
-              <li key={index} className="my-1">
-                <NavLink
-                  to={item.link}
-                  className={({ isActive }) =>
-                    isActive
-                      ? "bg-primary-blue text-white py-3 px-3 rounded-xl block w-full"
-                      : "py-3 px-3 rounded-xl hover:bg-primary-blue  hover:text-white transition-all duration-300 block w-full"
-                  }
-                    onClick={() => setShowSideBar(false)}
-                >
-                  {item.icon} {item.title}
-                </NavLink>
-              </li>
-            ))
-          : role === "patient"
-          ? PatientNavBar.map((item, index) => (
-=======
         {(() => {
           const roleLower = userRole?.toLowerCase() || "";
           
           if (roleLower === "doctor") {
             return DoctorNavBar.map((item, index) => (
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
               <li key={index} className="my-1">
                 <NavLink
                   to={item.link}
@@ -307,4 +267,3 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
     </div>
   );
 }
-

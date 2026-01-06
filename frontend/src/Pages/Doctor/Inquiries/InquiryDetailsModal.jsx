@@ -1,22 +1,8 @@
 import IconYes from "./Icons/yes.svg";
 import IconProgress from "./Icons/progress.svg";
 import IconDownload from "./Icons/download.svg";
-<<<<<<< HEAD
-import { useDispatch, useSelector } from "react-redux";
-import { closeInquiryModal } from "@/RiduxToolkit/Slices/InquirySlice";
-
-
-export default function InquiryDetailsModal() {
-     const dispatch = useDispatch();
-     const { selectedInquiry: inquiry, isModalOpen } = useSelector(
-    (state) => state.inquiry
-  );
-  
-  if (!isModalOpen || !inquiry) return null;
-
-=======
 import { useDispatch , useSelector } from "react-redux";
-import { closeInquiryModal } from "@/RiduxToolkit/Slices/inquirySlice";
+import { closeInquiryModal } from "@/RiduxToolkit/Slices/InquirySlice";
 
 
 
@@ -27,7 +13,6 @@ export default function InquiryDetailsModal() {
   );
   
   if (!isModalOpen || !inquiry) return null;
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
 
   const isReplied = inquiry.status === "Replied";
 
@@ -118,11 +103,7 @@ export default function InquiryDetailsModal() {
         )}
 
         <button
-<<<<<<< HEAD
-          onClick={()=>dispatch(closeInquiryModal())}
-=======
           onClick={()=>dispatch(closeInquiryModal)}
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
           className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg transition"
         >
           Ok

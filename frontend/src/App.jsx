@@ -42,10 +42,7 @@ import ResetPassword from './Pages/Auth/ResetPassword';
 import ResetSuccess from "./Pages/Auth/ResetSuccess";
 import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
-<<<<<<< HEAD
-=======
 import Consultations from "./Pages/Doctor/Consultation/Consultations";
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
 
 function App() {
   const role = "doctor";

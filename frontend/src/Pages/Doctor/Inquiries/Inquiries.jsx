@@ -1,60 +1,13 @@
-<<<<<<< HEAD
-import { useState,useEffect } from "react";
-=======
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchInquiries } from "@/RiduxToolkit/Slices/inquirySlice";
+import { fetchInquiries } from "@/RiduxToolkit/Slices/InquirySlice";
 import InquiryHeader from "./InquiryHeader";
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
 import InquiryForm from "./InquiryForm";
 import InquiryCard from "./InquiryCard";
 import InquiryDetailsModal from "./InquiryDetailsModal";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchInquiries } from "@/RiduxToolkit/Slices/InquirySlice";
 
 
 export default function Inquiries() {
-<<<<<<< HEAD
-  const [selectedInquiry, setSelectedInquiry] = useState(null);
- 
-  const dispatch =useDispatch();
-  const {inquiries ,loading , error}= useSelector((state)=>state.inquiry)
-  
-   useEffect(()=>{
-    dispatch(fetchInquiries());
-   },[dispatch])
-
-  // const inquiries = [
-  //   {
-  //     title: "Knee pain after running",
-  //     code: "TKT-2024-1156",
-  //     date: "Nov 23, 2025",
-  //     time: "Nov 23, 2025 at 2:30 PM",
-  //     status: "In progress",
-  //     description:
-  //       "Pain after running\nI booked an appointment for tomorrow, but didn’t receive a confirmation message.",
-  //     attachments: ["MRI_scan.pdf", "Blood_test.jpg"],
-  //   },
-  //   {
-  //     title: "Persistent wrist pain",
-  //     code: "TKT-2025-1032",
-  //     date: "Nov 30, 2025",
-  //     time: "Nov 30, 2025 at 1:10 PM",
-  //     status: "Replied",
-  //     description: "Wrist pain for more than a week.",
-  //     attachments: ["Xray.jpg"],
-  //   },
-  //   {
-  //     title: "Lower back stiffness",
-  //     code: "TKT-2025-1033",
-  //     date: "Dec 2, 2025",
-  //     time: "Dec 2, 2025 at 3:45 PM",
-  //     status: "In progress",
-  //     description: "Lower back stiffness every morning.",
-  //     attachments: ["CT_scan.pdf"],
-  //   },
-  // ];
-=======
   const dispatch = useDispatch();
   
   //  Local state for edit mode
@@ -159,7 +112,6 @@ export default function Inquiries() {
       />
     ));
   };
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
 
   return (
     <div className="min-h-screen p-8 bg-gray-50">
@@ -197,13 +149,6 @@ export default function Inquiries() {
 
           {/* Cards Section */}
           <div className="space-y-4">
-<<<<<<< HEAD
-             {loading && <p className="text-center text-gray-500">Loading...</p>}
-            {error && <p className="text-center text-red-500">Error: {error}</p>}
-            {inquiries.map((item, index) => (
-              <InquiryCard key={item.code || index} inquiry={item} />
-            ))}
-=======
             {/* Filter Buttons */}
             <div className="bg-white rounded-lg border shadow-sm p-2">
               <div className="flex gap-1">
@@ -272,7 +217,6 @@ export default function Inquiries() {
                 {loading ? "Refreshing..." : "🔄 Refresh List"}
               </button>
             )}
->>>>>>> 316e6907ea85a8ec2aaaae6a093e77a063d20889
           </div>
         </div>
 
