@@ -7,10 +7,11 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import Modal from "@mui/material/Modal";
 import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useState } from "react";
+import SubmitTicket from "./SubmitTicketModal";
+
 
 export default function HelpSupport() {
   const [expanded, setExpanded] = useState(false);
@@ -230,73 +231,7 @@ export default function HelpSupport() {
       </Card>
 
       {/* modal for submitting the ticket */}
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "100%",
-            maxWidth: 900,
-            borderRadius: 3,
-            backgroundColor: "#F7F7F7",
-          }}
-        >
-          <Card
-            sx={{
-              p: 4,
-              borderRadius: 3,
-              backgroundColor: "#F7F7F7",
-              border: "2px solid #D9D9D9",
-            }}
-          >
-            <Typography
-              variant="h6"
-              fontWeight="bold"
-              mb={2}
-              sx={{ color: "#505050" }}
-            >
-              Submit Support Ticket
-            </Typography>
-
-            <TextField
-              fullWidth
-              label=" Enter your Subject"
-              sx={{
-                mb: 2,
-                color: "#6B6B6B",
-                fontWeight: "700",
-                border: "1px solid #6B6B6B",
-                borderRadius: 2,
-              }}
-            />
-
-            <TextField
-              fullWidth
-              label="Enter your Details"
-              multiline
-              rows={4}
-              sx={{
-                mb: 3,
-                color: "#6B6B6B",
-                fontWeight: "700",
-                border: "1px solid #6B6B6B",
-                borderRadius: 2,
-              }}
-            />
-
-            <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
-              <Button sx={{ width: "151px" }} onClick={() => setOpen(false)}>
-                Cancel
-              </Button>
-              <Button sx={{ width: "151px" }} variant="contained">
-                Send
-              </Button>
-            </Box>
-          </Card>
-        </Box>
-      </Modal>
+     <SubmitTicket open={open} onClose={()=>setOpen(false)}/>
     </Box>
   );
 }
