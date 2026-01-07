@@ -128,6 +128,9 @@ function App() {
         },
         {
           path:"systemSetting", element:<SystemSetting/>
+        },
+        {
+              path:"helpSupport" , element:<HelpSupport/>
         }
         
       ],

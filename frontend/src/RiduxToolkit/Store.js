@@ -4,7 +4,7 @@ import authReducer from './Slices/authSlice'
 import consultationReducer from './Slices/ConsultationSlice';
 import inquiryReducer from './Slices/InquirySlice'
 import modifyConsultationReducer from "./Slices/modifyConsultationSlice";
-
+import helpReducer from './Slices/HelpSupportSlice'
 
 export const store = configureStore({
   reducer: {
@@ -13,5 +13,6 @@ export const store = configureStore({
     consultation: consultationReducer,
     modifyConsultation: modifyConsultationReducer,
     inquiry:inquiryReducer,
+    help:helpReducer,
   },
 }); 
