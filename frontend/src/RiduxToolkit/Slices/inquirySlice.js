@@ -1,3 +1,5 @@
+import { API } from "@/Api/Api";
+import Inquiries from "@/Pages/Doctor/Inquiries/Inquiries";
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
