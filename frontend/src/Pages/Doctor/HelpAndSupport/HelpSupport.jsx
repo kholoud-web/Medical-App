@@ -9,17 +9,73 @@ import Typography from "@mui/material/Typography";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import SubmitTicket from "./SubmitTicketModal";
+import { useSelector,useDispatch } from "react-redux";
+import { fetchFaqs } from "@/RiduxToolkit/Slices/HelpSupportSlice";
+
+
+
+
 
 
 export default function HelpSupport() {
   const [expanded, setExpanded] = useState(false);
   const [open, setOpen] = useState(false);
+  const [searchTerm , setSearchTerm] = useState("");
+  const dispatch = useDispatch();
+  
+  const {inquiries , loading , error} = useSelector((state)=>state.help)
+  
+  // fetch faqs when component mounts
+  useEffect(()=>{
+    dispatch(fetchFaqs());
+  },[dispatch]);
+
 
   const handleToggle = (panel) => {
     setExpanded(expanded === panel ? false : panel);
   };
+
+  // filter faqs based on search
+  const filteredFaqs = Array.isArray(inquiries) 
+  ? inquiries.filter((faq) =>
+      faq.question?.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  : [];
+
+  // show loading state
+    if (loading) {
+    return (
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        Loading
+      </Box>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Typography color="error">Error loading FAQs: {error}</Typography>
+      </Box>
+    );
+  }
+
 
   return (
     <Box
@@ -58,6 +114,8 @@ export default function HelpSupport() {
 
         {/* Search */}
         <TextField
+         value={searchTerm}
+         onChange={(e)=>setSearchTerm(e.target.value)}
           fullWidth
           placeholder="Search FAQs..."
           sx={{
@@ -81,123 +139,55 @@ export default function HelpSupport() {
         />
 
         {/* FAQ Items */}
-        <Accordion
-          expanded={expanded === "panel1"}
-          onChange={() => handleToggle("panel1")}
-          disableGutters
-          elevation={0}
-          sx={{ mb: 2, borderRadius: 2, border: "1px solid #6B6B6B" }}
-        >
-          <AccordionSummary>
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
+          {filteredFaqs.length > 0 ? (
+          filteredFaqs.map((faq, index) => (
+             <Accordion
+              key={faq.id || index}
+              expanded={expanded === `panel${index}`}
+              onChange={() => handleToggle(`panel${index}`)}
+              disableGutters
+              elevation={0}
+              sx={{ mb: 2, borderRadius: 2, border: "1px solid #6B6B6B" }}
             >
-              <Typography>How do I view my patients’ list?</Typography>
+              <AccordionSummary>
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography>{faq.question}</Typography>
 
-              <Typography
-                sx={{
-                  color: "#3f51b5",
-                  cursor: "pointer",
-                  fontWeight: 500,
-                }}
-              >
-                {expanded === "panel1" ? "Hide" : "Show"}
-              </Typography>
-            </Box>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography
-              color="#6B6B6B"
-              sx={{ fontWeight: "500", backgroundColor: "#FFFFFF" }}
-            >
-              You can view your patients list from the dashboard by clicking on
-              the Patients tab.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
+                  <Typography
+                    sx={{
+                      color: "#3f51b5",
+                      cursor: "pointer",
+                      fontWeight: 500,
+                    }}
+                  >
+                    {expanded === `panel${index}` ? "Hide" : "Show"}
+                  </Typography>
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography
+                  color="#6B6B6B"
+                  sx={{ fontWeight: "500", backgroundColor: "#FFFFFF" }}
+                >
+                  {faq.answer}
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))
+        ) : (
+          <Typography sx={{ textAlign: "center", py: 3, color: "#6B6B6B" }}>
+            No FAQs found
+          </Typography>
+        )}
 
-        <Accordion
-          expanded={expanded === "panel2"}
-          onChange={() => handleToggle("panel2")}
-          disableGutters
-          elevation={0}
-          sx={{ mb: 2, borderRadius: 2, border: "1px solid #6B6B6B" }}
-        >
-          <AccordionSummary>
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Typography>How do I check patient medical reports?</Typography>
-
-              <Typography
-                sx={{
-                  color: "#3f51b5",
-                  cursor: "pointer",
-                  fontWeight: 500,
-                }}
-              >
-                {expanded === "panel2" ? "Hide" : "Show"}
-              </Typography>
-            </Box>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography
-              color="#6B6B6B"
-              sx={{ fontWeight: "500", backgroundColor: "#FFFFFF" }}
-            >
-              Open the patient profile and navigate to the Reports section.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-
-        <Accordion
-          expanded={expanded === "panel3"}
-          onChange={() => handleToggle("panel3")}
-          disableGutters
-          elevation={0}
-          sx={{ mb: 2, borderRadius: 2, border: "1px solid #6B6B6B" }}
-        >
-          <AccordionSummary>
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Typography>How do I view and manage consultations?</Typography>
-
-              <Typography
-                sx={{
-                  color: "#3f51b5",
-                  cursor: "pointer",
-                  fontWeight: 500,
-                }}
-              >
-                {expanded === "panel3" ? "Hide" : "Show"}
-              </Typography>
-            </Box>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography
-              color="#6B6B6B"
-              sx={{ fontWeight: "500", backgroundColor: "#FFFFFF" }}
-            >
-              Consultations are available under the Consultations tab.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
+        
 
         {/* Contact Support */}
         <Box
@@ -231,7 +221,7 @@ export default function HelpSupport() {
       </Card>
 
       {/* modal for submitting the ticket */}
-     <SubmitTicket open={open} onClose={()=>setOpen(false)}/>
+      <SubmitTicket open={open} onClose={() => setOpen(false)} />
     </Box>
   );
 }

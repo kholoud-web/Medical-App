@@ -4,13 +4,67 @@
    import Button from "@mui/material/Button";
    import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-
+import { createTicket, setSubject , setDetails} from "@/RiduxToolkit/Slices/HelpSupportSlice";
+import { useDispatch ,useSelector} from "react-redux";
+import { useState } from "react";
    
    
   export default function SubmitTicket({open , onClose}){
+    const dispatch = useDispatch();
+    const {subject , details, loading ,error}=useSelector((state)=>state.help);
+
+//   state for sucess message
+  const [success, setSuccess] = useState(false);
+
+ 
+
+  const handleSubmit = async () => {
+   if (!subject.trim() || !details.trim()) {
+      alert("Please fill in both subject and details");
+
+      return;
+    }
+
+    try {
+      await dispatch(createTicket({ subject, details })).unwrap();
+      
+      setSuccess(true);
+      
+      setTimeout(() => {
+        dispatch(setSubject(""));
+        dispatch(setDetails(""));
+        setSuccess(false);
+        onClose();
+      }, 2000);
+      
+    } catch (err) {
+      console.error("Failed to create ticket", err);
+    }
+  };
+  // Handle input changes
+  const handleSubjectChange = (e) => {
+    dispatch(setSubject(e.target.value));
+  };
+
+
+
+  const handleDetailsChange = (e) => {
+    dispatch(setDetails(e.target.value));
+  };
+
+
+
+  // Handle modal close
+  const handleClose = () => {
+    dispatch(setSubject(""));
+    dispatch(setDetails(""));
+    setSuccess(false);
+    onClose();
+  };
+
     return(
          
-   <Modal open={open} onClose={onClose}>
+   <Modal open={open} onClose={handleClose}>
         <Box
           sx={{
             position: "absolute",
@@ -18,7 +72,7 @@ import TextField from "@mui/material/TextField";
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: "100%",
-            maxWidth: 900,
+            maxWidth: 600,
             borderRadius: 3,
             backgroundColor: "#F7F7F7",
           }}
@@ -37,10 +91,25 @@ import TextField from "@mui/material/TextField";
               mb={2}
               sx={{ color: "#505050" }}
             >
-              Submit Support Ticket
+              Submit Support Ticket 
             </Typography>
+              {/* Success Message */}
+          {success && (
+            <Alert severity="success" sx={{ mb: 2 }}>
+              Ticket submitted successfully!
+            </Alert>
+          )}
 
+          {/* Error Message */}
+          {error && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {error}
+            </Alert>
+          )}
             <TextField
+            value={subject}
+            onChange={handleSubjectChange}
+            disabled={loading}
               fullWidth
               label=" Enter your Subject"
               sx={{
@@ -53,6 +122,9 @@ import TextField from "@mui/material/TextField";
             />
 
             <TextField
+            value={details}
+            onChange={handleDetailsChange}
+            disabled={loading}
               fullWidth
               label="Enter your Details"
               multiline
@@ -67,10 +139,11 @@ import TextField from "@mui/material/TextField";
             />
 
             <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
-              <Button sx={{ width: "151px" }} onClick={onclose}>
+              <Button sx={{ width: "151px" }} onClick={handleClose} disabled={loading}>
                 Cancel
               </Button>
-              <Button sx={{ width: "151px" }} variant="contained">
+              <Button onClick={handleSubmit} disabled={loading}
+               sx={{ width: "151px" }} variant="contained">
                 Send
               </Button>
             </Box>

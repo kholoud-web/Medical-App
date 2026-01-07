@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const token = "";
+const token = localStorage.getItem("Q2ZESjhLRnYwYVB3ckROQ29GaWZKQ0s4NHpKU05xcm9iME4zSFUxUnZJSEpaekNhRzFlWEU1QkJEbXJXUVhYMk9ydjN3L3gwd2V4OXU5RVR2RnZKdkpldFV6TFBYb3RKK0kvZUtUTmhWMFY3OW42QkRENDQ2QjQ1ZUl1MHVPRWZQaGJ4dXNYNnBWZjhUOEtJbDRtQ0ozYXNpOW9XUmprRDA3azBLUnpMTHNTeXVtSy9GQzUwbmR1bTJ1YTIyMTVxd2Rva3hSdE8vZmdPL2J2eEFRa2hTVW91emdlVFFkbzUzNmxuek1VajhXaklnZ2RZUW5ubGxJUWdVRHI3enBJRi9xY0lvZz09");
 
 // get all admin
 export const fetchAdmins = createAsyncThunk(
@@ -183,6 +183,8 @@ const helpSlice = createSlice({
       .addCase(fetchFaqs.fulfilled, (state, action) => {
         state.loading = false;
         state.inquiries = action.payload;
+              console.log("fetchFaqs fulfilled with:", action.payload); // ✅ Add this log
+
       })
       .addCase(fetchFaqs.rejected, (state, action) => {
         state.loading = false;
