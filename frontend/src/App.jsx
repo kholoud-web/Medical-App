@@ -43,9 +43,10 @@ import ResetSuccess from "./Pages/Auth/ResetSuccess";
 import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 import Consultations from "./Pages/Doctor/Consultation/Consultations";
+import PatientsManagement from "./Pages/Admin/PatientsManagement/PatientsManagement";
 
 function App() {
-  const role = "doctor";
+  const role = "patient";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
   const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
@@ -106,6 +107,8 @@ function App() {
                {path:"inquiries", element: <Inquiries/>},
               {path:"AiPerformance",element:<AiPerformance/>},
               { path: "diagnosis-module", element: <DiagnosisModule /> },
+              { path: "PatientsManagement", element: <PatientsManagement /> },
+
             ]
           : []),
         {

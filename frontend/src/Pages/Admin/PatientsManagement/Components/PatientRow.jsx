@@ -3,8 +3,12 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { MdMoreVert } from "react-icons/md";
 import { FaTrash, FaUser } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { removePatient } from "../../../../RiduxToolkit/Slices/patientsSlice";
 
 const PatientRow = ({ patient }) => {
+    const dispatch = useDispatch();
+
   const statusStyles = {
     ACTIVE: "bg-green-100 text-[#016630]",
     DELETED: "bg-red-100 text-[#EF4444]",
@@ -23,27 +27,36 @@ const PatientRow = ({ patient }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-const handleDelete = () => {
-  Swal.fire({
+const handleDelete = async () => {
+  const result = await Swal.fire({
     title: "Delete Patient",
-    text: `Are you sure you want to block ${patient.name}? This will prevent them from accessing the system.`,
+    text: `Are you sure you want to block ${patient.name}?`,
     showCancelButton: true,
     confirmButtonColor: "#EF4444",
     cancelButtonColor: "#9CA3AF",
     confirmButtonText: "Delete",
-    cancelButtonText: "Cancel",
-    customClass: {
-      popup: "rounded-xl",
-      confirmButton: "px-6 py-2",
-      cancelButton: "px-6 py-2",
-    },
-  }).then((result) => {
-    if (result.isConfirmed) {
-      // الحذف (API)
-      console.log("Patient deleted:", patient.id);
-    }
   });
+
+  if (!result.isConfirmed) return;
+
+  try {
+    await dispatch(removePatient(patient.id)).unwrap();
+
+    Swal.fire({
+      icon: "success",
+      title: "Deleted",
+      timer: 1500,
+      showConfirmButton: false,
+    });
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Failed to delete patient",
+    });
+  }
 };
+
 
   return (
     <tr className="hover:bg-gray-50 transition">
@@ -79,7 +92,7 @@ const handleDelete = () => {
             </button>
 
             <button
-               onClick={handleDelete}
+              onClick={handleDelete}
               className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-gray-100"
             >
               <FaTrash />

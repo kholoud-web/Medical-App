@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TabButton from "./Components/TabButton";
 import PatientRow from "./Components/PatientRow";
-import { patientsData } from "./Patients";
 import HelpRequestRow from "./Components/HelpRequestRow";
-import { helpRequests } from "./HelpRequestsData";
 import ReplyModal from "./Components/replyModel";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPatients, fetchHelpRequests, removePatient } from "../../../RiduxToolkit/Slices/patientsSlice";
 
 const PatientsManagement = () => {
   const [activeTab, setActiveTab] = useState("Help Requests");
@@ -12,26 +12,40 @@ const PatientsManagement = () => {
   const [filter, setFilter] = useState("All Status");
   const [selectedRequest, setSelectedRequest] = useState(null);
 
-  const handleTabChange = (tab) => {
-  setActiveTab(tab);
-  setSearch(""); // إعادة تعيين البحث
-  setFilter("All Status"); // إعادة تعيين الفلتر
-  setSelectedRequest(null); // إغلاق أي مودال مفتوح
-};
+  const dispatch = useDispatch();
+  const { 
+    patients, 
+    helpRequests, 
+    loadingPatients, 
+    loadingHelpRequests 
+  } = useSelector((state) => state.patients);
 
-  const filteredPatients = patientsData.filter((patient) => {
-    const matchesSearch = patient.name
-      .toLowerCase()
-      .includes(search.toLowerCase());
+  // جلب البيانات عند تغيير التاب أو البحث
+  useEffect(() => {
+    if (activeTab === "Patient Table") {
+      dispatch(fetchPatients({ search, pageNumber: 1, pageSize: 10 }));
+    } else if (activeTab === "Help Requests") {
+      dispatch(fetchHelpRequests({ search, pageNumber: 1, pageSize: 10 }));
+    }
+  }, [activeTab, search, dispatch]);
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    setSearch("");
+    setFilter("All Status");
+    setSelectedRequest(null);
+  };
+
+  // فلترة البيانات حسب البحث والحالة
+  const filteredPatients = (patients || []).filter((patient) => {
+    const matchesSearch = patient.name.toLowerCase().includes(search.toLowerCase());
     const matchesFilter =
       filter === "All Status" || patient.status === filter.toUpperCase();
     return matchesSearch && matchesFilter;
   });
 
-  const filteredRequest = helpRequests.filter((request) => {
-    const matchesSearch = request.name
-      .toLowerCase()
-      .includes(search.toLowerCase());
+  const filteredRequests = (helpRequests || []).filter((request) => {
+    const matchesSearch = request.name.toLowerCase().includes(search.toLowerCase());
     const matchesFilter =
       filter === "All Status" || request.status === filter.toUpperCase();
     return matchesSearch && matchesFilter;
@@ -48,6 +62,7 @@ const PatientsManagement = () => {
         </p>
       </section>
 
+      {/* Tabs */}
       <div className="flex gap-6 border-b border-gray-200 mb-6 overflow-x-auto hide-scrollbar whitespace-nowrap">
         <TabButton
           active={activeTab === "Patient Table"}
@@ -59,17 +74,18 @@ const PatientsManagement = () => {
           active={activeTab === "Help Requests"}
           icon="fa-headset"
           label="Help Requests"
-          badge={5}
+          badge={filteredRequests.length}
           onClick={() => handleTabChange("Help Requests")}
         />
       </div>
 
+      {/* Search & Filter */}
       <section className="flex flex-col lg:flex-row gap-4 mb-6">
         <div className="flex-1 relative">
           <i className="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-[#747474]"></i>
           <input
             type="text"
-            placeholder="Search Patients..."
+            placeholder="Search..."
             className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-100"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -78,36 +94,33 @@ const PatientsManagement = () => {
         <div className="relative flex-1 w-full lg:w-48">
           <i className="fa-solid fa-filter absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
 
-            {activeTab === "Patient Table" && (
+          {activeTab === "Patient Table" && (
             <select
-            className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 appearance-none bg-white focus:outline-none"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-          >
-            <option>All Status</option>
-            <option>Active</option>
-            <option>Deleted</option>
+              className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 appearance-none bg-white focus:outline-none"
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+            >
+              <option>All Status</option>
+              <option>Active</option>
+              <option>Deleted</option>
             </select>
-            )
-            }
+          )}
 
-            {activeTab === "Help Requests" && (
+          {activeTab === "Help Requests" && (
             <select
-            className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 appearance-none bg-white focus:outline-none"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-          >
-            <option>All Status</option>
-            <option>New</option>
-            <option>Replied</option>
+              className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 appearance-none bg-white focus:outline-none"
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+            >
+              <option>All Status</option>
+              <option>New</option>
+              <option>Replied</option>
             </select>
-            )
-            }
-          
+          )}
         </div>
       </section>
 
-      {/* Patient Tabel */}
+      {/* Patient Table */}
       {activeTab === "Patient Table" && (
         <section className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="overflow-x-auto">
@@ -123,26 +136,31 @@ const PatientsManagement = () => {
                     "Status",
                     "Actions",
                   ].map((head) => (
-                    <th
-                      key={head}
-                      className="px-6 py-4 text-xs font-bold uppercase text-[#505050]"
-                    >
+                    <th key={head} className="px-6 py-4 text-xs font-bold uppercase text-[#505050]">
                       {head}
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody className="divide-y">
-                {filteredPatients.map((patient) => (
-                  <PatientRow key={patient.id} patient={patient} />
-                ))}
+                {loadingPatients ? (
+                  <tr>
+                    <td colSpan="7" className="text-center py-6 text-gray-400">
+                      Loading patients...
+                    </td>
+                  </tr>
+                ) : (
+                  filteredPatients.map((patient) => (
+                    <PatientRow key={patient.id} patient={patient} />
+                  ))
+                )}
               </tbody>
             </table>
           </div>
         </section>
       )}
 
-      {/* HelpRequest Tabel */}
+      {/* Help Requests Table */}
       {activeTab === "Help Requests" && (
         <section className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="overflow-x-auto">
@@ -151,10 +169,7 @@ const PatientsManagement = () => {
                 <tr>
                   {["Patient Name", "Age", "Gender", "Subject", "Status"].map(
                     (head) => (
-                      <th
-                        key={head}
-                        className="px-6 py-4 text-xs font-bold uppercase text-[#505050]"
-                      >
+                      <th key={head} className="px-6 py-4 text-xs font-bold uppercase text-[#505050]">
                         {head}
                       </th>
                     )
@@ -162,16 +177,25 @@ const PatientsManagement = () => {
                 </tr>
               </thead>
               <tbody className="divide-y">
-                {filteredRequest.map((request) => (
-                  <HelpRequestRow
-                    key={request.id}
-                    request={request}
-                    onReply={(request) => setSelectedRequest(request)}
-                  />
-                ))}
+                {loadingHelpRequests ? (
+                  <tr>
+                    <td colSpan="5" className="text-center py-6 text-gray-400">
+                      Loading help requests...
+                    </td>
+                  </tr>
+                ) : (
+                  filteredRequests.map((request) => (
+                    <HelpRequestRow
+                      key={request.id}
+                      request={request}
+                      onReply={setSelectedRequest}
+                    />
+                  ))
+                )}
               </tbody>
             </table>
-            {/* عرض الـ Modal فقط عند اختيار طلب */}
+
+            {/* Reply Modal */}
             {selectedRequest && (
               <ReplyModal
                 request={selectedRequest}
