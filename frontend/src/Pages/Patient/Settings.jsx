@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import {
   FiBell,
   FiChevronDown,
-  FiLock,
   FiSettings,
   FiShield,
   FiUser,
   FiX,
 } from "react-icons/fi";
-import { FaRegUserCircle } from "react-icons/fa";
 import Card from "@/components/Common/Card";
 import PrimButton from "@/components/Common/PrimButton";
 import { useLocale } from "@/context/LocaleContext";
@@ -40,7 +38,7 @@ function Toggle({ enabled, onChange, label }) {
 
 function SectionHeader({ icon: Icon, title }) {
   return (
-    <div className="flex items-center gap-3 text-lg font-semibold text-neutral-800">
+    <div className="flex items-center gap-3 text-xl font-semibold text-neutral-800">
       <Icon className="text-primary-blue" size={18} />
       <span>{title}</span>
     </div>
@@ -49,10 +47,10 @@ function SectionHeader({ icon: Icon, title }) {
 
 function SettingRow({ title, description, action }) {
   return (
-    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 rounded-xl bg-white px-3 py-2">
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 rounded-xl bg-white px-4 py-3">
       <div>
-        <p className="text-sm font-semibold text-neutral-800">{title}</p>
-        <p className="text-xs text-neutral-500">{description}</p>
+        <p className="text-base font-semibold text-neutral-800">{title}</p>
+        <p className="text-sm text-neutral-500">{description}</p>
       </div>
       {action}
     </div>
@@ -113,7 +111,7 @@ export default function Settings() {
 
   return (
     <div className="min-h-screen bg-[#f5f7fb] text-neutral-800 flex justify-center">
-      <div className="w-full max-w-5xl px-4 lg:px-6 py-10 space-y-5">
+      <div className="w-full max-w-6xl px-4 lg:px-6 py-10 space-y-5">
         <div className="space-y-1">
           <h1 className="text-3xl font-semibold text-neutral-900">
             {t("settings.title")}
@@ -121,110 +119,120 @@ export default function Settings() {
           <p className="text-sm text-neutral-500">{t("settings.subtitle")}</p>
         </div>
 
-        <Card classname="w-full p-5 lg:p-6 space-y-4 border border-primary-blue/30 bg-[#f8f9fc]">
-          <SectionHeader icon={FiUser} title={t("settings.profile.title")} />
-          <div className="flex items-center gap-3">
-            <img
-              src={profileAvatar}
-              alt="Profile"
-              className="h-12 w-12 rounded-full object-cover border border-primary-blue/20"
-            />
-            <div className="text-sm text-neutral-700">
-              <p className="font-semibold">{t("settings.profile.title")}</p>
-              <p className="text-xs text-neutral-500">
-                {t("settings.profile.description")}
-              </p>
+        <Card classname="w-full p-7 lg:p-10 border border-primary-blue/30 bg-[#f8f9fc]">
+          <div className="space-y-6">
+            <div className="space-y-4 border-b border-primary-blue/15 pb-6">
+              <SectionHeader icon={FiUser} title={t("settings.profile.title")} />
+              <div className="flex flex-col gap-4 rounded-xl bg-white px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-3">
+                  <img
+                    src={profileAvatar}
+                    alt="Profile"
+                    className="h-14 w-14 rounded-full object-cover border border-primary-blue/20"
+                  />
+                  <div className="text-base text-neutral-700">
+                    <p className="font-semibold">{t("settings.profile.title")}</p>
+                    <p className="text-sm text-neutral-500">
+                      {t("settings.profile.description")}
+                    </p>
+                  </div>
+                </div>
+                <PrimButton
+                  className="px-5 py-2.5 text-base shadow-sm hover:shadow-md"
+                  onClick={() => setShowProfileModal(true)}
+                >
+                  {t("settings.profile.button")}
+                </PrimButton>
+              </div>
             </div>
-            <div className="ml-auto">
-              <PrimButton
-                className="px-4 py-2 text-sm shadow-sm hover:shadow-md"
-                onClick={() => setShowProfileModal(true)}
-              >
-                {t("settings.profile.button")}
-              </PrimButton>
+
+            <div className="space-y-4 border-b border-primary-blue/15 pb-6">
+              <SectionHeader
+                icon={FiShield}
+                title={t("settings.security.title")}
+              />
+              <SettingRow
+                title={t("settings.security.passwordTitle")}
+                description={t("settings.security.passwordDesc")}
+                action={
+                  <PrimButton
+                    className="px-5 py-2.5 text-base shadow-sm hover:shadow-md"
+                    onClick={() => setShowPasswordModal(true)}
+                  >
+                    {t("settings.security.passwordButton")}
+                  </PrimButton>
+                }
+              />
+              <SettingRow
+                title={t("settings.security.2faTitle")}
+                description={t("settings.security.2faDesc")}
+                action={
+                  <Toggle
+                    label={t("settings.security.2faTitle")}
+                    enabled={smsNotif}
+                    onChange={setSmsNotif}
+                  />
+                }
+              />
             </div>
-          </div>
-        </Card>
 
-        <Card classname="w-full p-5 lg:p-6 space-y-4 border border-primary-blue/30 bg-[#f8f9fc]">
-          <SectionHeader icon={FiShield} title={t("settings.security.title")} />
-          <SettingRow
-            title={t("settings.security.passwordTitle")}
-            description={t("settings.security.passwordDesc")}
-            action={
-              <PrimButton
-                className="px-4 py-2 text-sm shadow-sm hover:shadow-md"
-                onClick={() => setShowPasswordModal(true)}
-              >
-                {t("settings.security.passwordButton")}
-              </PrimButton>
-            }
-          />
-          <SettingRow
-            title={t("settings.security.2faTitle")}
-            description={t("settings.security.2faDesc")}
-            action={
-              <Toggle
-                label={t("settings.security.2faTitle")}
-                enabled={smsNotif}
-                onChange={setSmsNotif}
+            <div className="space-y-4 border-b border-primary-blue/15 pb-6">
+              <SectionHeader
+                icon={FiBell}
+                title={t("settings.notifications.title")}
               />
-            }
-          />
-        </Card>
-
-        <Card classname="w-full p-5 lg:p-6 space-y-4 border border-primary-blue/30 bg-[#f8f9fc]">
-          <SectionHeader
-            icon={FiBell}
-            title={t("settings.notifications.title")}
-          />
-          <SettingRow
-            title={t("settings.notifications.emailTitle")}
-            description={t("settings.notifications.emailDesc")}
-            action={
-              <Toggle
-                label={t("settings.notifications.emailTitle")}
-                enabled={emailNotif}
-                onChange={setEmailNotif}
+              <SettingRow
+                title={t("settings.notifications.emailTitle")}
+                description={t("settings.notifications.emailDesc")}
+                action={
+                  <Toggle
+                    label={t("settings.notifications.emailTitle")}
+                    enabled={emailNotif}
+                    onChange={setEmailNotif}
+                  />
+                }
               />
-            }
-          />
-          <SettingRow
-            title={t("settings.notifications.smsTitle")}
-            description={t("settings.notifications.smsDesc")}
-            action={
-              <Toggle
-                label={t("settings.notifications.smsTitle")}
-                enabled={smsNotif}
-                onChange={setSmsNotif}
+              <SettingRow
+                title={t("settings.notifications.smsTitle")}
+                description={t("settings.notifications.smsDesc")}
+                action={
+                  <Toggle
+                    label={t("settings.notifications.smsTitle")}
+                    enabled={smsNotif}
+                    onChange={setSmsNotif}
+                  />
+                }
               />
-            }
-          />
-        </Card>
-
-        <Card classname="w-full p-5 lg:p-6 space-y-4 border border-primary-blue/30 bg-[#f8f9fc]">
-          <SectionHeader icon={FiLock} title={t("settings.general.title")} />
-          <div className="flex items-center justify-between rounded-xl bg-white px-3 py-2">
-            <div>
-              <p className="text-sm font-semibold text-neutral-800">
-                {t("settings.general.language")}
-              </p>
-              <p className="text-xs text-neutral-500">
-                {t("settings.general.languageDesc")}
-              </p>
             </div>
-            <div className="relative">
-              <select
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-                className="appearance-none rounded-lg border border-primary-blue/30 bg-white px-3 py-2 text-sm font-semibold text-neutral-700 focus:border-primary-blue focus:ring-1 focus:ring-primary-blue/40 outline-none pr-7"
-              >
-                <option value="en">{t("settings.general.english")}</option>
-                <option value="ar">{t("settings.general.arabic")}</option>
-              </select>
-              <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-neutral-500">
-                <FiChevronDown size={14} />
-              </span>
+
+            <div className="space-y-4">
+              <SectionHeader
+                icon={FiSettings}
+                title={t("settings.general.title")}
+              />
+              <div className="flex items-center justify-between rounded-xl bg-white px-4 py-3">
+                <div>
+                  <p className="text-base font-semibold text-neutral-800">
+                    {t("settings.general.language")}
+                  </p>
+                  <p className="text-sm text-neutral-500">
+                    {t("settings.general.languageDesc")}
+                  </p>
+                </div>
+                <div className="relative">
+                  <select
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
+                    className="appearance-none rounded-lg border border-primary-blue/30 bg-white px-3 py-2 text-base font-semibold text-neutral-700 focus:border-primary-blue focus:ring-1 focus:ring-primary-blue/40 outline-none pr-7"
+                  >
+                    <option value="en">{t("settings.general.english")}</option>
+                    <option value="ar">{t("settings.general.arabic")}</option>
+                  </select>
+                  <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-neutral-500">
+                    <FiChevronDown size={14} />
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </Card>

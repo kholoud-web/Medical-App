@@ -10,16 +10,19 @@ import DiagnosisAssistant from "./Pages/Doctor/Diagnosis/DiagnosisAssistant";
 import MyPatients from "./Pages/Doctor/MyPatients/MyPatients";
 import Reports from "./Pages/Doctor/Reports/Reports";
 import Notifications from "./Pages/Doctor/Notifications/Notifications";
+import DoctorSettings from "./Pages/Doctor/Settings";
 import NotificationCenter from "./Pages/Admin/NotificationCenter/NotificationCenter";
 import DrugChecker from "./Pages/Admin/DrugChecker/DrugChecker";
 import AiDiagnosisResult from "./Pages/Patient/AiDiagnosisResult";
 import DiagnosisModule from "./Pages/Patient/DiagnosisModule";
 import Directory from "./Pages/Patient/Directory";
 import Payment from "./Pages/Patient/Payment";
+import PatientSettings from "./Pages/Patient/Settings";
 import Service from "./Pages/Service/Service";
 import LandingPage from "./Pages/Common/LandingPage/LandingPage";
 import MainLayout from "./Layouts/MainLayout";
 import HelpSupport from './Pages/Doctor/HelpAndSupport/HelpSupport';
+import PatientHelp from "./Pages/Patient/Help";
 import Contact from "./Pages/Contact/Contact";
 import FAQ from "./Pages/Common/FAQ/FAQ";
 import Finance from "./Pages/Doctor/Finance/Finance";
@@ -41,14 +44,19 @@ import RequestWithdrawal from "./Pages/Doctor/Finance/RequestWithdrawal/RequestW
 import Consultations from "./Pages/Doctor/Consultation/Consultations";
 import PatientsManagement from "./Pages/Admin/PatientsManagement/PatientsManagement";
 import Login from "./Pages/Auth/Login";
-// import About from "./Pages/About/About";
+//import About from "./Pages/About/About";
 
 
 
 function App() {
   const role = "doctor";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
-  // const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
+  const SettingsElement =
+    role === "doctor"
+      ? DoctorSettings
+      : role === "patient"
+        ? PatientSettings
+        : SystemSetting;
 
   const router = createBrowserRouter([
     { path: "login", element: <Login /> },
@@ -112,7 +120,7 @@ function App() {
               ]
               : []),
         {
-          path: "settings", element: <settingsElement />
+          path: "settings", element: <SettingsElement />
         },
         {
           path: "help", element: helpElement
