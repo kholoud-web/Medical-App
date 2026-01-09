@@ -44,6 +44,7 @@ import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 import Consultations from "./Pages/Doctor/Consultation/Consultations";
 import AdminDashboard from "./Pages/Admin/Dashboard/AdminDashboard";
+import ConfirmEmail from "./Pages/Auth/ConfirmEmail";
 
 
 function App() {
@@ -57,6 +58,8 @@ function App() {
     { path: "/register", element: <Register />,},
     { path: "/reset-password", element: <ResetPassword /> },
     { path:"/reset-success" ,element:<ResetSuccess />},
+        {path : "/confirm-email", element : <ConfirmEmail/>},
+
   
       {
     path: "/",
