@@ -10,7 +10,7 @@ export const fetchInquiries = createAsyncThunk(
   "inquiry/fetchInquiries",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://diagnosis.runasp.net/Inquiry/Inquiries",{
+      const response = await axios.get("http://diagnosis.runasp.net/Inquiry/inquiries",{
         headers:{
           Authorization: `Bearer ${token}`,
         }
@@ -77,7 +77,8 @@ const initialState = {
   isModalOpen:false,
   loading:false,
   error:null,
-  fetchingInquiry:false
+  fetchingInquiry:false,
+ submitting: false,        
 };
 
 const inquirySlice = createSlice({
@@ -119,11 +120,12 @@ const inquirySlice = createSlice({
       return { ...state, ...action.payload };
     },
      openInquiryModal: (state, action) => {
-      state.data = action.payload; 
+      state.selectedInquiry = action.payload;   
       state.isModalOpen = true;
     },
     closeInquiryModal: (state) => {
       state.isModalOpen = false;
+      state.selectedInquiry = null;
     },
 
   },
@@ -165,11 +167,17 @@ const inquirySlice = createSlice({
 
     .addCase(submitInquiry.pending, (state) => {
         state.loading = true;
+        state.submitting = true; 
         state.error = null;
       })
       .addCase(submitInquiry.fulfilled, (state, action) => {
         state.loading = false;
         state.inquiries.unshift(action.payload);
+        state.symptoms = "";
+        state.description = "";
+        state.notes = "";
+        state.files = [];
+        state.doctorId = null;
       })
       .addCase(submitInquiry.rejected, (state, action) => {
         state.loading = false;
