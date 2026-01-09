@@ -43,6 +43,8 @@ import ResetSuccess from "./Pages/Auth/ResetSuccess";
 import Inquiries from "./Pages/Doctor/Inquiries/Inquiries";
 import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 import Consultations from "./Pages/Doctor/Consultation/Consultations";
+import AdminDashboard from "./Pages/Admin/Dashboard/AdminDashboard";
+
 
 function App() {
   const role = "patient";
@@ -90,9 +92,11 @@ function App() {
           ]
           : role === "admin"
             ? [
+               { path: "dashboard", element:<AdminDashboard/>},
               { path: "notificationCenter", element: <NotificationCenter /> },
               
               { path: "doctorsManagement", element: <DoctorsManagement /> },
+              
 
             ]
           : role === "patient"
