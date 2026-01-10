@@ -1,36 +1,87 @@
-const inquiries = [
-  {
-    doctor: "Dr. Ali Sameh",
-    subject: "Headache and Dizziness",
-    date: "2025/11/20",
-    time: "10:00 AM",
-    status: "confirmed",
-  },
-  {
-    doctor: "Dr. Sarah Ahmed",
-    subject: "Prescription Renewal",
-    date: "2025/12/2",
-    time: "11:15 AM",
-    status: "confirmed",
-  },
-  {
-    doctor: "Dr. Karam Adel",
-    subject: "Medication Side Effects",
-    date: "2025/11/25",
-    time: "2:30 PM",
-    status: "pending",
-  },
-];
+import { useDispatch,useSelector } from "react-redux";
+import { fetchAdminDashboard, selectAdminDashboard,selectDashboardLoading,selectDashboardError } from "@/RiduxToolkit/Slices/AdminDashboard";
+import Inquiries from "@/Pages/Doctor/Inquiries/Inquiries";
+
+
+
+// const inquiries = [
+//   {
+//     doctor: "Dr. Ali Sameh",
+//     subject: "Headache and Dizziness",
+//     date: "2025/11/20",
+//     time: "10:00 AM",
+//     status: "confirmed",
+//   },
+//   {
+//     doctor: "Dr. Sarah Ahmed",
+//     subject: "Prescription Renewal",
+//     date: "2025/12/2",
+//     time: "11:15 AM",
+//     status: "confirmed",
+//   },
+//   {
+//     doctor: "Dr. Karam Adel",
+//     subject: "Medication Side Effects",
+//     date: "2025/11/25",
+//     time: "2:30 PM",
+//     status: "pending",
+//   },
+// ];
+
+
+
 
 function InquiriesTable() {
+
+  const dispatch = useDispatch();
+  // const dashboardData = useSelector(selectAdminDashboard);
+  const loading = useSelector(selectDashboardLoading);
+  const error = useSelector(selectDashboardError);
+  
+  
+  //  const Inquiries = dashboardData?.inquiries || [];
+
+
   return (
     <div className="bg-treat-bg-Gray p-4 rounded-xl border border-primary-blue/50">
       <h3 className="font-semibold mb-1">Inquiries Overview</h3>
       <p className="text-sm text-gray-500 mb-4">
         Your scheduled inquiries
       </p>
+       {/*  */}
+         {loading && (
+        <div className="space-y-3 animate-pulse">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-16 bg-gray-200 rounded"></div>
+          ))}
+        </div>
+      )}
 
+      {/* Error State */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
+          <p className="text-red-600 font-semibold mb-2">
+            Failed to load inquiries
+          </p>
+          <p className="text-sm text-red-500 mb-3">{error}</p>
+          <button
+            onClick={() => dispatch(fetchAdminDashboard())}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm"
+          >
+            Retry
+          </button>
+        </div>
+      )}
+
+      {/* Empty State */}
+      {!loading && !error && Inquiries.length === 0 && (
+        <div className="text-center py-8 text-gray-400">
+          <p>No inquiries found</p>
+        </div>
+      )}
+      {/*  */}
       {/* Desktop Table View */}
+      {!loading && !error && Inquiries.length >0 &&(
       <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="text-gray-500">
@@ -76,10 +127,11 @@ function InquiriesTable() {
           </tbody>
         </table>
       </div>
-
+      )}
       {/* Mobile Card View */}
+       {!loading && !error && Inquiries.length > 0 && (
       <div className="md:hidden space-y-4">
-        {inquiries.map((item, i) => (
+        {Inquiries.map((item, i) => (
           <div
             key={i}
             className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm"
@@ -120,6 +172,7 @@ function InquiriesTable() {
           </div>
         ))}
       </div>
+       )}
     </div>
   );
 }

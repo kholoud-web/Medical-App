@@ -5,6 +5,8 @@ import consultationReducer from './Slices/ConsultationSlice';
 import inquiryReducer from './Slices/InquirySlice'
 import modifyConsultationReducer from "./Slices/modifyConsultationSlice";
 import helpReducer from './Slices/HelpSupportSlice'
+import AdminDashboardReducer from './Slices/AdminDashboard';
+
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +16,6 @@ export const store = configureStore({
     modifyConsultation: modifyConsultationReducer,
     inquiry:inquiryReducer,
     help:helpReducer,
+    AdminDashboard:AdminDashboardReducer,
   },
 }); 
