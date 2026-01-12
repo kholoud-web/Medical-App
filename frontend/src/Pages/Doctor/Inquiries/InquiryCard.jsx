@@ -8,8 +8,19 @@ import { openInquiryModal } from "@/RiduxToolkit/Slices/InquirySlice";
 
 export default function InquiryCard({ inquiry}) {
   const dispatch = useDispatch();
-  const isReplied = inquiry.status === "Replied";
-
+  const isReplied = inquiry.status === "Completed" || inquiry.status === "Replied";
+ 
+  //Format the date
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
   return (
     <div className="bg-gray-50 border rounded-xl p-4 space-y-3">
 
@@ -31,13 +42,14 @@ export default function InquiryCard({ inquiry}) {
       </div>
 
       <h3 className="font-semibold text-gray-800 text-sm">
-        {inquiry.title}
+        {inquiry.symptoms || "No symptoms provided"}
       </h3>
 
    
       <div className="text-xs text-gray-500 space-y-1">
-        <p># {inquiry.code}</p>
+        <p># {inquiry.inquiryId}</p>
         <p>{inquiry.date}</p>
+        <p>{formatDate(inquiry.date)}</p>
       </div>
 
    
