@@ -1,20 +1,21 @@
-import { API } from "@/Api/Api";
-import Inquiries from "@/Pages/Doctor/Inquiries/Inquiries";
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 
-const token = "eyJzdWIiOiJjZGI4ZTBkMi0zMWM4LTQxNzItOTFhZi0yMDJiMWM5ZGRhMzAiLCJlbWFpbCI6ImZhcmhheWEwMDVAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiJjZGI4ZTBkMi0zMWM4LTQxNzItOTFhZi0yMDJiMWM5ZGRhMzAiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJQYXRpZW50IiwiZXhwIjoxNzY3NjI0ODU0LCJpc3MiOiJEaWFnbm9zaXNBUEkiLCJhdWQiOiJEaWFnbm9zaXNDbGllbnQifQ"
+const getAuthHeader = () => ({
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+})
 
+// fetch all inquiries
 export const fetchInquiries = createAsyncThunk(
   "inquiry/fetchInquiries",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://diagnosis.runasp.net/Inquiry/Inquiries",{
-        headers:{
-          Authorization: `Bearer ${token}`,
-        }
-      });
+      const response = await axios.get("http://diagnosis.runasp.net/Inquiry/inquiries",
+       getAuthHeader()
+      )
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -25,33 +26,26 @@ export const fetchInquiries = createAsyncThunk(
 
 // submit new inquiry
 export const submitInquiry= createAsyncThunk(
-  "inquiry /submitInquiry",
+  "inquiry/submitInquiry",
   async(FormData,{rejectWithValue})=>{
     try {
-      const response = await axios.post("http://diagnosis.runasp.net/Inquiry",FormData,{
-        headers: 
-        {Authorization: `Bearer ${token}`
-      }
-         
-      })
+      const response = await axios.post("http://diagnosis.runasp.net/Inquiry",FormData,
+        getAuthHeader()
+   )
       return response.data;
     }catch(error){
       return rejectWithValue(error.response?.data || error.message)
     }
   }
 )
-
+// fectch inquiry by id 
 export const fetchInquiryById = createAsyncThunk(
   "inquiry/fetchInquiryById",
   async (inquiryId, { rejectWithValue }) => { 
     try {
       const response = await axios.get( 
         `http://diagnosis.runasp.net/Inquiry/${inquiryId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          }
-        }
+        getAuthHeader()
       );
        return response.data;
     } catch (error) {
@@ -119,7 +113,7 @@ const inquirySlice = createSlice({
       return { ...state, ...action.payload };
     },
      openInquiryModal: (state, action) => {
-      state.data = action.payload; 
+      state.selectedInquiry = action.payload; 
       state.isModalOpen = true;
     },
     closeInquiryModal: (state) => {
@@ -139,7 +133,7 @@ const inquirySlice = createSlice({
       
     })
     .addCase(fetchInquiries.rejected,(state,action)=>{
-      state.loading = false,
+      state.loading = false;
       state.error = action.payload;
     })
     
