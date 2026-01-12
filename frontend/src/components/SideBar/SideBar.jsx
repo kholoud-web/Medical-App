@@ -27,7 +27,7 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { role, isAuthenticated } = useSelector((state) => state.auth);
-  const userRole = role || "patient";
+  const userRole = role || "admin";
   const DoctorNavBar = [
     {
       icon: <MdOutlineDashboard className="inline-block mr-2" />,

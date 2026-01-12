@@ -1,20 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+const BASE_URL = "http://diagnosis.runasp.net";
 
-const token = localStorage.getItem("Q2ZESjhLRnYwYVB3ckROQ29GaWZKQ0s4NHpKU05xcm9iME4zSFUxUnZJSEpaekNhRzFlWEU1QkJEbXJXUVhYMk9ydjN3L3gwd2V4OXU5RVR2RnZKdkpldFV6TFBYb3RKK0kvZUtUTmhWMFY3OW42QkRENDQ2QjQ1ZUl1MHVPRWZQaGJ4dXNYNnBWZjhUOEtJbDRtQ0ozYXNpOW9XUmprRDA3azBLUnpMTHNTeXVtSy9GQzUwbmR1bTJ1YTIyMTVxd2Rva3hSdE8vZmdPL2J2eEFRa2hTVW91emdlVFFkbzUzNmxuek1VajhXaklnZ2RZUW5ubGxJUWdVRHI3enBJRi9xY0lvZz09");
 
+const getAuthHeader = () => ({
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+  
+});
 // get all admin
 export const fetchAdmins = createAsyncThunk(
   "supportTicket/fetchAdmins",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        "http://diagnosis.runasp.net/SupportTicket/all",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        // "http://diagnosis.runasp.net/SupportTicket/all",
+        `${BASE_URL}/SupportTicket/all`,
+        getAuthHeader()
+    
       );
       return response.data;
     } catch (error) {
@@ -31,11 +35,8 @@ export const createTicket = createAsyncThunk(
       const response = await axios.post(
         "http://diagnosis.runasp.net/SupportTicket/create",
         { subject, details },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        getAuthHeader()
+      
       );
       return response.data;
     } catch (error) {
@@ -51,11 +52,8 @@ export const fetchFaqs = createAsyncThunk(
     try {
       const response = await axios.get(
         "http://diagnosis.runasp.net/Help/faqs?Type=Patient",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        getAuthHeader()
+       
       );
       return response.data;
     } catch (error) {
@@ -72,11 +70,8 @@ export const sendReply = createAsyncThunk(
       const response = await axios.post(
         "http://diagnosis.runasp.net/Help/faqs?Type=Patient",
         { ticketId, reply },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        getAuthHeader()
+      
       );
       return response.data;
     } catch (error) {
@@ -92,11 +87,8 @@ export const fetchContentById = createAsyncThunk(
     try {
       const response = await axios.post(
         `http://diagnosis.runasp.net/SupportTicket/content/${ticketId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+       getAuthHeader()
+  
       );
       return response.data;
     } catch (error) {
