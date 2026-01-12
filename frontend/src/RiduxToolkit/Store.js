@@ -8,6 +8,9 @@ import helpReducer from './Slices/HelpSupportSlice'
 import doctorManagementReducer from './Slices/DoctorManagementSlice'
 import systemSettingReducer from './Slices/SystemSettingSlice'
 import adminDashboardReducer from './Slices/AdminDashboard'
+import AdminDashboardReducer from './Slices/AdminDashboard';
+import patientDashboardReducer from './Slices/patientDashboardSlice'
+
 
 export const store = configureStore({
   reducer: {
@@ -20,5 +23,7 @@ export const store = configureStore({
     doctorManagement: doctorManagementReducer,
     systemSetting: systemSettingReducer,
     adminDashboard: adminDashboardReducer,
+    AdminDashboard:AdminDashboardReducer,
+    patientDashboard:patientDashboardReducer,
   },
 }); 
