@@ -13,4 +13,10 @@ export const API ={
     CheckDrugChecker: `${BASE_URL}/DrugChecker/check`,
     GetDrugChecker: (keyword) =>
     `${BASE_URL}/DrugChecker/suggestions?keyword=${keyword}`,
+
+    // system setting
+    doctorRateLimit: `${BASE_URL}/SystemSettings/doctor/rate-limit`,
+    doctorWorkHours:`${BASE_URL}/SystemSettings/doctor/work-hours`,
+    aiRate:`${BASE_URL}/SystemSettings/ai/rate-limit`,
+    aiToggle:`${BASE_URL}/SystemSettings/ai/toggle`,
 }
