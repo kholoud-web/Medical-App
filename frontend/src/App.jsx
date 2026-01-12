@@ -33,8 +33,8 @@ import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTr
 import PatientProfile from "./Pages/Patient/PatientProfile/PatientProfile";
 import DoctorProfile from "./Pages/Admin/DoctorProfile/DoctorProfile";
 import SystemSetting from "./Pages/Admin/SystemSetting/SystemSetting";
-import DoctorsManagement from "./Pages/Admin/DoctorsManagement/DoctorsManagement";
-import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
+import DoctorsManagement from "./Pages/Admin/DoctorsManagement/DoctorsManagement";import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
+import PatientsManagement from "./Pages/Admin/PatientsManagement/PatientsManagement";
 import Physiotherapy from "./Pages/Patient/Physiotherapy/Physiotherapy";
 import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
 import Register from './Pages/Auth/Registration';
@@ -97,7 +97,7 @@ function App() {
             ? [
                { path: "dashboard", element:<AdminDashboard/>},
               { path: "notificationCenter", element: <NotificationCenter /> },
-              
+              {path:"patientsManagement", element:<PatientsManagement/>},
               { path: "doctorsManagement", element: <DoctorsManagement /> },
               
 

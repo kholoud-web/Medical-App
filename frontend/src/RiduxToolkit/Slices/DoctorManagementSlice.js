@@ -1,6 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { getAuthHeader, BASE_URL } from '../../Api/Api';
+
+const BASE_URL = 'http://diagnosis.runasp.net';
+
+const getAuthHeader = () => ({
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+});
 
 // Async thunks
 export const fetchDoctors = createAsyncThunk(
@@ -62,6 +69,23 @@ export const createDoctor = createAsyncThunk(
         doctorData,
         { headers: getAuthHeader() }
       );
+      
+      // Auto-confirm doctor email if token is returned
+      if (response.data.token && response.data.email) {
+        try {
+          await axios.post(
+            `${BASE_URL}/Auth/confirm-email`,
+            { email: response.data.email, token: response.data.token },
+            { headers: { "Content-Type": "application/json" } }
+          );
+          return { ...response.data, emailConfirmed: true };
+        } catch (confirmErr) {
+          console.log("Doctor email confirmation error:", confirmErr.response?.data || confirmErr.message);
+          // Doctor created but confirmation failed
+          return { ...response.data, emailConfirmed: false };
+        }
+      }
+      
       return response.data;
     } catch (error) {
       // Surface backend error details to UI for easier debugging
@@ -164,7 +188,8 @@ const doctorManagementSlice = createSlice({
         if (action.payload?.doctor) {
           state.doctors.unshift(action.payload.doctor);
         }
-        state.successMessage = 'Doctor added successfully'; // custom message
+        const confirmMsg = action.payload?.emailConfirmed ? ' and email confirmed' : '';
+        state.successMessage = `Doctor added successfully${confirmMsg}`;
         state.error = null;
       })
       .addCase(createDoctor.rejected, (state, action) => {

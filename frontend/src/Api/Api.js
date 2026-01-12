@@ -14,15 +14,3 @@ export const API ={
     GetDrugChecker: (keyword) =>
     `${BASE_URL}/DrugChecker/suggestions?keyword=${keyword}`,
 }
-
-export const getAuthHeader = () => {
-  const token = localStorage.getItem('token');
-  
-  if (!token) {
-    console.warn('No authentication token found. Please login first.');
-  }
-  
-  return {
-    Authorization: `Bearer ${token}`
-  };
-};
