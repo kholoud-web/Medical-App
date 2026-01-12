@@ -27,7 +27,7 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { role, isAuthenticated } = useSelector((state) => state.auth);
-  const userRole = role || "patient";
+  const userRole = role || "admin";
   const DoctorNavBar = [
     {
       icon: <MdOutlineDashboard className="inline-block mr-2" />,
@@ -66,19 +66,19 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
     {
       icon: <img src="/plus_icon.png" className="inline-block mr-2 w-4 h-4" />,
       title: "Doctor Management",
-      link: "/doctor-management",
+      link: "/doctorsManagement",
     },
     {
       icon: (
         <img src="/user_syting.png" className="inline-block mr-2 w-4 h-4" />
       ),
       title: "Patient Management",
-      link: "/patient-management",
+      link: "/patientsManagement",
     },
     {
       icon: <img src="/Vector (3).png" className="inline-block mr-2 w-4 h-4" />,
       title: "System Settings",
-      link: "/system-settings",
+      link: "/systemSetting",
     },
   ];
 

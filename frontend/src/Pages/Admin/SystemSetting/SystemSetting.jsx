@@ -1,4 +1,4 @@
- import Box from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button'
 import Card from '@/components/Common/Card';
@@ -7,7 +7,7 @@ import  Divider  from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import icon2 from "./icons/icon-park-outline_medicine-chest.svg"
 import icon3 from "./icons/ix_about.svg"  
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -19,44 +19,69 @@ import AddIcon from '@mui/icons-material/Add';
 import SaveModal from './SaveModal';
 import ReplyModal from './ReplyModal';
 import AddAdmin from './AddAdminOverlay';
+import { useDispatch, useSelector } from 'react-redux';
+import { getOutsideRequests, clearError, clearSuccess } from '@/RiduxToolkit/Slices/SystemSettingSlice';
 
 
   export default function SystemSetting(){
+      const dispatch = useDispatch();
+      const { outsideRequests, loading, error, successMessage } = useSelector((state) => state.systemSetting);
+      
       const [openSave , setOpenSave]= useState(false);
       const [openTable , setOpenTable]=useState(false);
       const [openAddAdmin , setOpenAddAdmin] = useState(false);
-      // table
-      const rows = [
-  {
-    name: "Ali Sameh",
-    email: "alisameh@gmail.com",
-    message: "I need support with an issue in the app.",
-    date: "2025/11/20",
-    status: "Replied",
-  },
-  {
-    name: "Sarah Ahmed",
-    email: "sarahahmed@gmail.com",
-    message: "I need help regarding the app.",
-    date: "2025/11/25",
-    status: "Replied",
-  },
-  {
-    name: "Karam Adel",
-    email: "karamadel@gmail.com",
-    message: "I need help using the app.",
-    date: "2025/11/25",
-    status: "Pending",
-  },
-            ];
+      const [selectedRequest, setSelectedRequest] = useState(null);
+      
+      // Fetch outside requests on mount
+      useEffect(() => {
+        dispatch(getOutsideRequests());
+      }, [dispatch]);
+
+      // Auto-dismiss messages
+      useEffect(() => {
+        if (successMessage || error) {
+          const timer = setTimeout(() => {
+            dispatch(clearSuccess());
+            dispatch(clearError());
+          }, 5000);
+          return () => clearTimeout(timer);
+        }
+      }, [successMessage, error, dispatch]);
+      
    //handle events
-   const handleOpenTable = ()=>{
-           setOpenTable(true);
+   const handleOpenReply = (request) => {
+     console.log('Opening reply for request:', request);
+     console.log('Request ID fields:', {
+       id: request?.id,
+       requestId: request?.requestId,
+       Id: request?.Id,
+       RequestId: request?.RequestId
+     });
+     setSelectedRequest(request);
+     setOpenTable(true);
+   }
+   
+   const handleCloseReply = () => {
+     setOpenTable(false);
+     setSelectedRequest(null);
+     dispatch(getOutsideRequests());
    }
 
 
     return(
         <Box sx={{p:{xs:2,md:3}}}>
+        {/* Success/Error Messages */}
+        {successMessage && (
+          <Box sx={{ backgroundColor: "#DCFCE7", color: "#16A34A", p: 2, borderRadius: 1, mb: 2 }}>
+            {successMessage}
+          </Box>
+        )}
+        {error && (
+          <Box sx={{ backgroundColor: "#FEE2E2", color: "#DC2626", p: 2, borderRadius: 1, mb: 2 }}>
+            {typeof error === 'string' ? error : JSON.stringify(error)}
+          </Box>
+        )}
+        
         <Box sx={{display:"flex" ,flexDirection:"column" ,gap:2,p:3}}>
           <Box sx={{display:"flex" ,justifyContent:"space-between",alignItems:"center"}}>
             <Box>
@@ -157,19 +182,28 @@ import AddAdmin from './AddAdminOverlay';
           </TableHead>
 
           <TableBody>
-            {rows.map((row, index) => (
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={6} align="center">Loading...</TableCell>
+              </TableRow>
+            ) : outsideRequests.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6} align="center">No outside requests found</TableCell>
+              </TableRow>
+            ) : (
+              outsideRequests.map((row, index) => (
               <TableRow key={index}>
-                <TableCell>{row.name}</TableCell>
+                <TableCell>{row.fullName || row.name}</TableCell>
                 <TableCell sx={{color:"#4A5565",fontWeight:"400",fontSize:"16px"}}>{row.email}</TableCell>
                 <TableCell sx={{ color: "#667085" }}>
                   {row.message}
                 </TableCell>
-                <TableCell>{row.date}</TableCell>
+                <TableCell>{row.createdAt ? new Date(row.createdAt).toLocaleDateString() : row.date}</TableCell>
 
                 {/* Status */}
                 <TableCell>
                   <Chip
-                    label={row.status}
+                    label={row.status === "Replied" ? "Replied" : "Pending"}
                     size="small"
                     sx={{
                       backgroundColor:
@@ -188,7 +222,7 @@ import AddAdmin from './AddAdminOverlay';
 
                 {/* Action */}
                 <TableCell>
-                  <Button onClick={()=> handleOpenTable()}
+                  <Button onClick={() => handleOpenReply({ ...row, id: index + 1 })}
                     variant="outlined"
                     size="small"
                     sx={{
@@ -199,11 +233,11 @@ import AddAdmin from './AddAdminOverlay';
                       borderColor:"#0000001A"
                     }}
                   >
-                    Reply
+                    {row.status === "Replied" ? "View Reply" : "Reply"}
                   </Button>
                 </TableCell>
               </TableRow>
-            ))}
+            )))}
           </TableBody>
         </Table>
       </TableContainer>
@@ -233,7 +267,7 @@ import AddAdmin from './AddAdminOverlay';
         
        <SaveModal open={openSave} onClose={()=>setOpenSave(false)}/>        
              {/*modal for reply btn  */}
-       <ReplyModal open ={openTable} onClose={()=>setOpenTable(false)}/>
+       <ReplyModal open={openTable} onClose={handleCloseReply} request={selectedRequest}/>
             
             {/* Add admin modal */}
         <AddAdmin open={openAddAdmin} onClose={()=>setOpenAddAdmin(false)}/>

@@ -37,11 +37,12 @@ function DateCell({ date }) {
   );
 }
 
-function DoctorRow({ doctor, onResetPassword, onDeactivate }) {
+function DoctorRow({ doctor, onResetPassword, onDeactivate, onViewProfile }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuPosition, setMenuPosition] = useState("below");
 
   const handleViewProfile = () => {
-    console.log("View profile:", doctor.name);
+    onViewProfile?.(doctor.id);
     setIsMenuOpen(false);
   };
 
@@ -53,6 +54,15 @@ function DoctorRow({ doctor, onResetPassword, onDeactivate }) {
   const handleResetPassword = () => {
     onResetPassword?.(doctor);
     setIsMenuOpen(false);
+  };
+
+  const handleMenuClick = (e) => {
+    const button = e.currentTarget;
+    const rect = button.getBoundingClientRect();
+    // If button is in the bottom third of the viewport, position menu above
+    const shouldBeAbove = rect.bottom > window.innerHeight * 0.7;
+    setMenuPosition(shouldBeAbove ? "above" : "below");
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
@@ -78,7 +88,7 @@ function DoctorRow({ doctor, onResetPassword, onDeactivate }) {
       <td className="px-4 py-3 text-center">
         <div className="relative inline-block">
           <button 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={handleMenuClick}
             className="rounded p-1 hover:bg-neutral-100" 
             aria-label="Actions"
           >
@@ -91,7 +101,9 @@ function DoctorRow({ doctor, onResetPassword, onDeactivate }) {
                 className="fixed inset-0 z-10" 
                 onClick={() => setIsMenuOpen(false)}
               />
-              <div className="absolute right-0 z-20 mt-1 w-48 rounded-lg bg-white shadow-lg border border-neutral-200 py-1">
+              <div className={`absolute right-0 z-20 w-48 rounded-lg bg-white shadow-lg border border-neutral-200 py-1 ${
+                menuPosition === "above" ? "bottom-full mb-1" : "top-full mt-1"
+              }`}>
                 <button
                   onClick={handleViewProfile}
                   className="flex w-full items-center gap-3 px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50"
@@ -122,7 +134,7 @@ function DoctorRow({ doctor, onResetPassword, onDeactivate }) {
   );
 }
 
-export default function DoctorsTable({ doctors, filtered, query, setQuery, status, setStatus, onResetPassword, onDeactivate }) {
+export default function DoctorsTable({ doctors, filtered, query, setQuery, status, setStatus, onResetPassword, onDeactivate, onViewProfile }) {
   return (
     <>
       <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -186,6 +198,7 @@ export default function DoctorsTable({ doctors, filtered, query, setQuery, statu
                 doctor={d} 
                 onResetPassword={onResetPassword}
                 onDeactivate={onDeactivate}
+                onViewProfile={onViewProfile}
               />
             ))}
           </tbody>
