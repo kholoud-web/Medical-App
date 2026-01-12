@@ -6,6 +6,7 @@ import inquiryReducer from './Slices/InquirySlice'
 import modifyConsultationReducer from "./Slices/modifyConsultationSlice";
 import helpReducer from './Slices/HelpSupportSlice'
 import AdminDashboardReducer from './Slices/AdminDashboard';
+import { SystemSettingSlice } from "./Slices/SystemSettingSlice";
 
 
 export const store = configureStore({
@@ -17,5 +18,6 @@ export const store = configureStore({
     inquiry:inquiryReducer,
     help:helpReducer,
     AdminDashboard:AdminDashboardReducer,
+    systemSetting:SystemSettingSlice
   },
 }); 
