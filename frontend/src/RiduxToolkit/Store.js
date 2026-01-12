@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import drugCheckerReducer from "./Slices/DrugCheckerSlice";
 import authReducer from './Slices/authSlice'
 import consultationReducer from './Slices/ConsultationSlice';
-import inquiryReducer from './Slices/inquirySlice'
+import inquiryReducer from './Slices/InquirySlice'
 import modifyConsultationReducer from "./Slices/modifyConsultationSlice";
 import helpReducer from './Slices/HelpSupportSlice'
 import doctorManagementReducer from './Slices/DoctorManagementSlice'
