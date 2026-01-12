@@ -36,7 +36,7 @@ import SystemSetting from "./Pages/Admin/SystemSetting/SystemSetting";
 import DoctorsManagement from "./Pages/Admin/DoctorsManagement/DoctorsManagement";
 import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
 import Physiotherapy from "./Pages/Patient/Physiotherapy/Physiotherapy";
-import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
+import AiPerformance from "./Pages/Patient/Physiotherapy/AiPerformance/VideoUploadOverlay";
 import Register from './Pages/Auth/Registration';
 import ResetPassword from './Pages/Auth/ResetPassword';
 import ResetSuccess from "./Pages/Auth/ResetSuccess";
@@ -45,6 +45,7 @@ import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 import Consultations from "./Pages/Doctor/Consultation/Consultations";
 import AdminDashboard from "./Pages/Admin/Dashboard/AdminDashboard";
 import ConfirmEmail from "./Pages/Auth/ConfirmEmail";
+import AiResults from "./Pages/Patient/Physiotherapy/AiPerformance/AiResults";
 
 
 function App() {
@@ -113,6 +114,7 @@ function App() {
                {path:"inquiries", element: <Inquiries/>},
               {path:"AiPerformance",element:<AiPerformance/>},
               { path: "diagnosis-module", element: <DiagnosisModule /> },
+              {path: "/ai-results",element: <AiResults />,},
             ]
           : []),
         {
