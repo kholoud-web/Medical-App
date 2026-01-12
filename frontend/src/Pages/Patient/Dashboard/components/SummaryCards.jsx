@@ -2,35 +2,52 @@ import { FiFileText } from "react-icons/fi";
 import { BiInjection } from "react-icons/bi";
 import { FaPersonThroughWindow } from "react-icons/fa6";
 import { TiMessages } from "react-icons/ti";
-
-const cards = [
-  {
-    title: "Medical Files",
-    value: "12 Files Uploaded",
-    subtitle: "Last Update - Nov 20",
-    icon: <FiFileText />,
-  },
-  {
-    title: "Drug Checker",
-    value: "0 Conflicts",
-    subtitle: "All medications are safe",
-    icon: <BiInjection />,
-  },
-  {
-    title: "Physiotherapy",
-    value: "3 New AI Sessions",
-    subtitle: "Scheduled this week",
-    icon: <FaPersonThroughWindow />,
-  },
-  {
-    title: "Inquiries",
-    value: "2 Pending",
-    subtitle: "Awaiting doctor response",
-    icon: <TiMessages />,
-  },
-];
+import {  useSelector } from "react-redux";
+import {
+  selectPendingCount,
+  selectDashboardLoading,
+} from "@/RiduxToolkit/Slices/patientDashboardSlice";
 
 export default function SummaryCards() {
+  const pendingCount = useSelector(selectPendingCount);
+  const loading = useSelector(selectDashboardLoading);
+
+
+  const cards = [
+    {
+      title: "Medical Files",
+      value: "12 Files Uploaded",
+      subtitle: "Last Update - Nov 20",
+      icon: <FiFileText />,
+    },
+    {
+      title: "Drug Checker",
+      value: "0 Conflicts",
+      subtitle: "All medications are safe",
+      icon: <BiInjection />,
+    },
+    {
+      title: "Physiotherapy",
+      value: "3 New AI Sessions",
+      subtitle: "Scheduled this week",
+      icon: <FaPersonThroughWindow />,
+    },
+    {
+      title: "Inquiries",
+      value: loading.pendingCount
+        ? "Loading..."
+        : pendingCount !== null
+        ? `${pendingCount} Pending`
+        : "0 Pending",
+      subtitle: loading.pendingCount
+        ? "Fetching data..."
+        : pendingCount !== null && pendingCount > 0
+        ? "Awaiting doctor response"
+        : "No pending inquiries",
+      icon: <TiMessages />,
+    },
+  ];
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
       {cards.map((card, i) => (
