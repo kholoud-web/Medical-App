@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaPlay } from "react-icons/fa";
+import VideoUploadOverlay from "./AiPerformance/VideoUploadOverlay";
 
 export default function Physiotherapy() {
   const [search, setSearch] = useState("");
+  const [openUpload, setOpenUpload] = useState(false);
 
   const videoList = [
     {
@@ -35,6 +36,19 @@ export default function Physiotherapy() {
     return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
   };
 
+    useEffect(() => {
+    if (openUpload) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [openUpload]);
+
+
   return (
     <div className="space-y-2 bg-gradient-to-b from-[#C6D8FD] to-[#207EFF] p-[1px] rounded-xl flex">
       <div className="bg-[#f7f7f7] rounded-xl p-4 flex flex-col h-full w-full space-y-6">
@@ -47,12 +61,13 @@ export default function Physiotherapy() {
         <div className="px-4 space-y-6">
           {/* button and status */}
           <div className="flex gap-3 max-[580px]:flex-col max-[580px]:items-start max-[880px]:flex-col xl:flex-row items-center justify-between">
-            <Link
-              to="/AiPerformance"
-              className="bg-[#207EFF] py-2 px-4 rounded-lg border border-primary-blue text-sm font-medium text-primary-white hover:bg-white hover:text-primary-blue transition"
-            >
-              Start AI-Based Measurement
-            </Link>
+            <button
+  onClick={() => setOpenUpload(true)}
+  className="bg-[#207EFF] py-2 px-4 rounded-lg border border-primary-blue text-sm font-medium text-primary-white hover:bg-white hover:text-primary-blue transition"
+>
+  Upload Video
+</button>
+
 
             <p>
               Program Status: <span className="text-primary-blue">Active</span>
@@ -125,6 +140,11 @@ export default function Physiotherapy() {
           </div>
         </div>
       </div>
+       {openUpload && (
+  <VideoUploadOverlay onClose={() => setOpenUpload(false)} />
+)}
     </div>
   );
+ 
+
 }
