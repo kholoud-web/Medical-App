@@ -7,6 +7,7 @@ import modifyConsultationReducer from "./Slices/modifyConsultationSlice";
 import helpReducer from './Slices/HelpSupportSlice'
 import doctorManagementReducer from './Slices/DoctorManagementSlice'
 import systemSettingReducer from './Slices/SystemSettingSlice'
+import adminDashboardReducer from './Slices/AdminDashboard'
 
 export const store = configureStore({
   reducer: {
@@ -18,5 +19,6 @@ export const store = configureStore({
     help:helpReducer,
     doctorManagement: doctorManagementReducer,
     systemSetting: systemSettingReducer,
+    adminDashboard: adminDashboardReducer,
   },
 }); 
