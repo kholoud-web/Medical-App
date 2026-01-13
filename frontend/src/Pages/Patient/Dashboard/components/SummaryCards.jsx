@@ -3,34 +3,36 @@ import { BiInjection } from "react-icons/bi";
 import { FaPersonThroughWindow } from "react-icons/fa6";
 import { TiMessages } from "react-icons/ti";
 
-const cards = [
-  {
-    title: "Medical Files",
-    value: "12 Files Uploaded",
-    subtitle: "Last Update - Nov 20",
-    icon: <FiFileText />,
-  },
-  {
-    title: "Drug Checker",
-    value: "0 Conflicts",
-    subtitle: "All medications are safe",
-    icon: <BiInjection />,
-  },
-  {
-    title: "Physiotherapy",
-    value: "3 New AI Sessions",
-    subtitle: "Scheduled this week",
-    icon: <FaPersonThroughWindow />,
-  },
-  {
-    title: "Inquiries",
-    value: "2 Pending",
-    subtitle: "Awaiting doctor response",
-    icon: <TiMessages />,
-  },
-];
+export default function SummaryCards({ pendingCount = 0, loading = false }) {
+  const safePendingCount =
+    Number.isFinite(pendingCount) && pendingCount >= 0 ? pendingCount : 0;
+  const cards = [
+    {
+      title: "Medical Files",
+      value: "12 Files Uploaded",
+      subtitle: "Last Update - Nov 20",
+      icon: <FiFileText />,
+    },
+    {
+      title: "Drug Checker",
+      value: "0 Conflicts",
+      subtitle: "All medications are safe",
+      icon: <BiInjection />,
+    },
+    {
+      title: "Physiotherapy",
+      value: "3 New AI Sessions",
+      subtitle: "Scheduled this week",
+      icon: <FaPersonThroughWindow />,
+    },
+    {
+      title: "Inquiries",
+      value: loading ? "Loading..." : `${safePendingCount} Pending`,
+      subtitle: "Awaiting doctor response",
+      icon: <TiMessages />,
+    },
+  ];
 
-export default function SummaryCards() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
       {cards.map((card, i) => (

@@ -1,16 +1,17 @@
 import React from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
+import { useLocation } from "react-router-dom";
 import Card from "@/components/Common/Card";
 import PrimButton from "@/components/Common/PrimButton";
 import { useLocale } from "@/context/LocaleContext";
 
-const followUpQuestions = [
+const fallbackFollowUpQuestions = [
   "What are the next steps after this diagnosis?",
   "How can I monitor my skin for any changes?",
   "Can you explain the treatment options available for Melanoma?",
 ];
 
-const diagnosis = {
+const fallbackDiagnosis = {
   name: "Melanoma",
   confidence: 92,
   description: [
@@ -21,6 +22,41 @@ const diagnosis = {
     "الميلانوما نوع من سرطان الجلد ينشأ عندما تبدأ خلايا الميلانين بالنمو بشكل غير طبيعي. هو أقل شيوعًا من سرطانات الجلد الأخرى لكنه أكثر خطورة لأنه قد ينتشر بسرعة إذا لم يُكتشف ويُعالج مبكرًا.",
     "قد يظهر الميلانوما على شكل شامة جديدة أو تغير في شامة موجودة. من المهم معرفة علامات ABCDE: عدم التماثل، الحواف، اللون، القطر، والتغير.",
   ],
+};
+
+const normalizeDescription = (value) => {
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => (item == null ? "" : String(item).trim()))
+      .filter(Boolean);
+  }
+  if (typeof value === "string") {
+    return value
+      .split(/\n+/)
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+  return [];
+};
+
+const normalizeQuestions = (questions) => {
+  if (!Array.isArray(questions)) return [];
+  return questions
+    .map((item) => {
+      if (typeof item === "string") {
+        return { question: item, answer: null };
+      }
+      if (item && typeof item === "object") {
+        const question = item.question ? String(item.question).trim() : "";
+        if (!question) return null;
+        return {
+          question,
+          answer: item.answer != null ? String(item.answer) : null,
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
 };
 
 function ConfidenceBadge({ value }) {
@@ -45,6 +81,36 @@ function ConfidenceBadge({ value }) {
 
 function AiDiagnosisResult() {
   const { t, language } = useLocale();
+  const location = useLocation();
+  const diagnosisState = location.state?.diagnosis || null;
+  const normalizedDescription = normalizeDescription(
+    diagnosisState?.diagnosisDescription
+  );
+  const normalizedFollowUp = normalizeQuestions(
+    diagnosisState?.followUpQuestions
+  );
+  const rawConfidence = diagnosisState?.confidenceLevel;
+  const confidenceValue =
+    rawConfidence != null &&
+    rawConfidence !== "" &&
+    Number.isFinite(Number(rawConfidence))
+      ? Number(rawConfidence)
+      : fallbackDiagnosis.confidence;
+  const diagnosisName =
+    diagnosisState?.diagnosisName?.trim() || fallbackDiagnosis.name;
+  const descriptionList =
+    normalizedDescription.length > 0
+      ? normalizedDescription
+      : language === "ar"
+      ? fallbackDiagnosis.descriptionAr
+      : fallbackDiagnosis.description;
+  const followUpList =
+    normalizedFollowUp.length > 0
+      ? normalizedFollowUp
+      : fallbackFollowUpQuestions.map((question) => ({
+          question,
+          answer: null,
+        }));
 
   return (
     <div className="min-h-screen bg-[#f5f7fb] text-neutral-800 flex justify-center">
@@ -66,14 +132,14 @@ function AiDiagnosisResult() {
                   {t("diagnosis.name")}
                 </p>
                 <p className="text-lg font-bold text-neutral-900">
-                  {diagnosis.name}
+                  {diagnosisName}
                 </p>
               </div>
               <div className="flex flex-col md:items-end gap-2">
                 <p className="text-sm font-semibold text-neutral-700">
                   {t("diagnosis.confidence")}
                 </p>
-                <ConfidenceBadge value={diagnosis.confidence} />
+                <ConfidenceBadge value={confidenceValue} />
               </div>
             </div>
           </Card>
@@ -82,7 +148,7 @@ function AiDiagnosisResult() {
             <h2 className="text-lg font-semibold text-neutral-800">
               {t("diagnosis.description.title")}
             </h2>
-            {(language === "ar" ? diagnosis.descriptionAr : diagnosis.description).map((paragraph) => (
+            {descriptionList.map((paragraph) => (
               <p
                 key={paragraph.slice(0, 12)}
                 className="text-sm leading-6 text-neutral-600"
@@ -97,13 +163,18 @@ function AiDiagnosisResult() {
               {t("diagnosis.followup.title")}
             </h2>
             <div className="space-y-2">
-              {followUpQuestions.map((question) => (
+              {followUpList.map((item) => (
                 <div
-                  key={question}
-                  className="flex items-center justify-between rounded-xl bg-white px-4 py-3 shadow-sm border border-primary-blue/15"
+                  key={item.question}
+                  className="rounded-xl bg-white px-4 py-3 shadow-sm border border-primary-blue/15 space-y-2"
                 >
-                  <p className="text-sm text-neutral-700">{question}</p>
-                  <FiChevronDown className="text-primary-blue" />
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-sm text-neutral-700">{item.question}</p>
+                    <FiChevronDown className="text-primary-blue" />
+                  </div>
+                  {item.answer ? (
+                    <p className="text-xs text-neutral-500">{item.answer}</p>
+                  ) : null}
                 </div>
               ))}
             </div>

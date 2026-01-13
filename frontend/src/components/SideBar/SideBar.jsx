@@ -64,19 +64,19 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
       link: "/dashboard",
     },
     {
-      icon: <img src="/plus_icon.png" className="inline-block mr-2 w-4 h-4" />,
+      icon: <img src="/plus_icon.png" className="inline-block w-4 h-4 mr-2" />,
       title: "Doctor Management",
       link: "/doctor-management",
     },
     {
       icon: (
-        <img src="/user_syting.png" className="inline-block mr-2 w-4 h-4" />
+        <img src="/user_syting.png" className="inline-block w-4 h-4 mr-2" />
       ),
       title: "Patient Management",
       link: "/patient-management",
     },
     {
-      icon: <img src="/Vector (3).png" className="inline-block mr-2 w-4 h-4" />,
+      icon: <img src="/Vector (3).png" className="inline-block w-4 h-4 mr-2" />,
       title: "System Settings",
       link: "/system-settings",
     },
@@ -147,8 +147,8 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
   };
 
   return (
-<div
-  className={`
+    <div
+      className={`
     space-y-4 text-lg overflow-y-auto scrollbar-hide
     max-[540px]:w-full max-[700px]:w-1/2 md:w-64 lg:w-64 xl:w-72
     fixed md:static left-0 z-[9999]
@@ -159,11 +159,8 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
     ${showSideBar ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
     top-0
   `}
->
-
-
-
-      <h2 className="text-2xl font-bold px-3">MENU</h2>
+    >
+      <h2 className="px-3 text-2xl font-bold">MENU</h2>
       <ul className="my-1 font-bold">
         {(() => {
           const roleLower = userRole?.toLowerCase() || "";
@@ -237,8 +234,8 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
         })()}
       </ul>
 
-      <h2 className="text-2xl font-bold px-3">GENERAL</h2>
-      <ul className=" font-bold">
+      <h2 className="px-3 text-2xl font-bold">GENERAL</h2>
+      <ul className="font-bold ">
         {generalMenu.map((item, index) => (
           <li key={index} className="my-2">
             <NavLink
@@ -254,13 +251,10 @@ export default function SideBar({ showSideBar, setShowSideBar }) {
             </NavLink>
           </li>
         ))}
-        <li className="my-2">
-          <button
-            onClick={handleLogout}
-            className="font-bold py-3 px-3 rounded-xl hover:bg-red-500 hover:text-white transition-all duration-300 block w-full text-left"
-          >
-            <FiLogOut className="inline-block mr-2" />
-            <span className="text-red-500 hover:text-white">Logout</span>
+        <li>
+          <button className="px-3 py-1 font-bold ">
+            <FiLogOut className="inline-block mr-2 " />
+            <span className="text-red-500">Logout</span>
           </button>
         </li>
       </ul>
