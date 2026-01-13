@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useRef } from "react";
 import { FiUploadCloud } from "react-icons/fi";
 import { MdOutlineVideoLibrary } from "react-icons/md";
@@ -5,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function VideoUploadOverlay({ onClose }) {
   const [video, setVideo] = useState(null);
+  const [loading, setLoading] = useState(false);
   const fileRef = useRef();
   const navigate = useNavigate();
 
@@ -15,6 +17,35 @@ export default function VideoUploadOverlay({ onClose }) {
     if (file.size > 10 * 1024 * 1024) return alert("Max size is 10MB");
     setVideo(file);
   };
+
+  const handleSend = async () => {
+  if (!video) return;
+
+  try {
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.append("video", video);
+
+    const res = await axios.post(
+      "https://medicalbotdt-production-b268.up.railway.app/PhysiotherapyExercise/submit-video",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    navigate("/ai-results", { state: res.data });
+  } catch (err) {
+    alert("Error while analyzing video");
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     
@@ -69,20 +100,13 @@ export default function VideoUploadOverlay({ onClose }) {
 
         {/* Button */}
         <button
-  disabled={!video}
-  onClick={() =>
-    navigate("/ai-results", {
-      state: {
-        exercise: "Arm_Abduction",
-        errors: 12.45,
-        feedback: "Safe Angle Exceeded",
-      },
-    })
-  }
+  disabled={!video || loading}
+  onClick={handleSend}
   className="w-full bg-primary-blue text-white py-2 rounded-lg font-medium disabled:opacity-40"
 >
-  Send
+  {loading ? "Analyzing..." : "Send"}
 </button>
+
 
       </div>
     </div>

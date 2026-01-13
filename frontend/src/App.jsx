@@ -49,7 +49,7 @@ import AiResults from "./Pages/Patient/Physiotherapy/AiPerformance/AiResults";
 
 
 function App() {
-  const role = "admin";
+  const role = "patient";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
   const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
