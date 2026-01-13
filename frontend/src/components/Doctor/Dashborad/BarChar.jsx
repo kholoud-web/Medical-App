@@ -55,6 +55,7 @@ function BarChar({data=chartData ,  dataKeyProp="month", className="" , show=tru
             />
             
 
+            <Bar dataKey="diagnosisCount" fill="#4682FA" radius={4} />
             <Bar dataKey="patient" fill="#4682FA" radius={4} />
            { show && <Bar dataKey="new" fill="#1F3A70" radius={4} />}
           </BarChart>

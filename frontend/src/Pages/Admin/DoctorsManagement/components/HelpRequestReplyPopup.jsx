@@ -3,18 +3,32 @@ import { createPortal } from "react-dom";
 
 export default function HelpRequestReplyPopup({ isOpen, onClose, onSave, request }) {
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!message.trim()) return;
-    onSave?.({ request, message });
-    setMessage("");
-    onClose?.();
+    
+    if (!message.trim()) {
+      return;
+    }
+    
+    setLoading(true);
+    
+    try {
+      await onSave?.({ request, message });
+      setMessage("");
+    } catch (error) {
+      alert(`Error: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleClose = () => {
-    setMessage("");
-    onClose?.();
+    if (!loading) {
+      setMessage("");
+      onClose?.();
+    }
   };
 
   if (!isOpen) return null;
@@ -56,8 +70,10 @@ export default function HelpRequestReplyPopup({ isOpen, onClose, onSave, request
           </div>
 
           <div className="flex gap-4">
-            <button type="submit" className="rounded-lg bg-primary-blue px-8 py-2.5 text-white shadow hover:bg-primary-blue/90 font-medium">Send Reply</button>
-            <button type="button" onClick={handleClose} className="rounded-lg border border-neutral-300 px-8 py-2.5 text-neutral-700 hover:bg-neutral-50 font-medium">Cancel</button>
+            <button type="submit" disabled={loading} className="rounded-lg bg-primary-blue px-8 py-2.5 text-white shadow hover:bg-primary-blue/90 font-medium disabled:opacity-50">
+              {loading ? "Sending..." : "Send Reply"}
+            </button>
+            <button type="button" onClick={handleClose} disabled={loading} className="rounded-lg border border-neutral-300 px-8 py-2.5 text-neutral-700 hover:bg-neutral-50 font-medium disabled:opacity-50">Cancel</button>
           </div>
         </form>
       </div>

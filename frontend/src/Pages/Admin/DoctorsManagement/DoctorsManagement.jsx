@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 import DoctorIcon from "./Icons/docor.svg";
 import HelpIcon from "./Icons/help.svg";
 import DoctorsTable from "./components/DoctorsTable";
@@ -17,10 +18,12 @@ import {
   clearError, 
   clearSuccess 
 } from "../../../RiduxToolkit/Slices/DoctorManagementSlice";
+import { fetchAdmins, sendReply, fetchContentById } from "../../../RiduxToolkit/Slices/HelpSupportSlice";
 
 export default function DoctorsManagement() {
   const dispatch = useDispatch();
   const { doctors, loading, error, successMessage } = useSelector((state) => state.doctorManagement);
+  const { inquiries, loading: helpLoading, error: helpError } = useSelector((state) => state.help);
 
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("all");
@@ -40,6 +43,7 @@ export default function DoctorsManagement() {
   // Fetch doctors on mount
   useEffect(() => {
     dispatch(fetchDoctors());
+    dispatch(fetchAdmins());
   }, [dispatch]);
 
   // Auto-dismiss messages
@@ -60,15 +64,21 @@ export default function DoctorsManagement() {
     });
   }, [doctors, query, status]);
 
-  const helpRequests = useMemo(() => (
-    [
-      { doctor: { name: "Mario Maged", experience: "12 y", gender: "Male", avatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop" }, subject: "Unable to upload patient X-ray image", details: "I'm unable to upload a wrist X-ray while completing a diagnosis. The upload fails despite multiple attempts and a stable connection. Please assist.", status: "New" },
-      { doctor: { name: "John William", experience: "12 y", gender: "Male", avatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop" }, subject: "Prescription Renewal Request", details: "", status: "New" },
-      { doctor: { name: "Ahmed Ali", experience: "10 y", gender: "Male", avatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop" }, subject: "Prescription Renewal Request", details: "", status: "Replied" },
-      { doctor: { name: "Amir Magdy", experience: "5 y", gender: "Male", avatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop" }, subject: "Prescription Renewal Request", details: "", status: "Replied" },
-      { doctor: { name: "Shady Monir", experience: "20 y", gender: "Male", avatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop" }, subject: "Prescription Renewal Request", details: "I need help understanding the latest updates to the prescription renewal system.", status: "New" },
-    ]
-  ), []);
+  const helpRequests = useMemo(() => {
+    if (!Array.isArray(inquiries)) return [];
+    return inquiries.map((inquiry, index) => ({
+      id: inquiry.id || (index + 1),
+      doctor: {
+        name: inquiry.userName || "Unknown",
+        experience: inquiry.experience || "N/A",
+        gender: inquiry.gender || "N/A",
+        avatar: inquiry.avatar || "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop",
+      },
+      subject: inquiry.subject || "No Subject",
+      details: inquiry.details || "",
+      status: inquiry.status || "New",
+    }));
+  }, [inquiries]);
 
   const helpFiltered = useMemo(() => {
     return helpRequests.filter((r) => {
@@ -80,26 +90,26 @@ export default function DoctorsManagement() {
 
   const handleAddDoctor = (formData) => {
     const doctorData = {
-      userName: formData.name,
+      userName: formData.userName,
+      FName: formData.FName,
+      lName: formData.lName,
       email: formData.email,
       password: formData.password,
       confirmPassword: formData.confirmPassword,
       phoneNumber: formData.phoneNumber,
       gender: formData.gender,
       nationalId: formData.nationalId,
-      birthDate: formData.dateOfBirth,
+      birthDate: formData.birthDate,
       address: formData.address,
-      experienceYears: parseInt(formData.experience) || 0,
-      // The backend expects a confirmation link; point to confirm-email route in this frontend
+      experienceYears: parseInt(formData.experienceYears) || 0,
       clientUri: `${window.location.origin}/confirm-email`,
     };
     
-    dispatch(createDoctor(doctorData))
+    return dispatch(createDoctor(doctorData))
       .unwrap()
       .then(() => {
-        // Refresh doctors list after adding and close modal
+        // Refresh doctors list after adding
         dispatch(fetchDoctors());
-        setIsPopupOpen(false);
       })
       .catch((err) => {
         console.error('Create doctor failed:', err);
@@ -107,7 +117,8 @@ export default function DoctorsManagement() {
           typeof err === 'string'
             ? err
             : err?.message || JSON.stringify(err);
-        alert(`Create doctor failed: ${details}`);
+        Swal.fire("Error", `Create doctor failed: ${details}`, "error");
+        throw err; // Re-throw so the child component knows it failed
       });
   };
 
@@ -172,8 +183,48 @@ export default function DoctorsManagement() {
   };
 
   const handleSaveReply = ({ request, message }) => {
-    console.log("Reply saved:", { request, message });
-    closeReply();
+    if (!request?.id) {
+      Swal.fire("Error", "No request ID found", "error");
+      return Promise.reject("No request ID");
+    }
+    
+    if (!message) {
+      Swal.fire("Error", "No message provided", "error");
+      return Promise.reject("No message");
+    }
+    
+    return dispatch(sendReply({ ticketId: request.id, reply: message }))
+      .unwrap()
+      .then((result) => {
+        // Show success notification
+        Swal.fire({
+          icon: "success",
+          title: "Reply Sent!",
+          text: "Your reply has been sent successfully.",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+        
+        // Refresh data
+        dispatch(fetchContentById(request.id))
+          .catch((err) => console.error("fetchContentById error:", err));
+        
+        dispatch(fetchAdmins())
+          .catch((err) => {
+            Swal.fire("Warning", "Reply sent but couldn't refresh list. Please refresh the page.", "warning");
+          });
+        
+        // Close modal after a short delay
+        setTimeout(() => {
+          closeReply();
+        }, 500);
+        
+        return result;
+      })
+      .catch((err) => {
+        Swal.fire("Error", `Failed to send reply: ${err}`, "error");
+        throw err;
+      });
   };
 
   const openProfile = (doctorId) => {

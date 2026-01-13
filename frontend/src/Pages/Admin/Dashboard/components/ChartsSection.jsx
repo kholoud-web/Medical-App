@@ -49,11 +49,11 @@ function ChartsSection() {
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-      <div className="bg-treat-bg-Gray p-4 rounded-xl border border-primary-blue/50">
-        <h3 className="font-semibold mb-2">
-          Treatment Progress Overview
+      <div className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-md">
+        <h3 className="font-bold text-lg text-neutral-800 mb-2">
+          Diagnoses Over Time
         </h3>
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm text-neutral-500 mb-4">
           Last 6 Months
         </p>
         <div className="h-64">
@@ -61,18 +61,23 @@ function ChartsSection() {
         </div>
       </div>
 
-      <div className="bg-treat-bg-Gray p-4 rounded-xl border border-primary-blue/50">
-        <h3 className="font-semibold mb-2">
-          Symptom Severity Trends
+      <div className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-md">
+        <h3 className="font-bold text-lg text-neutral-800 mb-2">
+          Top Diagnosing Doctors
         </h3>
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm text-neutral-500 mb-4">
           Current Week
         </p>
-        <div className="h-64 flex items-center justify-center text-gray-400 border-primary-blue/50">
-            <BarChar show={false} data={dashboardData}/>
+        <div className="h-64 flex items-center justify-center">
+            <BarChar 
+              show={false} 
+              data={dashboardData?.topDoctors || []}
+              dataKeyProp="doctorName"
+            />
         </div>
       </div>
     </div>
   );
 }
+
 export default ChartsSection;

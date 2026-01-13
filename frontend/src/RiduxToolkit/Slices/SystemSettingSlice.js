@@ -18,7 +18,7 @@ export const addAdmin = createAsyncThunk(
       const response = await axios.post(
         `${BASE_URL}/SystemSettings/add-admin`,
         adminData,
-        { headers: getAuthHeader() }
+        getAuthHeader()
       );
       return response.data;
     } catch (error) {
@@ -52,7 +52,7 @@ export const getOutsideRequests = createAsyncThunk(
     try {
       const response = await axios.get(
         `${BASE_URL}/SystemSettings/outside-requests`,
-        { headers: getAuthHeader() }
+        getAuthHeader()
       );
       return response.data;
     } catch (error) {
@@ -70,7 +70,7 @@ export const sendReply = createAsyncThunk(
       const response = await axios.post(
         `${BASE_URL}/SystemSettings/send-reply`,
         { requestId, reply },
-        { headers: getAuthHeader() }
+        getAuthHeader()
       );
       return response.data;
     } catch (error) {
@@ -87,7 +87,7 @@ export const getReply = createAsyncThunk(
     try {
       const response = await axios.get(
         `${BASE_URL}/SystemSettings/${requestId}/reply`,
-        { headers: getAuthHeader() }
+        getAuthHeader()
       );
       return response.data;
     } catch (error) {

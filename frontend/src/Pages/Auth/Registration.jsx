@@ -121,8 +121,11 @@ const emailAlreadyExists = React.useMemo(() => {
           <div className="w-full flex flex-col items-center">
             <div className="text-5xl mb-4 text-green-400">✓</div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white text-center mb-4">Email Confirmed</h1>
-            <p className="text-white text-center mb-6 text-[14px] sm:text-[16px]">
-              Your email has been confirmed successfully! Redirecting to login...
+            <p className="text-white text-center mb-4 text-[14px] sm:text-[16px]">
+              Your email has been confirmed successfully!
+            </p>
+            <p className="text-white/80 text-center mb-6 text-[12px] sm:text-[14px]">
+              Redirecting to login...
             </p>
           </div>
         </div>
