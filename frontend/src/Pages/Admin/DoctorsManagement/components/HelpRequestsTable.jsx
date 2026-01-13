@@ -68,17 +68,19 @@ export default function HelpRequestsTable({ helpFiltered, helpQuery, setHelpQuer
                 <td className="px-4 py-3 text-center w-40">
                   <div className="flex items-center justify-center gap-2">
                     {r.status === "New" ? (
-                      <span className="inline-flex min-w-[70px] justify-center items-center rounded-full bg-blue-100 text-blue-700 px-3 py-1 text-xs font-medium">New</span>
+                      <>
+                        <span className="inline-flex min-w-[70px] justify-center items-center rounded-full bg-blue-100 text-blue-700 px-3 py-1 text-xs font-medium">New</span>
+                        <button
+                          onClick={() => onReply(r)}
+                          className="flex items-center gap-1 rounded-lg border border-neutral-300 px-3 py-1.5 text-sm text-neutral-700 hover:bg-neutral-50"
+                        >
+                          <span className="text-xs">↩</span>
+                          Reply
+                        </button>
+                      </>
                     ) : (
                       <span className="inline-flex min-w-[70px] justify-center items-center rounded-full bg-green-100 text-green-700 px-3 py-1 text-xs font-medium">Replied</span>
                     )}
-                    <button
-                      onClick={() => onReply(r)}
-                      className="flex items-center gap-1 rounded-lg border border-neutral-300 px-3 py-1.5 text-sm text-neutral-700 hover:bg-neutral-50"
-                    >
-                      <span className="text-xs">↩</span>
-                      Reply
-                    </button>
                   </div>
                 </td>
               </tr>

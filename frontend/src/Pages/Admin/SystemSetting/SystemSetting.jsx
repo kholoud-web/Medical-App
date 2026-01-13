@@ -31,6 +31,11 @@ import { getOutsideRequests, clearError, clearSuccess } from '@/RiduxToolkit/Sli
       const [openTable , setOpenTable]=useState(false);
       const [openAddAdmin , setOpenAddAdmin] = useState(false);
       const [selectedRequest, setSelectedRequest] = useState(null);
+
+    const [maxAiRequests, setMaxAiRequests] = useState(100);
+    const [maxDoctorDiagnoses, setMaxDoctorDiagnoses] = useState(30);
+    const [doctorHours, setDoctorHours] = useState("2h");
+
       
       // Fetch outside requests on mount
       useEffect(() => {
@@ -113,11 +118,16 @@ import { getOutsideRequests, clearError, clearSuccess } from '@/RiduxToolkit/Sli
                 <Typography sx={{color:"#6B6B6B",fontSize:"16px",fontWeight:"500"}}>Limit the number of AI diagnosis requests allowed per day</Typography>
                 <TextField id="outlined-basic" label="100" variant="outlined" sx={{
                     outlineColor:"#4682FA",width:"100%",mt:1,backgroundColor:"#FFFFFF"
-                }} />
+                }} 
+                value={maxAiRequests}
+                onChange={(e)=>{setMaxAiRequests(e.target.value )}}
+                
+                
+                />
                <Typography sx={{color:"#6B6B6B",fontSize:"16px",fontWeight:"500"}}>Recommended: 100–500 requests per day</Typography>
             </Box> 
             </Card>
-          
+          {/* doctor work settings */}
             <Card sx={{p:4,mt:3,borderRadius:"8px", background:
       "linear-gradient(#F7F7F7, #F7F7F7) padding-box, " +
       "linear-gradient(90deg, #C6D8FD, #207EFF) border-box",
@@ -131,7 +141,11 @@ import { getOutsideRequests, clearError, clearSuccess } from '@/RiduxToolkit/Sli
                  <Typography sx={{color:"#6B6B6B",fontSize:"20px",fontWeight:"700", mt:2}}>Maximum Diagnoses per Doctor per Day</Typography>
                   <TextField id="outlined-basic" label="30" variant="outlined" sx={{
                     outlineColor:"#4682FA",width:"100%",mt:1,backgroundColor:"#FFFFFF"
-                }} />
+                }}
+                value={maxDoctorDiagnoses}
+                
+                onChange={(e)=>{setMaxDoctorDiagnoses(e.target.value)}}
+                />
                <Typography sx={{color:"#6B6B6B",fontSize:"16px",fontWeight:"500"}}>Recommended: 20–40 diagnoses per day</Typography> 
                <Divider sx={{my:1}}/>
               <Typography sx={{color:"#6B6B6B",fontSize:"20px",fontWeight:"700", mt:2}}>Doctor Working Hours</Typography>
@@ -139,7 +153,10 @@ import { getOutsideRequests, clearError, clearSuccess } from '@/RiduxToolkit/Sli
              <Typography sx={{color:"#6B6B6B",fontSize:"20px",fontWeight:"700",}}>Total Hours</Typography>
                 <TextField id="outlined-basic" label="2h" variant="outlined" sx={{
                     outlineColor:"#4682FA",width:"100%",mt:1,backgroundColor:"#FFFFFF"
-                }} />
+                }}
+                value={doctorHours}
+                onChange={(e)=>{setDoctorHours(e.target.value)}}
+                />
                 </Box>
             </Card>
           {/* table */}
@@ -265,7 +282,7 @@ import { getOutsideRequests, clearError, clearSuccess } from '@/RiduxToolkit/Sli
        
        {/* modal save setting */}
         
-       <SaveModal open={openSave} onClose={()=>setOpenSave(false)}/>        
+       <SaveModal open={openSave} onClose={()=>setOpenSave(false)}  doctorHours={doctorHours} maxAiRequests={maxAiRequests} maxDoctorDiagnoses={maxDoctorDiagnoses} />        
              {/*modal for reply btn  */}
        <ReplyModal open={openTable} onClose={handleCloseReply} request={selectedRequest}/>
             
