@@ -528,12 +528,6 @@ export default function DiagnosisModule() {
                   >
                     Restart
                   </button>
-                  <button
-                    type="button"
-                    className="w-full rounded-lg border border-neutral-300 px-3 py-2 text-xs font-semibold text-neutral-600 transition hover:bg-neutral-50"
-                  >
-                    Send to doctor
-                  </button>
                 </div>
               )}
 
