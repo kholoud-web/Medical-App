@@ -19,4 +19,7 @@ export const API ={
     doctorWorkHours:`${BASE_URL}/SystemSettings/doctor/work-hours`,
     aiRate:`${BASE_URL}/SystemSettings/ai/rate-limit`,
     aiToggle:`${BASE_URL}/SystemSettings/ai/toggle`,
+
+     //  AI Exercise Video
+  SubmitExerciseVideo: `${BASE_URL}/PhysiotherapyExercise/submit-video`,
 }
