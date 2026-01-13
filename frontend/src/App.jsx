@@ -48,7 +48,7 @@ import ConfirmEmail from "./Pages/Auth/ConfirmEmail";
 
 
 function App() {
-  const role = "admin";
+  const role = "patient";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
   const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
