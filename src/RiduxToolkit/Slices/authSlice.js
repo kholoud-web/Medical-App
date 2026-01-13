@@ -105,8 +105,8 @@ const authSlice = createSlice({
   initialState: {
     loading: false,
     success: false,
-    error: null,
-    isAuthenticated: false,
+    token: localStorage.getItem("token") || null,
+  isAuthenticated: !!localStorage.getItem("token"),
     token: null,
     userId: null,
     email: null,
@@ -136,6 +136,7 @@ const authSlice = createSlice({
       state.role = null;
       state.expiresAt = null;
       state.error = null;
+      localStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {
@@ -167,6 +168,7 @@ const authSlice = createSlice({
           state.email = action.payload.email;
           state.role = action.payload.role;
           state.expiresAt = action.payload.expiresAt;
+          localStorage.setItem("token", action.payload.token);
         }
       })
       .addCase(loginUser.rejected, (state, action) => {

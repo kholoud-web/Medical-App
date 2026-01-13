@@ -16,6 +16,12 @@ function Dashboard() {
 const fetchDashboard = async () => {
     try {
     const res = await getDoctorDashboard();
+    // إذا لم يكن هناك توكن، الـ service سيعيد null
+    if (!res) {
+      console.warn("No data received (check token)");
+      setLoading(false);
+      return; 
+    }
     console.log("API Response:", res); 
         const data = res.data || res;
       

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { IoIosNotificationsOutline } from "react-icons/io";
@@ -8,14 +8,38 @@ import { FaBars } from "react-icons/fa6";
 
 
 function Header({showSideBar, setShowSideBar}) {
-  const role = "admin";
+  const [userName , setUserName]=useState("Doctor");
   const date = dayjs().format("dddd, MMMM D, YYYY");
-  
-  const handleToggleSidebar = () => {
-    if (setShowSideBar) {
-      setShowSideBar(!showSideBar);
+  const [role, setRole] = useState("doctor");
+    const handleToggleSidebar = () => {
+        if (setShowSideBar) {
+          setShowSideBar(!showSideBar);
+        }
+      };
+ useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        console.log("Decoded Token:", decoded);
+
+        // استخراج الاسم من التوكن بناءً على المفاتيح التي رأيناها في بياناتك
+        const nameFromToken = 
+          decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 
+          decoded.email || 
+          "Doctor";
+        
+        const roleFromToken = 
+          decoded["http://schemas.xmlsoap.org/ws/2008/06/identity/claims/role"]?.toLowerCase() || 
+          "doctor";
+
+        setUserName(nameFromToken);
+        setRole(roleFromToken);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
     }
-  };
+  }, []);
 
   return (
     <>
@@ -37,7 +61,7 @@ function Header({showSideBar, setShowSideBar}) {
           {/* Greeting - hidden on mobile */}
           <div className="hidden md:flex flex-col justify-center">
             <h1 className="font-bold text-xl text-neutral-700">
-              Good morning, Dr.Ahmed!
+              Good morning, {userName}!
             </h1>
             <p className="font-normal text-lg text-neutral-600">{date}</p>
           </div>
