@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import PrimButton from "@/components/Common/PrimButton";
 import { useLocale } from "@/context/LocaleContext";
 
+const DIAGNOSIS_BASE_URL = "https://medicalbotdt-production-b268.up.railway.app";
+
 const uploads = [
   { id: 1, name: "skin-scan-front.png", size: "1.2 MB", status: "uploading" },
   { id: 2, name: "lab-report.pdf", size: "2.9 MB", status: "failed" },
@@ -58,6 +60,13 @@ export default function DiagnosisModule() {
   const [isCaseModalOpen, setIsCaseModalOpen] = useState(false);
   const [caseDescription, setCaseDescription] = useState("");
   const [caseDraft, setCaseDraft] = useState("");
+  const [diagnosisStatus, setDiagnosisStatus] = useState("idle");
+  const [diagnosisNodeId, setDiagnosisNodeId] = useState(0);
+  const [diagnosisQuestion, setDiagnosisQuestion] = useState("");
+  const [diagnosisResults, setDiagnosisResults] = useState([]);
+  const [diagnosisHistory, setDiagnosisHistory] = useState([]);
+  const [diagnosisError, setDiagnosisError] = useState("");
+  const [isDiagnosisLoading, setIsDiagnosisLoading] = useState(false);
   const maxCaseLength = 2000;
 
   const handleAddSymptom = () => {
@@ -79,6 +88,101 @@ export default function DiagnosisModule() {
   const handleCaseSave = () => {
     setCaseDescription(caseDraft);
     setIsCaseModalOpen(false);
+  };
+
+  const formatConfidence = (value) => {
+    if (typeof value !== "number" || Number.isNaN(value)) return "N/A";
+    return `${Math.round(value * 100)}%`;
+  };
+
+  const resetDiagnosis = () => {
+    setDiagnosisStatus("idle");
+    setDiagnosisNodeId(0);
+    setDiagnosisQuestion("");
+    setDiagnosisResults([]);
+    setDiagnosisHistory([]);
+    setDiagnosisError("");
+    setIsDiagnosisLoading(false);
+  };
+
+  const requestDiagnosis = async (nodeId, answer) => {
+    const payload = { node_id: nodeId };
+    if (typeof answer === "number") {
+      payload.answer = answer;
+    }
+
+    const response = await fetch(`${DIAGNOSIS_BASE_URL}/diagnose/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error("Unable to reach diagnosis service.");
+    }
+
+    return response.json();
+  };
+
+  const applyDiagnosisResponse = (data) => {
+    if (data?.status === "question") {
+      setDiagnosisStatus("question");
+      setDiagnosisQuestion(data?.question || "");
+      setDiagnosisNodeId(
+        Number.isInteger(data?.node_id) ? data.node_id : 0
+      );
+      return;
+    }
+
+    if (data?.status === "final") {
+      setDiagnosisStatus("final");
+      setDiagnosisQuestion("");
+      setDiagnosisResults(Array.isArray(data?.results) ? data.results : []);
+      setDiagnosisNodeId(0);
+      return;
+    }
+
+    setDiagnosisStatus("idle");
+    setDiagnosisError("Unexpected response from diagnosis service.");
+  };
+
+  const handleStartDiagnosis = async () => {
+    setDiagnosisError("");
+    setDiagnosisQuestion("");
+    setDiagnosisResults([]);
+    setDiagnosisHistory([]);
+    setDiagnosisNodeId(0);
+    setIsDiagnosisLoading(true);
+
+    try {
+      const data = await requestDiagnosis(0);
+      applyDiagnosisResponse(data);
+    } catch (error) {
+      setDiagnosisStatus("idle");
+      setDiagnosisError(error?.message || "Something went wrong.");
+    } finally {
+      setIsDiagnosisLoading(false);
+    }
+  };
+
+  const handleAnswer = async (answer) => {
+    if (diagnosisStatus !== "question" || isDiagnosisLoading) return;
+    setDiagnosisError("");
+    setIsDiagnosisLoading(true);
+    setDiagnosisHistory((prev) => [
+      ...prev,
+      { question: diagnosisQuestion, answer },
+    ]);
+
+    try {
+      const data = await requestDiagnosis(diagnosisNodeId, answer);
+      applyDiagnosisResponse(data);
+    } catch (error) {
+      setDiagnosisStatus("question");
+      setDiagnosisError(error?.message || "Something went wrong.");
+    } finally {
+      setIsDiagnosisLoading(false);
+    }
   };
 
   return (
@@ -179,6 +283,132 @@ export default function DiagnosisModule() {
             >
               {t("diagnosis.module.manual.analyze")}
             </PrimButton>
+          </section>
+
+          <section className="rounded-2xl border border-primary-blue/20 bg-[#f8fbff] p-5 space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="space-y-1">
+                <h2 className="text-sm font-semibold text-neutral-800">
+                  Decision Tree Diagnosis
+                </h2>
+                <p className="text-xs text-neutral-500">
+                  Answer a few questions to get a diagnosis result.
+                </p>
+              </div>
+              {diagnosisStatus !== "idle" && (
+                <button
+                  type="button"
+                  onClick={resetDiagnosis}
+                  className="text-xs font-semibold text-primary-blue hover:text-primary-blue/80"
+                >
+                  Reset
+                </button>
+              )}
+            </div>
+
+            {diagnosisError && (
+              <div className="rounded-xl border border-rose-200 bg-white px-4 py-3 text-xs text-rose-600">
+                {diagnosisError}
+              </div>
+            )}
+
+            {diagnosisStatus === "idle" && (
+              <PrimButton
+                className="w-full py-3 text-sm shadow-[0_8px_20px_rgba(56,104,200,0.18)] hover:-translate-y-0.5 transition"
+                onClick={handleStartDiagnosis}
+                disabled={isDiagnosisLoading}
+              >
+                {isDiagnosisLoading ? "Starting..." : "Start diagnosis"}
+              </PrimButton>
+            )}
+
+            {diagnosisStatus === "question" && (
+              <div className="space-y-3">
+                <div className="rounded-xl border border-primary-blue/20 bg-white px-4 py-3 text-sm text-neutral-700">
+                  {diagnosisQuestion || "Waiting for the next question..."}
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  <PrimButton
+                    className="px-5 py-2 text-sm shadow-sm hover:shadow-md"
+                    onClick={() => handleAnswer(1)}
+                    disabled={isDiagnosisLoading}
+                  >
+                    Yes
+                  </PrimButton>
+                  <button
+                    type="button"
+                    onClick={() => handleAnswer(0)}
+                    disabled={isDiagnosisLoading}
+                    className="rounded-xl border border-primary-blue/40 px-5 py-2 text-sm font-semibold text-primary-blue hover:bg-primary-blue/5 transition disabled:opacity-60"
+                  >
+                    No
+                  </button>
+                  {isDiagnosisLoading && (
+                    <span className="inline-flex items-center gap-2 text-xs font-semibold text-primary-blue">
+                      <span className="h-4 w-4 rounded-full border-2 border-primary-blue/40 border-t-primary-blue animate-spin" />
+                      Processing...
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {diagnosisStatus === "final" && (
+              <div className="space-y-3">
+                <div className="rounded-xl border border-emerald-200 bg-white px-4 py-3 text-sm text-emerald-700">
+                  Diagnosis completed.
+                </div>
+                {diagnosisResults.length ? (
+                  <div className="space-y-2">
+                    {diagnosisResults.map((result, index) => (
+                      <div
+                        key={`${result.disease}-${index}`}
+                        className="rounded-xl border border-primary-blue/15 bg-white px-4 py-3"
+                      >
+                        <p className="text-sm font-semibold text-neutral-800">
+                          {result.disease || "Unknown condition"}
+                        </p>
+                        <p className="text-xs text-neutral-500">
+                          Confidence: {formatConfidence(result.confidence)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-xs text-neutral-500">
+                    No results returned from the service.
+                  </p>
+                )}
+                <PrimButton
+                  className="w-full py-3 text-sm shadow-[0_8px_20px_rgba(56,104,200,0.18)] hover:-translate-y-0.5 transition"
+                  onClick={handleStartDiagnosis}
+                >
+                  Start new diagnosis
+                </PrimButton>
+              </div>
+            )}
+
+            {diagnosisHistory.length > 0 && (
+              <div className="rounded-xl border border-primary-blue/15 bg-white px-4 py-3">
+                <p className="text-xs font-semibold text-neutral-700 pb-2">
+                  Recent answers
+                </p>
+                <div className="space-y-2">
+                  {diagnosisHistory.map((entry, index) => (
+                    <div key={`${entry.question}-${index}`} className="text-xs text-neutral-600">
+                      <span className="font-semibold text-neutral-700">
+                        Q{index + 1}:
+                      </span>{" "}
+                      {entry.question}{" "}
+                      <span className="text-neutral-400">-</span>{" "}
+                      <span className="font-semibold text-primary-blue">
+                        {entry.answer === 1 ? "Yes" : "No"}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </section>
 
           <section className="rounded-2xl border border-primary-blue/20 bg-white p-5 space-y-3">
