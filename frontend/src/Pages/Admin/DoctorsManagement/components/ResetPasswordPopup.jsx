@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { createPortal } from "react-dom";
 
 export default function ResetPasswordPopup({ isOpen, onClose, onSave, doctor }) {
-  const [form, setForm] = useState({ current: "", next: "", confirm: "" });
+  const [form, setForm] = useState({ next: "", confirm: "" });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const resetState = () => setForm({ current: "", next: "", confirm: "" });
+  const resetState = () => setForm({ next: "", confirm: "" });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ export default function ResetPasswordPopup({ isOpen, onClose, onSave, doctor }) 
       alert("New passwords do not match.");
       return;
     }
-    onSave?.({ doctor, current: form.current, next: form.next });
+    onSave?.({ doctor, next: form.next });
     resetState();
     onClose?.();
   };
@@ -44,17 +44,6 @@ export default function ResetPasswordPopup({ isOpen, onClose, onSave, doctor }) 
       >
         <h3 className="mb-4 text-xl font-semibold text-neutral-800">Reset password{doctor?.name ? ` — ${doctor.name}` : ""}</h3>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="mb-1 block text-sm text-neutral-600">Current password</label>
-            <input
-              type="password"
-              name="current"
-              value={form.current}
-              onChange={handleChange}
-              required
-              className="w-full rounded-lg border border-neutral-300 px-4 py-2.5 outline-primary-blue"
-            />
-          </div>
           <div>
             <label className="mb-1 block text-sm text-neutral-600">New password</label>
             <input

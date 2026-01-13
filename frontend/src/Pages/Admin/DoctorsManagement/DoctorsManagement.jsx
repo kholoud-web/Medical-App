@@ -1,4 +1,6 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 import DoctorIcon from "./Icons/docor.svg";
 import HelpIcon from "./Icons/help.svg";
 import DoctorsTable from "./components/DoctorsTable";
@@ -7,97 +9,76 @@ import AddDoctorPopup from "./components/AddDoctorPopup";
 import ResetPasswordPopup from "./components/ResetPasswordPopup";
 import DeactivateConfirmPopup from "./components/DeactivateConfirmPopup";
 import HelpRequestReplyPopup from "./components/HelpRequestReplyPopup";
+import DoctorProfileModal from "./components/DoctorProfileModal";
+import { 
+  fetchDoctors, 
+  createDoctor,
+  deactivateDoctor,
+  resetDoctorPassword,
+  clearError, 
+  clearSuccess 
+} from "../../../RiduxToolkit/Slices/DoctorManagementSlice";
+import { fetchAdmins, sendReply, fetchContentById } from "../../../RiduxToolkit/Slices/HelpSupportSlice";
 
 export default function DoctorsManagement() {
+  const dispatch = useDispatch();
+  const { doctors, loading, error, successMessage } = useSelector((state) => state.doctorManagement);
+  const { inquiries, loading: helpLoading, error: helpError } = useSelector((state) => state.help);
+
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("all");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isResetOpen, setIsResetOpen] = useState(false);
   const [resetDoctor, setResetDoctor] = useState(null);
   const [isDeactivateOpen, setIsDeactivateOpen] = useState(false);
-  const [deactivateDoctor, setDeactivateDoctor] = useState(null);
+  const [deactivateDoctorData, setDeactivateDoctorData] = useState(null);
   const [activeTab, setActiveTab] = useState("doctors");
   const [helpQuery, setHelpQuery] = useState("");
   const [helpStatus, setHelpStatus] = useState("all");
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [selectedDoctorId, setSelectedDoctorId] = useState(null);
 
-  const doctors = useMemo(() => (
-    [
-      {
-        name: "Sara Ali",
-        experience: "10 y",
-        gender: "Female",
-        consultations: 10,
-        lastConsultation: "Dec 12, 2025",
-        status: "Active",
-        avatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=200&auto=format&fit=crop"
-      },
-      {
-        name: "Amr Mohamed",
-        experience: "10 y",
-        gender: "Male",
-        consultations: 9,
-        lastConsultation: "Dec 10, 2025",
-        status: "Inactive",
-        avatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop"
-      },
-      {
-        name: "Salma Omar",
-        experience: "10 y",
-        gender: "Female",
-        consultations: 8,
-        lastConsultation: "Dec 15, 2025",
-        status: "Active",
-        avatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=200&auto=format&fit=crop"
-      },
-      {
-        name: "Ramy Ahmed",
-        experience: "10 y",
-        gender: "Male",
-        consultations: 5,
-        lastConsultation: "Dec 17, 2025",
-        status: "Active",
-        avatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop"
-      },
-      {
-        name: "Hana Tarek",
-        experience: "10 y",
-        gender: "Female",
-        consultations: 15,
-        lastConsultation: "Dec 3, 2025",
-        status: "Active",
-        avatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=200&auto=format&fit=crop"
-      },
-      {
-        name: "Mohamed Ali",
-        experience: "10 y",
-        gender: "Male",
-        consultations: 12,
-        lastConsultation: "Dec 2, 2025",
-        status: "Inactive",
-        avatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop"
-      },
-    ]
-  ), []);
+  // Fetch doctors on mount
+  useEffect(() => {
+    dispatch(fetchDoctors());
+    dispatch(fetchAdmins());
+  }, [dispatch]);
+
+  // Auto-dismiss messages
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        dispatch(clearSuccess());
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage, dispatch]);
 
   const filtered = useMemo(() => {
     return doctors.filter((d) => {
-      const matchQuery = d.name.toLowerCase().includes(query.toLowerCase());
-      const matchStatus = status === "all" ? true : d.status.toLowerCase() === status.toLowerCase();
+      const matchQuery = d.name?.toLowerCase().includes(query.toLowerCase());
+      const matchStatus = status === "all" ? true : d.status?.toLowerCase() === status.toLowerCase();
       return matchQuery && matchStatus;
     });
   }, [doctors, query, status]);
 
-  const helpRequests = useMemo(() => (
-    [
-      { doctor: { name: "Mario Maged", experience: "12 y", gender: "Male", avatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop" }, subject: "Unable to upload patient X-ray image", details: "I'm unable to upload a wrist X-ray while completing a diagnosis. The upload fails despite multiple attempts and a stable connection. Please assist.", status: "New" },
-      { doctor: { name: "John William", experience: "12 y", gender: "Male", avatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop" }, subject: "Prescription Renewal Request", details: "", status: "New" },
-      { doctor: { name: "Ahmed Ali", experience: "10 y", gender: "Male", avatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop" }, subject: "Prescription Renewal Request", details: "", status: "Replied" },
-      { doctor: { name: "Amir Magdy", experience: "5 y", gender: "Male", avatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop" }, subject: "Prescription Renewal Request", details: "", status: "Replied" },
-      { doctor: { name: "Shady Monir", experience: "20 y", gender: "Male", avatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop" }, subject: "Prescription Renewal Request", details: "I need help understanding the latest updates to the prescription renewal system.", status: "New" },
-    ]
-  ), []);
+  const helpRequests = useMemo(() => {
+    if (!Array.isArray(inquiries)) return [];
+    return inquiries.map((inquiry, index) => ({
+      id: inquiry.id || (index + 1),
+      doctor: {
+        name: inquiry.userName || "Unknown",
+        experience: inquiry.experience || "N/A",
+        gender: inquiry.gender || "N/A",
+        avatar: inquiry.avatar || "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop",
+      },
+      subject: inquiry.subject || "No Subject",
+      details: inquiry.details || "",
+      status: inquiry.status || "New",
+    }));
+  }, [inquiries]);
 
   const helpFiltered = useMemo(() => {
     return helpRequests.filter((r) => {
@@ -107,8 +88,38 @@ export default function DoctorsManagement() {
     });
   }, [helpRequests, helpQuery, helpStatus]);
 
-  const handleAddDoctor = (newDoctor) => {
-    console.log("New doctor added:", newDoctor);
+  const handleAddDoctor = (formData) => {
+    const doctorData = {
+      userName: formData.userName,
+      FName: formData.FName,
+      lName: formData.lName,
+      email: formData.email,
+      password: formData.password,
+      confirmPassword: formData.confirmPassword,
+      phoneNumber: formData.phoneNumber,
+      gender: formData.gender,
+      nationalId: formData.nationalId,
+      birthDate: formData.birthDate,
+      address: formData.address,
+      experienceYears: parseInt(formData.experienceYears) || 0,
+      clientUri: `${window.location.origin}/confirm-email`,
+    };
+    
+    return dispatch(createDoctor(doctorData))
+      .unwrap()
+      .then(() => {
+        // Refresh doctors list after adding
+        dispatch(fetchDoctors());
+      })
+      .catch((err) => {
+        console.error('Create doctor failed:', err);
+        const details =
+          typeof err === 'string'
+            ? err
+            : err?.message || JSON.stringify(err);
+        Swal.fire("Error", `Create doctor failed: ${details}`, "error");
+        throw err; // Re-throw so the child component knows it failed
+      });
   };
 
   const openResetPassword = (doctor) => {
@@ -121,23 +132,44 @@ export default function DoctorsManagement() {
     setResetDoctor(null);
   };
 
-  const handleSaveResetPassword = () => {
-    closeResetPassword();
+  const handleSaveResetPassword = ({ doctor, next }) => {
+    if (doctor?.id) {
+      dispatch(resetDoctorPassword({ doctorId: doctor.id, newPassword: next }))
+        .unwrap()
+        .then(() => {
+          alert(`Password reset successfully for ${doctor.name}!`);
+          closeResetPassword();
+        })
+        .catch((err) => {
+          console.error('Reset password failed:', err);
+          alert(`Reset password failed: ${err}`);
+        });
+    }
   };
 
   const openDeactivate = (doctor) => {
-    setDeactivateDoctor(doctor);
+    setDeactivateDoctorData(doctor);
     setIsDeactivateOpen(true);
   };
 
   const closeDeactivate = () => {
     setIsDeactivateOpen(false);
-    setDeactivateDoctor(null);
+    setDeactivateDoctorData(null);
   };
 
   const handleConfirmDeactivate = () => {
-    console.log("Deactivate doctor:", deactivateDoctor);
-    closeDeactivate();
+    if (deactivateDoctorData) {
+      dispatch(deactivateDoctor(deactivateDoctorData.id))
+        .unwrap()
+        .then(() => {
+          dispatch(fetchDoctors());
+          closeDeactivate();
+        })
+        .catch((err) => {
+          console.error('Deactivate failed:', err);
+          alert(`Deactivate failed: ${err}`);
+        });
+    }
   };
 
   const openReply = (request) => {
@@ -151,12 +183,82 @@ export default function DoctorsManagement() {
   };
 
   const handleSaveReply = ({ request, message }) => {
-    console.log("Reply saved:", { request, message });
-    closeReply();
+    if (!request?.id) {
+      Swal.fire("Error", "No request ID found", "error");
+      return Promise.reject("No request ID");
+    }
+    
+    if (!message) {
+      Swal.fire("Error", "No message provided", "error");
+      return Promise.reject("No message");
+    }
+    
+    return dispatch(sendReply({ ticketId: request.id, reply: message }))
+      .unwrap()
+      .then((result) => {
+        // Show success notification
+        Swal.fire({
+          icon: "success",
+          title: "Reply Sent!",
+          text: "Your reply has been sent successfully.",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+        
+        // Refresh data
+        dispatch(fetchContentById(request.id))
+          .catch((err) => console.error("fetchContentById error:", err));
+        
+        dispatch(fetchAdmins())
+          .catch((err) => {
+            Swal.fire("Warning", "Reply sent but couldn't refresh list. Please refresh the page.", "warning");
+          });
+        
+        // Close modal after a short delay
+        setTimeout(() => {
+          closeReply();
+        }, 500);
+        
+        return result;
+      })
+      .catch((err) => {
+        Swal.fire("Error", `Failed to send reply: ${err}`, "error");
+        throw err;
+      });
+  };
+
+  const openProfile = (doctorId) => {
+    setSelectedDoctorId(doctorId);
+    setIsProfileOpen(true);
+  };
+
+  const closeProfile = () => {
+    setIsProfileOpen(false);
+    setSelectedDoctorId(null);
   };
 
   return (
     <div className="max-w-7xl mx-auto p-6">
+      {/* Error Message */}
+      {error && (
+        <div className="mb-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg flex justify-between items-center">
+          <span>{error}</span>
+          <button onClick={() => dispatch(clearError())} className="text-red-500 hover:text-red-700 font-bold">
+            ✕
+          </button>
+        </div>
+      )}
+
+      {/* Success Message */}
+      {successMessage && (
+        <div className="mb-4 p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg flex justify-between items-center">
+          <span>{successMessage}</span>
+          <button onClick={() => dispatch(clearSuccess())} className="text-green-500 hover:text-green-700 font-bold">
+            ✕
+          </button>
+        </div>
+      )}
+
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-xl sm:text-2xl font-semibold">Doctors Management</h1>
@@ -207,6 +309,8 @@ export default function DoctorsManagement() {
           setStatus={setStatus}
           onResetPassword={openResetPassword}
           onDeactivate={openDeactivate}
+          onViewProfile={openProfile}
+          loading={loading}
         />
       )}
 
@@ -239,7 +343,7 @@ export default function DoctorsManagement() {
         isOpen={isDeactivateOpen}
         onClose={closeDeactivate}
         onConfirm={handleConfirmDeactivate}
-        doctor={deactivateDoctor}
+        doctor={deactivateDoctorData}
       />
 
       <HelpRequestReplyPopup
@@ -247,6 +351,12 @@ export default function DoctorsManagement() {
         onClose={closeReply}
         onSave={handleSaveReply}
         request={selectedRequest}
+      />
+
+      <DoctorProfileModal
+        isOpen={isProfileOpen}
+        onClose={closeProfile}
+        doctorId={selectedDoctorId}
       />
     </div>
   );

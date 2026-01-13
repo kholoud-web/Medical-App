@@ -7,7 +7,28 @@ export const registerUser = createAsyncThunk(
   "auth/register",
   async (userData, { rejectWithValue }) => {
     try {
-      const res = await axios.post("http://diagnosis.runasp.net/Auth/register", userData);
+      const clientUri =
+        typeof window !== "undefined" ? `${window.location.origin}/confirm-email` : "";
+
+      const res = await axios.post(
+        "http://diagnosis.runasp.net/Auth/register",
+        { ...userData, clientUri }
+      );
+      
+      if (res.data.token && res.data.email) {
+        try {
+          const confirmRes = await axios.post(
+            API.ConfirmEmail,
+            { email: res.data.email, token: res.data.token },
+            { headers: { "Content-Type": "application/json" } }
+          );
+          return { ...res.data, emailConfirmed: true, confirmationResult: confirmRes.data };
+        } catch (confirmErr) {
+          console.log("Email confirmation error:", confirmErr.response?.data || confirmErr.message);
+          return { ...res.data, emailConfirmed: false, confirmationError: confirmErr.response?.data };
+        }
+      }
+      
       return res.data;
     } catch (err) {
       console.log("Server response error:", err.response?.data);

@@ -15,10 +15,8 @@ export const fetchAdmins = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        // "http://diagnosis.runasp.net/SupportTicket/all",
         `${BASE_URL}/SupportTicket/all`,
         getAuthHeader()
-    
       );
       return response.data;
     } catch (error) {
@@ -68,10 +66,9 @@ export const sendReply = createAsyncThunk(
   async ({ ticketId, reply }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://diagnosis.runasp.net/Help/faqs?Type=Patient",
+        `${BASE_URL}/SupportTicket/reply`,
         { ticketId, reply },
         getAuthHeader()
-      
       );
       return response.data;
     } catch (error) {
@@ -85,10 +82,9 @@ export const fetchContentById = createAsyncThunk(
   "help/fetchContentById",
   async (ticketId, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `http://diagnosis.runasp.net/SupportTicket/content/${ticketId}`,
-       getAuthHeader()
-  
+      const response = await axios.get(
+        `${BASE_URL}/SupportTicket/content/${ticketId}`,
+        getAuthHeader()
       );
       return response.data;
     } catch (error) {
@@ -104,6 +100,7 @@ const helpSlice = createSlice({
     details: "",
     ticketId: "",
     reply: "",
+    currentReply: null,
     loading: false,
     error: null,
     inquiries: [],
@@ -141,7 +138,7 @@ const helpSlice = createSlice({
       })
       .addCase(fetchContentById.fulfilled, (state, action) => {
         state.loading = false;
-        state.inquiries = action.payload;
+        state.currentReply = action.payload;
       })
       .addCase(fetchContentById.rejected, (state, action) => {
         (state.loading = false), (state.error = action.payload);

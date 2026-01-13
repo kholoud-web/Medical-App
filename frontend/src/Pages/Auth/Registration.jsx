@@ -69,6 +69,9 @@ export default function Register() {
     //   clientUri: "https://frontend-app.com/confirm-email",
     // });
 
+   const clientUri =
+  typeof window !== "undefined" ? `${window.location.origin}/confirm-email` : "";
+
    dispatch(
   registerUser({
     userName: `${formData.firstName}${formData.secondName}_${Date.now().toString().slice(-4)}`,
@@ -80,7 +83,7 @@ export default function Register() {
     fName: formData.firstName,
     lName: formData.secondName,
     birthDate: formData.birthDate,
-    clientUri: "https://frontend-app.com/confirm-email",
+    clientUri,
   })
 );
 
@@ -88,10 +91,13 @@ export default function Register() {
 
 useEffect(() => {
   if (success) {
-    dispatch(clearAuthState());
-    navigate("/login");
+    const timer = setTimeout(() => {
+      dispatch(clearAuthState());
+      navigate("/login");
+    }, 2000);
+    return () => clearTimeout(timer);
   }
-}, [success, navigate, dispatch]);
+}, [success, dispatch, navigate]);
 
 const emailAlreadyExists = React.useMemo(() => {
   if (typeof error === "string") {
@@ -102,6 +108,30 @@ const emailAlreadyExists = React.useMemo(() => {
   return "";
 }, [error]);
 
+
+  if (success) {
+    return (
+      <div
+        className="relative min-h-screen w-full flex items-center justify-center bg-cover bg-center px-4 sm:px-6"
+        style={{ backgroundImage: `url(${bgImage})` }}
+      >
+        <div className="absolute inset-0 bg-black/40"></div>
+
+        <div className="relative z-10 w-full max-w-md sm:max-w-lg lg:max-w-xl rounded-2xl bg-black/40 backdrop-blur-md p-6 sm:p-8 shadow-2xl flex justify-center overflow-hidden">
+          <div className="w-full flex flex-col items-center">
+            <div className="text-5xl mb-4 text-green-400">✓</div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white text-center mb-4">Email Confirmed</h1>
+            <p className="text-white text-center mb-4 text-[14px] sm:text-[16px]">
+              Your email has been confirmed successfully!
+            </p>
+            <p className="text-white/80 text-center mb-6 text-[12px] sm:text-[14px]">
+              Redirecting to login...
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

@@ -1,5 +1,5 @@
 import IconDownload from "./Icons/download.svg";
-import { setSymptoms,  setDescription,
+import { setSymptoms,    setNotes,
   addFile, resetInquiry,submitInquiry,fetchInquiryById,} from "../../../RiduxToolkit/Slices/InquirySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 export default function InquiryForm({inquiryId}) {
   const dispatch = useDispatch();
-  const {symptoms,description,files,loading,fetchingInquiry,}= useSelector((state) => state.inquiry);
+  const {symptoms, notes, files, loading, fetchingInquiry }= useSelector((state) => state.inquiry);
  
   
 useEffect(() => {
@@ -27,16 +27,15 @@ useEffect(() => {
  }
 
 
-
-   const handleSubmit = async () => {
- if (!symptoms || !description) {
+ const handleSubmit = async () => {
+    if (!symptoms || !notes) {
       alert("Please fill in all required fields");
       return;
     }
 
     const formData = new FormData();
     formData.append("symptoms", symptoms);
-    formData.append("description", description);
+    formData.append("notes", notes);
 
     files.forEach((file, index) => {
       formData.append(`files[${index}]`, file);
@@ -87,8 +86,8 @@ useEffect(() => {
           Description <span className="text-red-600">*</span>
         </label>
         <textarea
-        value={description}
-        onChange={(e)=>dispatch(setDescription(e.target.value))}
+        value={notes}
+        onChange={(e)=>dispatch(setNotes(e.target.value))}
           rows="4"
           placeholder="Describe when it started, how severe it is, and what makes it better or worse"
           className="w-full rounded-lg border px-4 py-2 text-sm
@@ -121,6 +120,7 @@ useEffect(() => {
           multiple
           hidden
           onChange={handleFileChange}
+                    accept="image/*,.pdf,.doc,.docx"
         />
 
         {/* File list */}
@@ -136,11 +136,12 @@ useEffect(() => {
       </div>
 
       <button onClick={handleSubmit}
+      disabled={loading}
         className="w-[452px] mx-auto flex items-center justify-center bg-blue-600 hover:bg-blue-700
         text-white font-medium py-2 rounded-lg transition"
       >
 
-        {loading ? "Submitting..." : "Select doctor"}
+        {loading ? "Submitting..." : "Submit Inquiry"}
       </button>
     </div>
   );

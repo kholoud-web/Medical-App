@@ -33,10 +33,10 @@ import SuggestedTreatments from "./Pages/Patient/SuggestedTreatments/SuggestedTr
 import PatientProfile from "./Pages/Patient/PatientProfile/PatientProfile";
 import DoctorProfile from "./Pages/Admin/DoctorProfile/DoctorProfile";
 import SystemSetting from "./Pages/Admin/SystemSetting/SystemSetting";
-import DoctorsManagement from "./Pages/Admin/DoctorsManagement/DoctorsManagement";
-import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
+import DoctorsManagement from "./Pages/Admin/DoctorsManagement/DoctorsManagement";import FindDoctor from './Pages/Customers/FindDoctor/FindDoctor'
+import PatientsManagement from "./Pages/Admin/PatientsManagement/PatientsManagement";
 import Physiotherapy from "./Pages/Patient/Physiotherapy/Physiotherapy";
-import AiPerformance from "./Pages/Patient/AiPerformance/AiPerformance";
+import AiPerformance from "./Pages/Patient/Physiotherapy/AiPerformance/VideoUploadOverlay";
 import Register from './Pages/Auth/Registration';
 import ResetPassword from './Pages/Auth/ResetPassword';
 import ResetSuccess from "./Pages/Auth/ResetSuccess";
@@ -45,10 +45,11 @@ import PatientDashboard from "./Pages/Patient/Dashboard/PatientDashboard";
 import Consultations from "./Pages/Doctor/Consultation/Consultations";
 import AdminDashboard from "./Pages/Admin/Dashboard/AdminDashboard";
 import ConfirmEmail from "./Pages/Auth/ConfirmEmail";
+import AiResults from "./Pages/Patient/Physiotherapy/AiPerformance/AiResults";
 
 
 function App() {
-  const role = "patient";
+  const role = "admin";
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
   const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
@@ -97,7 +98,7 @@ function App() {
             ? [
                { path: "dashboard", element:<AdminDashboard/>},
               { path: "notificationCenter", element: <NotificationCenter /> },
-              
+              {path:"patientsManagement", element:<PatientsManagement/>},
               { path: "doctorsManagement", element: <DoctorsManagement /> },
               
 
@@ -113,6 +114,7 @@ function App() {
                {path:"inquiries", element: <Inquiries/>},
               {path:"AiPerformance",element:<AiPerformance/>},
               { path: "diagnosis-module", element: <DiagnosisModule /> },
+              {path: "/ai-results",element: <AiResults />,},
             ]
           : []),
         {

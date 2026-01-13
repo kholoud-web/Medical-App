@@ -5,8 +5,10 @@ import consultationReducer from './Slices/ConsultationSlice';
 import inquiryReducer from './Slices/InquirySlice'
 import modifyConsultationReducer from "./Slices/modifyConsultationSlice";
 import helpReducer from './Slices/HelpSupportSlice'
-import AdminDashboardReducer from './Slices/AdminDashboard';
-
+import doctorManagementReducer from './Slices/DoctorManagementSlice'
+import systemSettingReducer from './Slices/SystemSettingSlice'
+import adminDashboardReducer from './Slices/AdminDashboard'
+import patientDashboardReducer from './Slices/patientDashboardSlice'
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +18,9 @@ export const store = configureStore({
     modifyConsultation: modifyConsultationReducer,
     inquiry:inquiryReducer,
     help:helpReducer,
-    AdminDashboard:AdminDashboardReducer,
+    doctorManagement: doctorManagementReducer,
+    systemSetting: systemSettingReducer,
+    adminDashboard: adminDashboardReducer,
+    patientDashboard:patientDashboardReducer,
   },
 }); 
