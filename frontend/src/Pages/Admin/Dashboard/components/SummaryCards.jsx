@@ -2,6 +2,7 @@ import { FiFileText } from "react-icons/fi";
 import { BiInjection } from "react-icons/bi";
 import { FaPersonThroughWindow } from "react-icons/fa6";
 import { TiMessages } from "react-icons/ti";
+import { useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { fetchAdminDashboard,selectAdminDashboard,selectDashboardError,selectDashboardLoading } from "@/RiduxToolkit/Slices/AdminDashboard";
 
@@ -37,42 +38,31 @@ export default function SummaryCards() {
   const dashboardData = useSelector(selectAdminDashboard);
   const loading = useSelector(selectDashboardLoading);
   const error = useSelector(selectDashboardError);
-
-
-
-  // Extract data from API response with fallbacks
-  const medicalFiles = dashboardData?.medicalFiles || {};
-  const drugChecker = dashboardData?.drugChecker || {};
-  const physiotherapy = dashboardData?.physiotherapy || {};
-  const inquiries = dashboardData?.inquiries || {};
+  const [selectedCard, setSelectedCard] = useState(0);
 
   const cards = [
     {
-      title: "Medical Files",
-      value: `${medicalFiles.count || 0} Files Uploaded`,
-      subtitle: medicalFiles.lastUpdate || "No updates yet",
+      title: "Total Doctors",
+      value: `${dashboardData?.totalDoctors || 0}`,
+      subtitle: dashboardData?.totalDoctorsChange || "N/A",
       icon: <FiFileText />,
     },
     {
-      title: "Drug Checker",
-      value: `${drugChecker.conflicts || 0} Conflicts`,
-      subtitle: drugChecker.conflicts === 0 
-        ? "All medications are safe" 
-        : "Check medications",
+      title: "Active Doctors",
+      value: `${dashboardData?.activeDoctors || 0}`,
+      subtitle: dashboardData?.activeDoctorsChange || "N/A",
       icon: <BiInjection />,
     },
     {
-      title: "Physiotherapy",
-      value: `${physiotherapy.newSessions || 0} New AI Sessions`,
-      subtitle: physiotherapy.scheduled || "No sessions scheduled",
+      title: "Total Patients",
+      value: `${dashboardData?.totalPatients || 0}`,
+      subtitle: dashboardData?.totalPatientsChange || "N/A",
       icon: <FaPersonThroughWindow />,
     },
     {
-      title: "Inquiries",
-      value: `${inquiries.pending || 0} Pending`,
-      subtitle: inquiries.pending > 0 
-        ? "Awaiting doctor response" 
-        : "No pending inquiries",
+      title: "Peak Usage Time",
+      value: dashboardData?.peakUsageTime || "N/A",
+      subtitle: "Highest system activity window",
       icon: <TiMessages />,
     },
   ];
@@ -122,14 +112,29 @@ export default function SummaryCards() {
       {cards.map((card, i) => (
         <div
           key={i}
-          className="p-4 rounded-xl border bg-treat-bg-Gray hover:bg-primary-blue hover:text-white hover:shadow-md duration-300 transition-colors cursor border-primary-blue/50"
+          onClick={() => setSelectedCard(i)}
+          className={`p-6 rounded-2xl border-2 shadow-md transition-all duration-300 cursor-pointer hover:shadow-lg ${
+            selectedCard === i
+              ? 'bg-blue-500 text-white border-blue-500'
+              : 'bg-white border-blue-500'
+          }`}
         >
-          <div className="flex justify-between items-center">
-            <h3 className="font-semibold">{card.title}</h3>
-            <span className="text-xl">{card.icon}</span>
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className={`font-semibold text-sm mb-2 ${selectedCard === i ? 'text-white' : 'text-neutral-600'}`}>
+                {card.title}
+              </h3>
+              <p className={`text-4xl font-bold mb-2 ${selectedCard === i ? 'text-white' : 'text-blue-500'}`}>
+                {card.value}
+              </p>
+              <p className={`text-xs ${selectedCard === i ? 'text-white' : 'text-neutral-500'}`}>
+                {card.subtitle}
+              </p>
+            </div>
+            <div className={`p-3 rounded-full ${selectedCard === i ? 'bg-white/20' : 'bg-blue-500'}`}>
+              <span className={`text-2xl ${selectedCard === i ? 'text-white' : 'text-white'}`}>{card.icon}</span>
+            </div>
           </div>
-          <p className="mt-2 font-bold">{card.value}</p>
-          <p className="text-sm opacity-80">{card.subtitle}</p>
         </div>
       ))}
     </div>
