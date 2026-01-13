@@ -6,54 +6,31 @@ import ChartsCard from "@/components/Doctor/Dashborad/ChartsCard";
 import CommonDiagnoses from "@/components/Doctor/Dashborad/CommonDiagnoses";
 import React, { useEffect, useState } from "react";
 import { getDoctorDashboard } from "./doctorDashboardService";
-// const statsData = [
-//   { title: "Consultations", value: 12 , imgSrc:"/consultaions.svg"},
-//   { title: "Treatment plans", value: 8 , imgSrc:"/TreatmentPlans.svg"},
-// ];
-
-// const chartsData = [
-//   {
-//     title: "New vs Returning Patients",
-//     chart: <BarChar />,
-//     imgSrc:"/people.svg"
-//     },
-//   {
-//     title: "Rating",
-//     chart: <EarningsChart type="natural" />,
-//     imgSrc:"/star.svg"
-//   },
-//   {
-//     title: "Earnings",
-//     chart: <EarningsChart type="step" />,
-//     imgSrc:"/money.svg"
-//   },
-// ];
 
 function Dashboard() {
   const [statsData, setStatsData] = useState([]);
   const [chartsData, setChartsData] = useState([]);
   const [commonDiagnoses, setCommonDiagnoses] = useState([]);
   const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    fetchDashboard();
-  }, []);
+ 
 const fetchDashboard = async () => {
     try {
-      const res = await getDoctorDashboard();
-
-      if (res.success) {
-        const data = res.data;
+    const res = await getDoctorDashboard();
+    console.log("API Response:", res); 
+        const data = res.data || res;
+      
+      if (data) {
 
         // 🔹 Stats Cards
         setStatsData([
           {
             title: "Consultations",
-            value: data.totalConsultations,
+            value: data.totalConsultations || 0,
             imgSrc: "/consultaions.svg",
           },
           {
             title: "Treatment plans",
-            value: data.totalTreatmentPlans,
+            value: data.totalTreatmentPlans || 0,
             imgSrc: "/TreatmentPlans.svg",
           },
         ]);
@@ -62,31 +39,35 @@ const fetchDashboard = async () => {
         setChartsData([
           {
             title: "New vs Returning Patients",
-            chart: <BarChar data={data.patientsStats} />,
+            chart: <BarChar data={data.newVsReturningPatients || []} />,
             imgSrc: "/people.svg",
           },
           {
             title: "Rating",
-            chart: <EarningsChart type="natural" data={data.ratingStats} />,
+            chart: <EarningsChart type="natural" data={data.ratingStats || []} />,
             imgSrc: "/star.svg",
           },
           {
             title: "Earnings",
-            chart: <EarningsChart type="step" data={data.earningsStats} />,
+            chart: <EarningsChart type="step" data={data.earningsStats || []} />,
             imgSrc: "/money.svg",
           },
         ]);
 
         // 🔹 Common Diagnoses
-        setCommonDiagnoses(data.commonDiagnoses);
+        setCommonDiagnoses(data.commonDiagnoses|| []);
       }
     } catch (error) {
       console.error("Dashboard Error:", error);
     } finally {
       setLoading(false);
     }
-  };
 
+    
+  };
+ useEffect(() => {
+    fetchDashboard();
+  }, []);
   const [filterOptions, setFilteredOptions] = useState([
     { title: "Daily", active: true },
     { title: "Monthly", active: false },
