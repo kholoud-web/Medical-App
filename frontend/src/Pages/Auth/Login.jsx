@@ -6,14 +6,14 @@ import bgImage from './Image/LoginImg.jpg'
 
 
 export default function Login() {
-  const [role, setRole] = useState("Admin");
+  const [role, setRole] = useState("patient");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, isAuthenticated, role: userRole, error: authError } = useSelector((state) => state.auth);
+const { loading, isAuthenticated, error: authError } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(clearAuthState());
@@ -37,7 +37,7 @@ export default function Login() {
     }
   }, [authError]);
 
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
@@ -52,7 +52,7 @@ export default function Login() {
       return;
     }
 
-    dispatch(loginUser({ email, password }));
+    dispatch(loginUser({ email, password, role }));
   };
 
   return (

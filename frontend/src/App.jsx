@@ -46,10 +46,16 @@ import Consultations from "./Pages/Doctor/Consultation/Consultations";
 import AdminDashboard from "./Pages/Admin/Dashboard/AdminDashboard";
 import ConfirmEmail from "./Pages/Auth/ConfirmEmail";
 import AiResults from "./Pages/Patient/Physiotherapy/AiPerformance/AiResults";
+import { useSelector } from "react-redux";
 
 
 function App() {
-  const role = "patient";
+  
+  const { role: userRole, isAuthenticated } = useSelector((state) => state.auth);
+  
+ 
+const role = isAuthenticated ? userRole?.toLowerCase() : null; 
+
   const helpElement = role === "patient" ? <PatientHelp /> : <HelpSupport />;
   const settingsElement = role === "doctor" ? <DoctorSettings /> : <PatientSettings />;
 
