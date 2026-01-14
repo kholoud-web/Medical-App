@@ -1,66 +1,114 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axiosInstance from "@/Api/axiosInstance";
 
-const BASE_URL = 'http://diagnosis.runasp.net';
-
-// Axios instance with auth
-const api = axios.create({
-  baseURL: BASE_URL,
-});
-
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+const normalizeSymptomCount = (data) => {
+  if (!data) {
+    return null;
   }
-  return config;
-});
+
+  if (Array.isArray(data)) {
+    return data.reduce((acc, item) => {
+      const day = item?.day ?? item?.Day ?? item?.label ?? item?.date ?? item?.name;
+      const count =
+        item?.count ?? item?.value ?? item?.total ?? item?.severity ?? null;
+
+      if (day != null && count != null) {
+        acc[day] = count;
+      }
+
+      return acc;
+    }, {});
+  }
+
+  return data;
+};
+
+const extractTopSymptom = (data) => {
+  if (!data) {
+    return null;
+  }
+
+  if (typeof data === "string") {
+    return data;
+  }
+
+  return data.symptom ?? data.topSymptom ?? data.name ?? null;
+};
+
+const extractPendingCount = (data) => {
+  if (data == null) {
+    return null;
+  }
+
+  if (typeof data === "number") {
+    return data;
+  }
+
+  if (typeof data === "string") {
+    const parsed = Number(data);
+    return Number.isNaN(parsed) ? null : parsed;
+  }
+
+  return data.pendingInquiriesCount ?? data.count ?? null;
+};
 
 // Async Thunks
 export const fetchRecentInquiries = createAsyncThunk(
-  'patientDashboard/fetchRecentInquiries',
+  "patientDashboard/fetchRecentInquiries",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/Inquiry/recent');
+      const response = await axiosInstance.get("/Inquiry/recent");
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch recent inquiries');
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch recent inquiries"
+      );
     }
   }
 );
 
 export const fetchPendingInquiriesCount = createAsyncThunk(
-  'patientDashboard/fetchPendingInquiriesCount',
+  "patientDashboard/fetchPendingInquiriesCount",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/Inquiry/pending');
-      return response.data.pendingInquiriesCount;
+      const response = await axiosInstance.get("/Inquiry/pending");
+      return extractPendingCount(response.data);
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch pending count');
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch pending count"
+      );
     }
   }
 );
 
 export const fetchSymptomCountThisWeek = createAsyncThunk(
-  'patientDashboard/fetchSymptomCountThisWeek',
+  "patientDashboard/fetchSymptomCountThisWeek",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/Consultation/symptom-count-this-week');
-      return response.data;
+      const response = await axiosInstance.get(
+        "/Consultation/symptom-count-this-week"
+      );
+      return normalizeSymptomCount(response.data);
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch symptom count');
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch symptom count"
+      );
     }
   }
 );
 
 export const fetchTopSymptomsThisWeek = createAsyncThunk(
-  'patientDashboard/fetchTopSymptomsThisWeek',
+  "patientDashboard/fetchTopSymptomsThisWeek",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/Consultation/top-symptoms-this-week');
-      return response.data.symptom;
+      const response = await axiosInstance.get(
+        "/Consultation/top-symptoms-this-week"
+      );
+      return extractTopSymptom(response.data);
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch top symptoms');
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch top symptoms"
+      );
     }
   }
 );

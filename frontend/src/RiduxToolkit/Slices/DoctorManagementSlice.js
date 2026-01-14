@@ -88,9 +88,27 @@ export const createDoctor = createAsyncThunk(
       
       return response.data;
     } catch (error) {
-      // Surface backend error details to UI for easier debugging
-      const backendMessage = error.response?.data?.message || error.response?.data;
-      return rejectWithValue(backendMessage || 'Failed to create doctor');
+      // Extract error message from API response
+      const errorData = error.response?.data;
+      let errorMessage = error.message;
+      
+      if (errorData) {
+        if (typeof errorData === 'string') {
+          errorMessage = errorData;
+        } else if (errorData.message) {
+          errorMessage = errorData.message;
+        } else if (errorData.title) {
+          errorMessage = errorData.title;
+        } else if (errorData.errors) {
+          // Handle validation errors - extract field errors
+          const fieldErrors = Object.entries(errorData.errors)
+            .map(([field, errors]) => `${field}: ${errors.join(', ')}`)
+            .join('\n');
+          errorMessage = fieldErrors;
+        }
+      }
+      
+      return rejectWithValue(errorMessage);
     }
   }
 );
