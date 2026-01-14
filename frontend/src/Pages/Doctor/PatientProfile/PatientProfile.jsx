@@ -54,7 +54,6 @@ export default function PatientProfile() {
           </div>
         </div>
 
-        {/* ---------------------- RIGHT SIDE — MEDICAL RECORDS + XRAY + TREATMENT ---------------------- */}
         <div className="md:col-span-2 space-y-6">
 
           {/* Medical Records */}
