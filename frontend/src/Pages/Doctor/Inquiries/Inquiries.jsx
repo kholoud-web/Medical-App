@@ -14,11 +14,9 @@ export default function Inquiries() {
   const [editingInquiryId, setEditingInquiryId] = useState(null);
   const [filter, setFilter] = useState("all"); 
 
-  // Get data from Redux
   const { inquiries, loading, error } = useSelector((state) => state.inquiry);
 
   
-  // Fetch inquiries when component mounts
   useEffect(() => {
     dispatch(fetchInquiries());
   }, [dispatch]);

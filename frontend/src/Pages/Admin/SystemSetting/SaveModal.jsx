@@ -3,10 +3,23 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button'
 import icon3 from "./icons/ix_about.svg"  
+import { useDispatch } from 'react-redux';
+import { AiRateLimit, AiToggle, doctorRatelimit, workHours } from '@/RiduxToolkit/Slices/SystemSettingSlice';
 
 
 
-export default function SaveModal ({open , onClose}){
+
+export default function SaveModal ({open , onClose,doctorHours,maxAiRequests,maxDoctorDiagnoses }){
+  const dispatch = useDispatch();
+
+  const handleSaveSetting = () => {
+  dispatch(AiRateLimit({ maxRequestsPerDay: maxAiRequests }));
+  dispatch(AiToggle({ toggle: true }));
+  dispatch(doctorRatelimit({ maxRequestsPerDay: maxDoctorDiagnoses }));
+  dispatch(workHours({hours: doctorHours}))
+  console.log(doctorHours,maxAiRequests,maxDoctorDiagnoses);
+  onClose();
+};
     return(
         <Modal open ={open} onClose={onClose}  >
           <Box
@@ -39,6 +52,7 @@ export default function SaveModal ({open , onClose}){
                   Cancel
                 </Button>
                 <Button 
+                onClick={handleSaveSetting}
                 sx={{width:"151px"}}
                 variant="contained">
                   Save Setting

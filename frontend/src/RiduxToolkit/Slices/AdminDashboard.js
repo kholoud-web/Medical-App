@@ -12,13 +12,12 @@ const getAuthHeader = () => ({
 
 
 // Async thunk for fetching admin dashboard data
-//  Get all consultations (Doctor)
 export const fetchAdminDashboard = createAsyncThunk(
   "adminDashboard/fetchAdminDashboard",
   async (_, { rejectWithValue }) => {
     try {
       const res = await axios.get(
-        `${BASE_URL}/api/AdminDashboard`,
+        `${BASE_URL}/AdminDashboard`,
         getAuthHeader()
       );
       return res.data;
@@ -60,11 +59,10 @@ const AdminDashboardSlice = createSlice({
             state.data = action.payload;
             state.error = null;
             state.lastFetched = new Date().toISOString();
-
         })
         .addCase(fetchAdminDashboard.rejected,(state,action)=>{
            state.loading= false;
-           state.error= action.payload
+           state.error= action.payload;
         })
     }
 
