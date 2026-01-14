@@ -59,7 +59,7 @@ function App() {
     { path: "/register", element: <Register />,},
     { path: "/reset-password", element: <ResetPassword /> },
     { path:"/reset-success" ,element:<ResetSuccess />},
-        {path : "/confirm-email", element : <ConfirmEmail/>},
+    {path : "/confirm-email", element : <ConfirmEmail/>},
 
   
       {
