@@ -20,6 +20,7 @@ export default function AddDoctorPopup({ isOpen, onClose, onSave }) {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [, setFieldErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,7 +62,7 @@ export default function AddDoctorPopup({ isOpen, onClose, onSave }) {
     
     try {
       // Call onSave and wait for it to complete
-      const result = await Promise.resolve(onSave(formData));
+      await Promise.resolve(onSave(formData));
       
       // Only show success if we get here without error
       setSuccess(true);
@@ -71,7 +72,25 @@ export default function AddDoctorPopup({ isOpen, onClose, onSave }) {
         handleClose();
       }, 1500);
     } catch (err) {
-      setError(err?.message || "Failed to add doctor");
+      const errorMsg = err?.message || "Failed to add doctor";
+      setError(errorMsg);
+      
+      // Parse validation errors and map them to field names
+      if (errorMsg.includes(':')) {
+        const errors = {};
+        errorMsg.split('\n').forEach(line => {
+          const [field, message] = line.split(':');
+          if (field && message) {
+            errors[field.trim().toLowerCase()] = message.trim();
+          }
+        });
+        setFieldErrors(errors);
+      }
+      
+      // Close popup after 3 seconds to let user see the error in the alert
+      setTimeout(() => {
+        handleClose();
+      }, 3000);
     } finally {
       setLoading(false);
     }
@@ -94,6 +113,7 @@ export default function AddDoctorPopup({ isOpen, onClose, onSave }) {
     });
     setSuccess(false);
     setError(null);
+    setFieldErrors({});
     setCurrentStep(1);
     onClose();
   };
@@ -146,6 +166,18 @@ export default function AddDoctorPopup({ isOpen, onClose, onSave }) {
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="mb-8 text-2xl font-semibold text-neutral-800 text-center">Add doctor</h2>
+        
+        {/* Error Alert */}
+        {error && (
+          <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
+            <p className="text-red-700 font-semibold mb-2">Validation Error:</p>
+            <div className="text-red-600 text-sm whitespace-pre-wrap">
+              {error.split('\n').map((line, idx) => (
+                <div key={idx}>{line}</div>
+              ))}
+            </div>
+          </div>
+        )}
         
         {/* Step Indicator */}
         <div className="mb-8 flex items-center justify-center gap-4">
