@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drug Pregnancy Category Checker</title>
+</head>
+<body>
+    <h1>Drug Pregnancy Category Checker</h1>
+    <form method="post" action="/predict">
+        <label>Drug Name:</label><input type="text" name="drug_name" required><br>
+        <label>RX/OTC:</label><input type="text" name="rx_otc" required><br>
+        <label>Drug Classes:</label><input type="text" name="drug_classes" required><br>
+        <label>CSA:</label><input type="text" name="csa" required><br>
+        <label>Alcohol:</label><input type="text" name="alcohol" required><br>
+        <label>Generic Name:</label><input type="text" name="generic_name" required><br>
+        <label>Medical Condition:</label><input type="text" name="medical_condition" required><br>
+        <label>Activity:</label><input type="text" name="activity" required><br>
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if prediction %}
+        <h2>Predicted Pregnancy Category: {{ prediction }}</h2>
+    {% endif %}
+</body>
+</html>

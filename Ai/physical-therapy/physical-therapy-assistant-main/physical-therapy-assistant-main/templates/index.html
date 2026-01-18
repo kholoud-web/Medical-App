@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Physiotherapy Test Interface</title>
+<style>
+    body { font-family: Arial; max-width: 600px; margin: 30px auto; padding: 0 20px; }
+    h1 { text-align: center; }
+    input, button { width: 100%; margin: 10px 0; padding: 8px; }
+    #feedback { margin-top: 20px; padding: 10px; border: 1px solid #ccc; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<h1>Physiotherapy API Test</h1>
+
+<label>Exercise Name:</label>
+<input type="text" id="exerciseName" placeholder="e.g., Arm_Abduction">
+
+<label>Upload Video (.mp4 only):</label>
+<input type="file" id="videoFile" accept=".mp4,video/mp4">
+
+<button id="submitBtn">Submit Exercise</button>
+<button id="getFeedbackBtn">Get Feedback</button>
+
+<div id="feedback"></div>
+
+<script>
+const baseURL = ""; // empty string because served from same FastAPI
+
+// Submit video to FastAPI
+document.getElementById("submitBtn").addEventListener("click", async () => {
+    const exercise = document.getElementById("exerciseName").value.trim();
+    const videoFile = document.getElementById("videoFile").files[0];
+    
+    if (!exercise || !videoFile) {
+        alert("Enter exercise name and select a video!");
+        return;
+    }
+
+    if (!videoFile.name.toLowerCase().endsWith(".mp4")) {
+        alert("Only .mp4 videos are allowed!");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("exercise", exercise);
+    formData.append("file", videoFile);
+
+    try {
+        const res = await fetch(`${baseURL}/submit_exercise_video`, { method: "POST", body: formData });
+        const data = await res.json();
+        document.getElementById("feedback").innerText = 
+            `Submitted!\nExercise: ${data.exercise}\nError: ${data.error}°\nFeedback: ${data.feedback}`;
+    } catch (err) {
+        console.error(err);
+        document.getElementById("feedback").innerText = "Error submitting exercise.";
+    }
+});
+
+// Get latest feedback for exercise
+document.getElementById("getFeedbackBtn").addEventListener("click", async () => {
+    const exercise = document.getElementById("exerciseName").value.trim();
+    if (!exercise) { 
+        alert("Enter exercise name to get feedback"); 
+        return; 
+    }
+
+    try {
+        const res = await fetch(`${baseURL}/get_feedback/${exercise}`);
+        const data = await res.json();
+        document.getElementById("feedback").innerText =
+            data.status === "error" ? data.message : 
+            `Latest Feedback:\nExercise: ${data.exercise}\nError: ${data.error}°\nFeedback: ${data.feedback}`;
+    } catch (err) {
+        console.error(err);
+        document.getElementById("feedback").innerText = "Error fetching feedback.";
+    }
+});
+</script>
+</body>
+</html>

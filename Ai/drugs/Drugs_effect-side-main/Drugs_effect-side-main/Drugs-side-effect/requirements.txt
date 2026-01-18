@@ -1,0 +1,6 @@
+fastapi==0.121.3
+uvicorn
+pandas
+scikit-learn
+pydantic
+

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Diagnosis Bot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+
+        .chat-container {
+            width: 420px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .question {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .yes { background: #28a745; color: white; }
+        .no { background: #dc3545; color: white; }
+
+        .results {
+            text-align: left;
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <h2>Medical AI Bot</h2>
+    <hr>
+
+    <div id="chat">
+        <p id="question" class="question">Loading...</p>
+        <button class="btn yes" onclick="sendAnswer(1)">Yes</button>
+        <button class="btn no" onclick="sendAnswer(0)">No</button>
+    </div>
+
+    <div id="results" class="hidden">
+        <h3>Diagnosis Results</h3>
+        <div id="result-list" class="results"></div>
+        <br>
+        <button class="btn" style="background:#007bff;color:white" onclick="restart()">
+            Restart
+        </button>
+    </div>
+</div>
+
+<script>
+    let currentNode = 0;
+
+    async function callAPI(answer = null) {
+        try {
+            const response = await fetch("/diagnose/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    node_id: currentNode,
+                    answer: answer
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error("Server error");
+            }
+
+            const data = await response.json();
+            handleResponse(data);
+
+        } catch (err) {
+            alert("Something went wrong. Check server logs.");
+            console.error(err);
+        }
+    }
+
+    function handleResponse(data) {
+        if (data.status === "question") {
+            document.getElementById("question").innerText = data.question;
+            currentNode = data.node_id;
+        } else {
+            document.getElementById("chat").classList.add("hidden");
+            document.getElementById("results").classList.remove("hidden");
+
+            let html = "<ul>";
+            data.results.forEach(r => {
+                html += `<li><b>${r.disease}</b>: ${(r.confidence * 100).toFixed(1)}%</li>`;
+            });
+            html += "</ul>";
+
+            document.getElementById("result-list").innerHTML = html;
+        }
+    }
+
+    function sendAnswer(ans) {
+        callAPI(ans);
+    }
+
+    function restart() {
+        location.reload();
+    }
+
+    // Start
+    callAPI();
+</script>
+
+</body>
+</html>

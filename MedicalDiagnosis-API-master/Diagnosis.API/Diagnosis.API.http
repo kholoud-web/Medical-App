@@ -1,0 +1,12 @@
+@Diagnosis.API_HostAddress = http://localhost:5198
+
+
+POST {{Diagnosis.API_HostAddress}}/Auth/Login
+Accept: application/json
+{
+    "email": "",
+    "password" : "",
+    "role" : //Patient, Doctor, Admin
+}
+
+###
